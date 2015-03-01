@@ -2,8 +2,7 @@ package controller;
 
 import graphe.Sommet;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.*;
 
 import dialogue.GrapheView;
 

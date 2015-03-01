@@ -1,10 +1,7 @@
 package dialogue;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -20,6 +17,7 @@ public class GrapheView extends JFrame{
    private JPanelGraphe jpg;
    private JToggleButton bsommet;
    private JButton barcarrete;
+   
    public GrapheView(String titre,int w,int h){
 	  super(titre);
 	  this.setDefaultCloseOperation(EXIT_ON_CLOSE);

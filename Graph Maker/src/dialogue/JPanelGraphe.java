@@ -1,8 +1,7 @@
 package dialogue;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
+import java.awt.geom.*;
 
 import javax.swing.*;
 
@@ -14,6 +13,7 @@ public class JPanelGraphe extends JPanel{
 	private int index =1;
 	private Arc arc;
 	public final int ARR_SIZE=4;
+	
 	public JPanelGraphe(LayoutManager layout,Graphe graphe){
 		super(layout);
 		this.graphe=graphe;
@@ -21,7 +21,9 @@ public class JPanelGraphe extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		int height = 50, width = 50;
-		 for( Sommet s : graphe.getSommets()){
+		
+		for( Sommet s : graphe.getSommets())
+		{
 		    g.setColor(Color.yellow);
 		    g.fillOval(s.getPosX()-height/2, s.getPosY()-width/2,width, height);
 		    g.setColor(Color.BLACK);
@@ -30,9 +32,9 @@ public class JPanelGraphe extends JPanel{
 		}
 		for(Arc a : graphe.getArcs()){
 			if(this.graphe.isType())
-				this.drawArrow(g, a.getS_1().getPosX(), a.getS_1().getPosY(), a.getS_2().getPosX(), a.getS_2().getPosY());
+				this.drawArrow(g, a.getOrigine().getPosX(), a.getOrigine().getPosY(), a.getArrivee().getPosX(), a.getArrivee().getPosY());
 			else{
-				g.drawLine(a.getS_1().getPosX(),a.getS_1().getPosY(),a.getS_2().getPosX(),a.getS_2().getPosY());
+				g.drawLine(a.getOrigine().getPosX(),a.getOrigine().getPosY(),a.getArrivee().getPosX(),a.getArrivee().getPosY());
 			}
 		}
 	}

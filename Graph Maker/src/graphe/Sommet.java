@@ -7,6 +7,7 @@ public class Sommet {
 	private ArrayList<Arc> arcs;
 	private int posX;
 	private int posY;
+	
 	public Sommet(String nom, ArrayList<Arc> arcs, int posX, int posY) {
 		this.nom = nom;
 		this.arcs = arcs;

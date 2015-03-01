@@ -11,13 +11,13 @@ public class Arc {
 			int centre_posY) {
 		nom = nm;
 		origine = s_1;
-		arivee = s_2;
+		this.arrivee = s_2;
 		this.centre_posX = centre_posX;
 		this.centre_posY = centre_posY;
 	}
 	
 	public Arc(){
-		this('0',new Sommet(),new Sommet(),0,0);
+		this("0",new Sommet(),new Sommet(),0,0);
 	}
 	
 	public String getNom() {

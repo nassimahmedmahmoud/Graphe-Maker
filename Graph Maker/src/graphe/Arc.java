@@ -1,33 +1,33 @@
 package graphe;
 
 public class Arc {
-	private int distance;
-	private Sommet s_1;
-	private Sommet s_2;
+	private String nom;
+	private Sommet origine;
+	private Sommet arrivee;
 	private int centre_posX;
 	private int centre_posY;
 	
-	public Arc(int distance, Sommet s_1, Sommet s_2, int centre_posX,
+	public Arc(String nm, Sommet s_1, Sommet s_2, int centre_posX,
 			int centre_posY) {
-		this.distance = distance;
-		this.s_1 = s_1;
-		this.s_2 = s_2;
+		nom = nm;
+		origine = s_1;
+		arivee = s_2;
 		this.centre_posX = centre_posX;
 		this.centre_posY = centre_posY;
 	}
 	
 	public Arc(){
-		this(0,new Sommet(),new Sommet(),0,0);
+		this('0',new Sommet(),new Sommet(),0,0);
 	}
 	
-	public int getDistance() {
-		return distance;
+	public String getNom() {
+		return nom;
 	}
-	public Sommet getS_1() {
-		return s_1;
+	public Sommet getOrigine() {
+		return origine;
 	}
-	public Sommet getS_2() {
-		return s_2;
+	public Sommet getArrivee() {
+		return arrivee;
 	}
 	public int getCentre_posX() {
 		return centre_posX;
@@ -35,14 +35,14 @@ public class Arc {
 	public int getCentre_posY() {
 		return centre_posY;
 	}
-	public void setDistance(int distance) {
-		this.distance = distance;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
-	public void setS_1(Sommet s_1) {
-		this.s_1 = s_1;
+	public void setOrigine(Sommet s_1) {
+		origine = s_1;
 	}
-	public void setS_2(Sommet s_2) {
-		this.s_2 = s_2;
+	public void setArrivee(Sommet s_2) {
+		arrivee = s_2;
 	}
 	public void setCentre_posX(int centre_posX) {
 		this.centre_posX = centre_posX;
@@ -52,46 +52,46 @@ public class Arc {
 	}
 
 	public String toString() {
-		return "Arc [distance=" + distance + ", s_1=" + s_1 + ", s_2=" + s_2
-				+ ", centre_posX=" + centre_posX + ", centre_posY="
+		return "Arc [Nom : " + nom + ", origine : " + origine + ", arrivee : " + arrivee
+				+ ", centre_posX : " + centre_posX + ", centre_posY : "
 				+ centre_posY + "]";
 	}
 
 	public int distancePointX(){
-		if(this.s_1.getPosX()> this.s_2.getPosX())
-			return this.s_1.getPosX()-this.s_2.getPosX();
+		if(this.origine.getPosX()> this.arrivee.getPosX())
+			return this.origine.getPosX()-this.arrivee.getPosX();
 		else
-			return this.s_2.getPosX()-this.s_1.getPosX();
+			return this.arrivee.getPosX()-this.origine.getPosX();
 	}
 	public int petitX(){
-		if(this.s_1.getPosX()> this.s_2.getPosX())
-			return this.s_2.getPosX();
+		if(this.origine.getPosX()> this.arrivee.getPosX())
+			return this.arrivee.getPosX();
 		else
-			return this.s_1.getPosX();
+			return this.origine.getPosX();
 	}
 	public int grandX(){
-		if(this.s_1.getPosX()< this.s_2.getPosX())
-			return this.s_2.getPosX();
+		if(this.origine.getPosX()< this.arrivee.getPosX())
+			return this.arrivee.getPosX();
 		else
-			return this.s_1.getPosX();
+			return this.origine.getPosX();
 	}
 	
 	public int petitY(){
-		if(this.s_1.getPosY()> this.s_2.getPosY())
-			return this.s_2.getPosY();
+		if(this.origine.getPosY()> this.arrivee.getPosY())
+			return this.arrivee.getPosY();
 		else
-			return this.s_1.getPosY();
+			return this.origine.getPosY();
 	}
 	public int grandY(){
-		if(this.s_1.getPosY()< this.s_2.getPosY())
-			return this.s_2.getPosY();
+		if(this.origine.getPosY()< this.arrivee.getPosY())
+			return this.arrivee.getPosY();
 		else
-			return this.s_1.getPosY();
+			return this.origine.getPosY();
 	}
 	public int distancePointY(){
-		if(this.s_1.getPosY()> this.s_2.getPosY())
-			return this.s_1.getPosY()-this.s_2.getPosY();
+		if(this.origine.getPosY()> this.arrivee.getPosY())
+			return this.origine.getPosY()-this.arrivee.getPosY();
 		else
-			return this.s_2.getPosY()-this.s_1.getPosY();
+			return this.arrivee.getPosY()-this.origine.getPosY();
 	}
 }

@@ -1,4 +1,5 @@
 package graphe;
+import java.awt.event.MouseEvent;
 import java.util.*;
 
 public class Graphe {
@@ -67,6 +68,15 @@ public class Graphe {
 		return null;
 	}
 	
+	public Sommet isSommet(int diametre,MouseEvent e){
+		int rayon = diametre/2;
+		for(Sommet s : this.sommets){
+			if(s.getPosX()-rayon<=e.getX() && s.getPosY()-rayon<=e.getY() && (s.getPosX()+rayon)>=e.getX() && (s.getPosY()+rayon)>=e.getY()){
+				return s;
+			}
+		}
+		return null;
+	}
 	
 	
 }

@@ -1,29 +1,25 @@
 package controller;
 
-import graphe.Sommet;
-
-import java.awt.*;
 import java.awt.event.*;
-
-import dialogue.GrapheView;
+import dialogue.*;
 
 public class ListenerMouseMotionGraphe implements MouseMotionListener  {
-private GrapheView gv;
+
+	private GrapheView gv;
+	private ListenerBoutonGraphe lbg;
 	
-	public ListenerMouseMotionGraphe(GrapheView gv){
+	public ListenerMouseMotionGraphe(GrapheView gv,ListenerBoutonGraphe lbg){
 		this.gv=gv;
+		this.lbg=lbg;
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if(this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected()){
-			for(Sommet s : this.gv.getGraphe().getSommets()){
-				if(s.getPosX()-25<=e.getX() && s.getPosY()-25<=e.getY() && (s.getPosX()+25)>=e.getX() && (s.getPosY()+25)>=e.getY()){
-					s.setPosX(e.getX());
-					s.setPosY(e.getY());	
-					this.gv.getJpg().repaint();
-					break;
-				}
+			if(lbg.getsCourant()!=null){
+				lbg.getsCourant().setPosX(e.getX());
+				lbg.getsCourant().setPosY(e.getY());
+				this.gv.getJpg().repaint();
 			}
 		}
 	}

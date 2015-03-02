@@ -3,13 +3,11 @@ package controller;
 import graphe.Sommet;
 
 import java.awt.event.*;
-
-import javax.swing.event.MouseInputListener;
-
 import dialogue.*;
 public class ListenerBoutonGraphe implements MouseListener{
 	
 	private GrapheView gv;
+	private Sommet sCourant;
 	public ListenerBoutonGraphe(GrapheView gv){
 		this.gv=gv;
 	}
@@ -28,9 +26,13 @@ public class ListenerBoutonGraphe implements MouseListener{
 	}
 
 	public void mousePressed(MouseEvent e) {
+		if(this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected())
+			this.sCourant=this.gv.getGraphe().isSommet(50,e);
 	}
 
 	public void mouseReleased(MouseEvent e) {
+		if(this.sCourant!=null)
+			this.sCourant=null;
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -39,4 +41,14 @@ public class ListenerBoutonGraphe implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 
 	}
+
+	public Sommet getsCourant() {
+		return sCourant;
+	}
+
+	public void setsCourant(Sommet sCourant) {
+		this.sCourant = sCourant;
+	}
+	
+	
 }

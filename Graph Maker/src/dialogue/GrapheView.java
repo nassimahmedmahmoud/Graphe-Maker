@@ -1,10 +1,7 @@
 package dialogue;
 
 import java.awt.*;
-import java.awt.event.*;
-
 import javax.swing.*;
-
 import controller.*;
 import graphe.*;
 
@@ -53,7 +50,7 @@ public class GrapheView extends JFrame{
 	}
 	public JMenu menuFile(){
 		JMenu menufichier=new JMenu("Fichier");
-		JMenuItem menugraphe=new JMenuItem("Créer un graphe");
+		JMenuItem menugraphe=new JMenuItem("Réinitialiser un graphe");
 		JMenuItem menusave = new JMenuItem("sauvegarder graphe");
 		JMenuItem menuload = new JMenuItem("charger graphe");
 		menufichier.add(menugraphe);
@@ -74,7 +71,7 @@ public class GrapheView extends JFrame{
 	public JMenu menuAide(){
 		JMenu menuAide = new JMenu("Aide");
 		JMenuItem menuhelp = new JMenuItem("Assistance");
-		JMenuItem menupropos = new JMenuItem("A propose de nous");
+		JMenuItem menupropos = new JMenuItem("A propos de nous");
 		menuAide.add(menuhelp);
 		menuAide.add(menupropos);
 		return menuAide;
@@ -112,8 +109,10 @@ public class GrapheView extends JFrame{
   public JPanelGraphe panelListenerTest(){
 	  jpg = new JPanelGraphe(new BorderLayout(),this.graphe);
 	  jpg.setBackground(Color.GRAY);
-	  jpg.addMouseListener(new ListenerBoutonGraphe(this));
-	  jpg.addMouseMotionListener(new ListenerMouseMotionGraphe(this) );
+	  ListenerBoutonGraphe lbg = new ListenerBoutonGraphe(this);
+	  ListenerMouseMotionGraphe lmmg = new ListenerMouseMotionGraphe(this,lbg); 
+	  jpg.addMouseListener(lbg);
+	  jpg.addMouseMotionListener(lmmg);
 	  return jpg;
   }
   

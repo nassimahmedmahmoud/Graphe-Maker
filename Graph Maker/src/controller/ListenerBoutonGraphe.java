@@ -24,8 +24,12 @@ public class ListenerBoutonGraphe implements MouseListener{
 			s.setPosX(e.getX());
 			s.setPosY(e.getY());
 			this.gv.getGraphe().getSommets().add(s);
-		}
-		this.setsCourant(e);
+			}
+			this.setsCourant(e);
+			if(this.gv.getBgomme().isSelected() && SwingUtilities.isLeftMouseButton(e)){
+				this.setsCourant(e);
+				this.gv.getGraphe().getSommets().remove(this.getsCourant());
+			}
 		if(SwingUtilities.isRightMouseButton(e) && sCourant!=null){
 			String val =  (String)JOptionPane.showInputDialog(null, 
 					"Modifier la valeur du sommet","Sommet",JOptionPane.QUESTION_MESSAGE, null, null, "");
@@ -82,7 +86,7 @@ public class ListenerBoutonGraphe implements MouseListener{
 	}
 
     public void setsCourant(MouseEvent e){
-    	if(this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected())
+    	if(this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected() || this.gv.getBgomme().isSelected())
     		this.sCourant=this.gv.getGraphe().isSommet(50,e);
         }
 	public void mouseEntered(MouseEvent e) {

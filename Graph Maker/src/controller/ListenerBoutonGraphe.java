@@ -57,7 +57,7 @@ public class ListenerBoutonGraphe implements MouseListener{
             {
                     
                 sCourant = this.gv.getGraphe().isSommet(50, e);
-                System.out.println(sCourant);
+                //System.out.println(sCourant);
                 arcCourant.setArrivee(sCourant);
                 this.gv.getGraphe().getArcs().add(arcCourant);
                 arcCourant.getArrivee().ajouterArc(arcCourant);

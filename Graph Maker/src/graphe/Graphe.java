@@ -25,9 +25,9 @@ public class Graphe {
 
 	public void switchTypeOfGraphe(){
 		if(this.type)
-			this.setType(false);
+			this.setType(Graphe.NON_ORIENTE);
 		else
-			this.setType(true);
+			this.setType(Graphe.ORIENTE);
 	}
 	public String getNom() {
 		return nom;

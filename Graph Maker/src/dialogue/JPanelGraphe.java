@@ -28,14 +28,14 @@ public class JPanelGraphe extends JPanel{
 		    g.drawOval(s.getPosX()-height/2, s.getPosY()-width/2,width+1, height+1);
 		    g.drawString(s.getNom()+"",s.getPosX()-height/12, s.getPosY()-width/12);
 		}
-		for(Arc a : graphe.getArcs()){
-			if(this.graphe.isType())
+		if(this.graphe.isType()){
+			for(Arc a : graphe.getArcs())
 				this.drawArrow(g, a.getOrigine().getPosX(), a.getOrigine().getPosY(), a.getArrivee().getPosX(), a.getArrivee().getPosY());
-			else{
+		}else{
+			for(Arc a : graphe.getArcs())
 				g.drawLine(a.getOrigine().getPosX(),a.getOrigine().getPosY(),a.getArrivee().getPosX(),a.getArrivee().getPosY());
-			}
-		}
-	}	
+		}	
+	}
 	void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
         Graphics2D g = (Graphics2D) g1.create();
         double dx = x2 - x1, dy = y2 - y1;

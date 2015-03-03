@@ -100,6 +100,7 @@ public class GrapheView extends JFrame{
 	  pgraphe.add(barcarrete);
 	  pgraphe.add(bgomme);
 	  pgraphe.add(jpg);
+	  barcarrete.addActionListener(new ListenerActionGraphe(this));
 	  return pgraphe;
   }
   public JPanel panel1(){

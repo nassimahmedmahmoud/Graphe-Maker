@@ -1,4 +1,5 @@
 package graphe;
+
 import java.awt.event.*;
 import java.util.*;
 
@@ -80,5 +81,16 @@ public class Graphe {
 		return null;
 	}
 	
+        public boolean arcInGraphe(Arc arc_g)
+        {
+            boolean ui = false;
+            
+            for(Arc a : this.arcs)
+            {
+                if(arc_g.equals(a))
+                    ui = true;
+            }
+            return ui;
+        }
 	
 }

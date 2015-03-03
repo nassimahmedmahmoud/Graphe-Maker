@@ -71,4 +71,16 @@ public class Sommet {
 				+ ", posY=" + posY + "]";
 	}
 	
+        @Override
+        public boolean equals(Object o)
+        {
+            if(o == null)
+                return false;
+            if(!(o instanceof Sommet))
+                return false;
+            
+            Sommet s = (Sommet)o;
+            return s.nom == this.nom && s.posX == this.posX && s.posY == this.posY
+                    && s.arcs.equals(this.arcs);
+        }
 }

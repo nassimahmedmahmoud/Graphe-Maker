@@ -1,5 +1,7 @@
 package graphe;
 
+import java.util.Objects;
+
 public class Arc {
 	private String nom;
 	private Sommet origine;
@@ -94,4 +96,18 @@ public class Arc {
 		else
 			return this.arrivee.getPosY()-this.origine.getPosY();
 	}
+        
+        @Override
+        public boolean equals(Object o)
+        {
+            if(o == null)
+                return false;
+            if(!(o instanceof Arc))
+                return false;
+            
+            Arc a = (Arc)o;
+            return a.nom == this.nom && a.arrivee.equals(this.arrivee) &&
+                    a.origine.equals(this.origine) && a.centre_posX == this.centre_posX
+                    && a.centre_posY == this.centre_posY;
+        }
 }

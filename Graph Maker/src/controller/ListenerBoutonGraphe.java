@@ -3,6 +3,9 @@ package controller;
 import graphe.*;
 
 import java.awt.event.*;
+
+import javax.swing.*;
+
 import dialogue.*;
 
 public class ListenerBoutonGraphe implements MouseListener{
@@ -16,20 +19,29 @@ public class ListenerBoutonGraphe implements MouseListener{
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		if(this.gv.getBsommet().isSelected()){
+		if(this.gv.getBsommet().isSelected() && SwingUtilities.isLeftMouseButton(e)){
 			Sommet s= new Sommet();
 			s.setPosX(e.getX());
 			s.setPosY(e.getY());
 			this.gv.getGraphe().getSommets().add(s);
+		}
+		this.setsCourant(e);
+		if(SwingUtilities.isRightMouseButton(e) && sCourant!=null){
+			String val =  (String)JOptionPane.showInputDialog(null, 
+					"Modifier la valeur du sommet","Sommet",JOptionPane.QUESTION_MESSAGE, null, null, "");
+			if(val!=null){
+				sCourant.setNom(val);
+			}
+			else
+				sCourant=null;
 		}
 		this.gv.getJpg().repaint();
 	}
 
         @Override
 	public void mousePressed(MouseEvent e) {
-		if(this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected())
-			this.sCourant=this.gv.getGraphe().isSommet(50,e);
-        else if(this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected())
+		 this.setsCourant(e);
+		 if(this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected())
         {
             sCourant = this.gv.getGraphe().isSommet(50, e);
             if(sCourant != null)
@@ -69,6 +81,10 @@ public class ListenerBoutonGraphe implements MouseListener{
             }
 	}
 
+    public void setsCourant(MouseEvent e){
+    	if(this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected())
+    		this.sCourant=this.gv.getGraphe().isSommet(50,e);
+        }
 	public void mouseEntered(MouseEvent e) {
 	}
 

@@ -85,8 +85,8 @@ public class GrapheView extends JFrame{
 	  bclic = new JToggleButton("clic");
 	  bsommet = new JToggleButton("sommet");
 	  barc = new JToggleButton("arc");
-	  barrete = new JToggleButton("arrete");
-	  barcarrete = new JButton("arc <-> arrete");
+	  barrete = new JToggleButton("arête");
+	  barcarrete = new JButton("arc <-> arête");
 	  bgomme= new JToggleButton("gomme");
 	  pgraphe.add(this.panelListenerTest(),"Center");
 	  btngrp.add(bclic);

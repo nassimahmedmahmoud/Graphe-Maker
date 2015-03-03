@@ -1,19 +1,23 @@
 package controller;
 
-import graphe.Sommet;
+import graphe.*;
 
 import java.awt.event.*;
 import dialogue.*;
+
 public class ListenerBoutonGraphe implements MouseListener{
 	
 	private GrapheView gv;
 	private Sommet sCourant;
+        private Arc arcCourant;
+        
 	public ListenerBoutonGraphe(GrapheView gv){
 		this.gv=gv;
 	}
 	
 	public void mouseClicked(MouseEvent e) {
 		if(this.gv.getBsommet().isSelected()){
+                    //System.out.println("lul");
 			Sommet s= new Sommet();
 			s.setPosX(e.getX());
 			s.setPosY(e.getY());
@@ -25,14 +29,43 @@ public class ListenerBoutonGraphe implements MouseListener{
 		}
 	}
 
+        @Override
 	public void mousePressed(MouseEvent e) {
 		if(this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected())
-			this.sCourant=this.gv.getGraphe().isSommet(50,e);
+                	this.sCourant=this.gv.getGraphe().isSommet(50,e);
+                
+                else if(this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected())
+                {
+                    sCourant = this.gv.getGraphe().isSommet(50, e);
+                    arcCourant = new Arc();
+                    arcCourant.setOrigine(sCourant);
+                }
 	}
 
+        @Override
 	public void mouseReleased(MouseEvent e) {
+            if(sCourant == null)
+                arcCourant = null;
+            
+            if(this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected())
+            {
 		if(this.sCourant!=null)
-			this.sCourant=null;
+                    this.sCourant=null;
+            }
+            
+            if(this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected())
+            {
+                    
+                sCourant = this.gv.getGraphe().isSommet(50, e);
+                System.out.println(sCourant);
+                arcCourant.setArrivee(sCourant);
+                this.gv.getGraphe().getArcs().add(arcCourant);
+                arcCourant.getArrivee().ajouterArc(arcCourant);
+                arcCourant.getOrigine().ajouterArc(arcCourant);
+                sCourant = null;
+                arcCourant = null;
+                this.gv.getJpg().repaint();
+            }
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -49,6 +82,15 @@ public class ListenerBoutonGraphe implements MouseListener{
 	public void setsCourant(Sommet sCourant) {
 		this.sCourant = sCourant;
 	}
-	
+        
+        public Arc getArcCourant()
+        {
+            return arcCourant;
+        }
+        
+        public void setArcCourant(Arc a)
+        {
+            arcCourant = a;
+        }
 	
 }

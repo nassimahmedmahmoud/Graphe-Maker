@@ -1,5 +1,5 @@
 package graphe;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.*;
 
 public class Graphe {
@@ -9,6 +9,8 @@ public class Graphe {
 	private boolean type;
 	private ArrayList<Sommet> sommets;
 	private ArrayList<Arc> arcs;
+        
+        
 	public Graphe(String nom, boolean type, ArrayList<Sommet> sommets,
 			ArrayList<Arc> arcs) {
 		this.nom = nom;

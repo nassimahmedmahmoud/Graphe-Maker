@@ -10,10 +10,13 @@ import graphe.*;
 public class GrapheView extends JFrame{
    private JTabbedPane onglets;
    private Graphe graphe;
-   private JToggleButton bclic;
+   private JToggleButton bclic;                 // Bouton clic
+   private JToggleButton bsommet;               // Bouton sommet
+   private JToggleButton barc;                  // Bouton arc
+   private JToggleButton barrete;               // Bouton arrete
+   private JButton barcarrete;                  // Bouton pour orienter/desorienter le graphe
+   private JToggleButton bgomme;                // Bouton gomme
    private JPanelGraphe jpg;
-   private JToggleButton bsommet;
-   private JButton barcarrete;
    
    public GrapheView(String titre,int w,int h){
 	  super(titre);
@@ -81,10 +84,10 @@ public class GrapheView extends JFrame{
 	  ButtonGroup btngrp = new ButtonGroup();
 	  bclic = new JToggleButton("clic");
 	  bsommet = new JToggleButton("sommet");
-	  JToggleButton barc = new JToggleButton("arc");
-	  JToggleButton barrete = new JToggleButton("arrete");
+	  barc = new JToggleButton("arc");
+	  barrete = new JToggleButton("arrete");
 	  barcarrete = new JButton("arc <-> arrete");
-	  JToggleButton bgomme= new JToggleButton("gomme");
+	  bgomme= new JToggleButton("gomme");
 	  pgraphe.add(this.panelListenerTest(),"Center");
 	  btngrp.add(bclic);
 	  btngrp.add(bsommet);
@@ -116,8 +119,36 @@ public class GrapheView extends JFrame{
 	  return jpg;
   }
   
+  public JToggleButton getBarc()
+  {
+      return barc;
+  }
+  
+  public JToggleButton getBarrete()
+  {
+      return barrete;
+  }
+  
+  public JToggleButton getBgomme()
+  {
+      return bgomme;
+  }
+  
+  public void setBarc(JToggleButton butarc)
+  {
+      barc = butarc;
+  }
+  
+  public void setBarrete(JToggleButton butarrete)
+  {
+      barrete = butarrete;
+  }
 
-
+  public void setBgomme(JToggleButton butgomme)
+  {
+      bgomme = butgomme;
+  }
+  
 public JTabbedPane getOnglets() {
 	return onglets;
 }
@@ -169,6 +200,7 @@ public JButton getBarcarrete() {
 public void setBarcarrete(JButton barcarrete) {
 	this.barcarrete = barcarrete;
 }
+
   
   
 }

@@ -15,6 +15,7 @@ public class JPanelGraphe extends JPanel{
 		super(layout);
 		this.graphe=graphe;
 	}
+        
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		int height = 50, width = 50;

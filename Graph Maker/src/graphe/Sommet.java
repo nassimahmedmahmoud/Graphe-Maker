@@ -18,6 +18,11 @@ public class Sommet {
 	public Sommet(){
 		this("",new ArrayList<Arc>(),0,0);
 	}
+        
+        public void ajouterArc(Arc arc)
+        {
+            arcs.add(arc);
+        }
 
 	public String getNom() {
 		return nom;
@@ -26,6 +31,16 @@ public class Sommet {
 	public ArrayList<Arc> getArcs() {
 		return arcs;
 	}
+        
+        public Arc getArc(int indexu)
+        {
+            return arcs.get(indexu);
+        }
+        
+        public void setArc(int indexu, Arc arc)
+        {
+            arcs.set(indexu, arc);
+        }
 
 	public int getPosX() {
 		return posX;

@@ -37,8 +37,11 @@ public class ListenerBoutonGraphe implements MouseListener{
                 else if(this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected())
                 {
                     sCourant = this.gv.getGraphe().isSommet(50, e);
-                    arcCourant = new Arc();
-                    arcCourant.setOrigine(sCourant);
+                    if(sCourant != null)
+                    {
+                        arcCourant = new Arc();
+                        arcCourant.setOrigine(sCourant);
+                    }
                 }
 	}
 
@@ -53,15 +56,18 @@ public class ListenerBoutonGraphe implements MouseListener{
                     this.sCourant=null;
             }
             
-            if(this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected())
+            if((this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected()) && arcCourant != null)
             {
                     
                 sCourant = this.gv.getGraphe().isSommet(50, e);
                 //System.out.println(sCourant);
-                arcCourant.setArrivee(sCourant);
-                this.gv.getGraphe().getArcs().add(arcCourant);
-                arcCourant.getArrivee().ajouterArc(arcCourant);
-                arcCourant.getOrigine().ajouterArc(arcCourant);
+                if(sCourant != null)
+                {
+                    arcCourant.setArrivee(sCourant);
+                    this.gv.getGraphe().getArcs().add(arcCourant);
+                    arcCourant.getArrivee().ajouterArc(arcCourant);
+                    arcCourant.getOrigine().ajouterArc(arcCourant);
+                }
                 sCourant = null;
                 arcCourant = null;
                 this.gv.getJpg().repaint();

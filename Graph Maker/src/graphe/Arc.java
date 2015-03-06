@@ -1,7 +1,5 @@
 package graphe;
 
-import java.util.Objects;
-
 public class Arc {
 	private String nom;
 	private Sommet origine;
@@ -54,8 +52,8 @@ public class Arc {
 	}
 
 	public String toString() {
-		return "Arc [Nom : " + nom + ", origine : " + origine + ", arrivee : " + arrivee
-				+ ", centre_posX : " + centre_posX + ", centre_posY : "
+		return "Arc [nom=" + nom + ", origine=" + origine + ", arrivee="
+				+ arrivee + ", centre_posX=" + centre_posX + ", centre_posY="
 				+ centre_posY + "]";
 	}
 

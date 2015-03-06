@@ -18,17 +18,26 @@ public class JPanelGraphe extends JPanel{
         
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		if(!this.graphe.isType()){
-			for(Arc a : graphe.getArcs())
+		if(!this.graphe.isType())
+			for(Arc a : graphe.getArcs()){
 				g.drawLine(a.getOrigine().getPosX(),a.getOrigine().getPosY(),a.getArrivee().getPosX(),a.getArrivee().getPosY()); // A MODIFIER (BEZIER)
-		}	
-		else{
-			for(Arc a : graphe.getArcs())
+			}	
+		else
+			for(Arc a : graphe.getArcs()){
 				this.drawArrow(g, a.getOrigine().getPosX(), a.getOrigine().getPosY(), a.getArrivee().getPosX(), a.getArrivee().getPosY()); // A MODIFIER (BEZIER)
-		}
+			}
 		for( Sommet s : graphe.getSommets())
 			this.drawNode(s,g,50,Color.WHITE);
-
+		if(graphe.getSommets().size()>2 && graphe.getArcs().size()>2){
+		/*for(int i=0;i<graphe.getSommets().size();i++){
+			for(int j=0;j<graphe.getSommets().size();j++){
+				System.out.print(graphe.matrice()[i][j]);
+				//System.out.println(pos);
+			}
+			System.out.println();
+			}*/
+		}
+		//System.out.println(graphe.getSommets());
 	}
 	
 	void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {

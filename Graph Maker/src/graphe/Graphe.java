@@ -80,6 +80,27 @@ public class Graphe {
 		}
 		return null;
 	}
+	
+	public int positionSommets(Sommet s){
+		return this.sommets.indexOf(s);
+	}
+	
+	public int [][] matrice(){
+		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
+		ArrayList<Arc> tmpArc = new ArrayList<Arc>();
+		for(int i=0;i<this.sommets.size();i++){
+			tmpArc.addAll(this.sommets.get(i).getArcs());
+		}
+		for(int i=0;i<this.sommets.size();i++){
+				for(int j=0;j<this.sommets.get(i).getArcs().size();j++){
+					int pos = positionSommets(this.sommets.get(i).getArcs().get(j).getArrivee());
+					if(pos!=-1)
+						tab[i][pos]=1;
+				}
+		}
+		
+		return tab;
+	}
 
 	public boolean arcInGraphe(Arc arc_g)
 	{

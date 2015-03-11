@@ -80,6 +80,16 @@ public class Graphe {
 		}
 		return null;
 	}
+        
+        public Arc isArc(int diametre,MouseEvent e){
+		int rayon = diametre/2;
+		for(Arc a : this.arcs){
+			if(a.getCentre_posX()-rayon<=e.getX() && a.getCentre_posY()-rayon<=e.getY() && (a.getCentre_posX()+rayon)>=e.getX() && (a.getCentre_posY()+rayon)>=e.getY()){
+				return a;
+			}
+		}
+		return null;
+	}
 	
 	public int positionSommets(Sommet s){
 		return this.sommets.indexOf(s);

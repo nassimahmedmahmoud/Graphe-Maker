@@ -67,7 +67,7 @@ public class Sommet {
 	}
 
 	public String toString() {
-		return "Sommet [nom=" + nom + ", arcs=" + arcs + ", posX=" + posX
+		return "Sommet [nom=" + nom /*+ ", arcs=" + arcs*/ + ", posX=" + posX
 				+ ", posY=" + posY + "]";
 	}
 	

@@ -27,9 +27,12 @@ public class ListenerBoutonGraphe implements MouseListener {
         }
         this.setsCourant(e);
 
-        if (this.gv.getBclic().isSelected()) {
+        if (this.gv.getBclic().isSelected())
+        {
             arcCourant = this.gv.getGraphe().isArc(50, e);
+            //System.out.println(this.gv.getGraphe().isArc(50, e));
             //System.out.println(this.gv.getGraphe().getArcs());
+            //System.out.println(arcCourant);
             if (arcCourant != null) {
                 System.out.println("arc : " + arcCourant + " selected");
             }
@@ -40,6 +43,17 @@ public class ListenerBoutonGraphe implements MouseListener {
                 this.gv.getGraphe().getArcs().remove(this.getsCourant().getArc(i));
             }
             this.gv.getGraphe().getSommets().remove(this.getsCourant());
+        }
+        
+        if (SwingUtilities.isRightMouseButton(e) && arcCourant != null)
+        {
+            String val = (String) JOptionPane.showInputDialog(null,
+                    "Modifier la valeur de l'arc", "Arc",
+                    JOptionPane.QUESTION_MESSAGE, null, null, "");
+            if (val != null)
+                arcCourant.setNom(val);
+            else
+                arcCourant = null;
         }
 
         if (SwingUtilities.isRightMouseButton(e) && sCourant != null) {
@@ -52,16 +66,22 @@ public class ListenerBoutonGraphe implements MouseListener {
             }
         }
 
-        if (this.gv.getBarc().isSelected()) {
+        if (this.gv.getBarc().isSelected())
+        {
             sCourant = this.gv.getGraphe().isSommet(50, e);
-            if (sCourant != null && arcCourant == null) {
+            if (sCourant != null && arcCourant == null)
+            {
                 arcCourant = new Arc();
                 arcCourant.setOrigine(sCourant);
-            } else if (sCourant != null) {
+            }
+            else if (sCourant != null)
+            {
                 arcCourant.setArrivee(sCourant);
-                if (!(gv.getGraphe().arcInGraphe(arcCourant))) {
+                if (!(gv.getGraphe().arcInGraphe(arcCourant)))
+                {
                     if ((!(gv.getGraphe().isType()) && arcCourant.getArrivee()
-                            != arcCourant.getOrigine()) || gv.getGraphe().isType()) {
+                            != arcCourant.getOrigine()) || gv.getGraphe().isType())
+                    {
                         arcCourant.getArrivee().ajouterArc(arcCourant);
                         arcCourant.getOrigine().ajouterArc(arcCourant);
                         arcCourant.milieu();
@@ -76,11 +96,14 @@ public class ListenerBoutonGraphe implements MouseListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e)
+    {
         this.setsCourant(e);
-        if (this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected()) {
+        if (this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected())
+        {
             sCourant = this.gv.getGraphe().isSommet(50, e);
-            if (sCourant != null) {
+            if (sCourant != null)
+            {
                 arcCourant_2 = new Arc();
                 arcCourant_2.setOrigine(sCourant);
             }
@@ -93,14 +116,18 @@ public class ListenerBoutonGraphe implements MouseListener {
             arcCourant = null;
         }
 
-        if ((this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected()) && arcCourant_2 != null) {
+        if ((this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected()) && arcCourant_2 != null)
+       {
             sCourant = this.gv.getGraphe().isSommet(50, e);
-            if (sCourant != null) {
+            if (sCourant != null)
+            {
                 arcCourant_2.setArrivee(sCourant);
 
-                if (!(gv.getGraphe().arcInGraphe(arcCourant_2))) {
+                if (!(gv.getGraphe().arcInGraphe(arcCourant_2)))
+                {
                     if ((!(gv.getGraphe().isType()) && arcCourant_2.getArrivee()
-                            != arcCourant_2.getOrigine()) || gv.getGraphe().isType()) {
+                            != arcCourant_2.getOrigine()) || gv.getGraphe().isType())
+                    {
                         arcCourant_2.getArrivee().ajouterArc(arcCourant_2);
                         arcCourant_2.getOrigine().ajouterArc(arcCourant_2);
                         arcCourant_2.milieu();

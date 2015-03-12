@@ -83,10 +83,11 @@ public class Graphe {
         
         public Arc isArc(int diametre,MouseEvent e){
 		int rayon = diametre/2;
-		for(Arc a : this.arcs){
-			if(a.getCentre_posX()-rayon<=e.getX() && a.getCentre_posY()-rayon<=e.getY() && (a.getCentre_posX()+rayon)>=e.getX() && (a.getCentre_posY()+rayon)>=e.getY()){
+		for(Arc a : this.arcs)
+                {
+			if(a.getCentre_posX()-rayon<=e.getX() && a.getCentre_posY()-rayon<=e.getY() && (a.getCentre_posX()+rayon)>=e.getX() && (a.getCentre_posY()+rayon)>=e.getY())
 				return a;
-			}
+                        
 		}
 		return null;
 	}

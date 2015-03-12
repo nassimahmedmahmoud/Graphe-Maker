@@ -18,7 +18,7 @@ public class Arc {
     }
 
     public Arc() {
-        this("0", new Sommet(), new Sommet(), 0, 0);
+        this(" ", new Sommet(), new Sommet(), 0, 0);
     }
 
     public String getNom() {
@@ -67,8 +67,12 @@ public class Arc {
                 + centre_posY + "]";
     }
 
-    public int distancePointX() {
-            return this.arrivee.getPosX() + this.origine.getPosX();
+    public int distancePointX()
+    {
+        if(arrivee.getPosX() > origine.getPosX())
+            return arrivee.getPosX() - origine.getPosX();
+        else
+            return origine.getPosX() - arrivee.getPosX();
     }
 
     public int petitX() {
@@ -99,8 +103,12 @@ public class Arc {
             return this.origine.getPosY();
     }
 
-    public int distancePointY() {
-            return this.arrivee.getPosY() + this.origine.getPosY();
+    public int distancePointY()
+    {
+        if(arrivee.getPosY() > origine.getPosY())
+            return arrivee.getPosY() - origine.getPosY();
+        else
+            return origine.getPosY() - arrivee.getPosY();
     }
     
     public void milieu()

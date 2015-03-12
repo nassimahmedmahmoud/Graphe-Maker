@@ -68,10 +68,7 @@ public class Arc {
     }
 
     public int distancePointX() {
-        if (this.origine.getPosX() > this.arrivee.getPosX())
-            return this.origine.getPosX() - this.arrivee.getPosX();
-        else
-            return this.arrivee.getPosX() - this.origine.getPosX();
+            return this.arrivee.getPosX() + this.origine.getPosX();
     }
 
     public int petitX() {
@@ -103,10 +100,7 @@ public class Arc {
     }
 
     public int distancePointY() {
-        if (this.origine.getPosY() > this.arrivee.getPosY())
-            return this.origine.getPosY() - this.arrivee.getPosY();
-        else
-            return this.arrivee.getPosY() - this.origine.getPosY();
+            return this.arrivee.getPosY() + this.origine.getPosY();
     }
     
     public void milieu()

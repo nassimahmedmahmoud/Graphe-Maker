@@ -103,7 +103,7 @@ public class ListenerBoutonGraphe implements MouseListener {
                             != arcCourant_2.getOrigine()) || gv.getGraphe().isType()) {
                         arcCourant_2.getArrivee().ajouterArc(arcCourant_2);
                         arcCourant_2.getOrigine().ajouterArc(arcCourant_2);
-                        arcCourant.milieu();
+                        arcCourant_2.milieu();
                         this.gv.getGraphe().getArcs().add(arcCourant_2);
                         sCourant = null;
                         arcCourant_2 = null;

@@ -3,9 +3,7 @@ package controller;
 import graphe.*;
 
 import java.awt.event.*;
-
 import javax.swing.*;
-
 import dialogue.*;
 
 public class ListenerBoutonGraphe implements MouseListener {

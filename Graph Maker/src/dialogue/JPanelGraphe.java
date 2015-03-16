@@ -25,32 +25,32 @@ public class JPanelGraphe extends JPanel{
 		for( Sommet s : graphe.getSommets())
 			this.drawNode(s,g,50,Color.WHITE);
 		if(graphe.getSommets().size()>2 && graphe.getArcs().size()>2){
-			/*for(int i=0;i<graphe.getSommets().size();i++){
-			for(int j=0;j<graphe.getSommets().size();j++){
-				System.out.print(graphe.matrice()[i][j]);
-				//System.out.println(pos);
+			for(int i=0;i<graphe.getSommets().size();i++){
+				for(int j=0;j<graphe.getSommets().size();j++){
+					System.out.print(graphe.matrice()[i][j]);
+					//System.out.println(pos);
+				}
+				System.out.println();
 			}
-			System.out.println();
-			}*/
 		}
 		//System.out.println(graphe.getSommets());
 	}
 
 	void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
-        Graphics2D g = (Graphics2D) g1.create();
-        double dx = x2 - x1, dy = y2 - y1;
-        double angle = Math.atan2(dy, dx);
-        int len = (int) Math.sqrt(dx*dx + dy*dy);
-        AffineTransform at =affineTransforme(x1,y1,x2,y2);
-        at.concatenate(AffineTransform.getRotateInstance(angle));
-        g.transform(at);
-        g.fillPolygon(new int[] {len/2, len/2-ARR_SIZE, len/2-ARR_SIZE, len/2},
-                      new int[] {0, -ARR_SIZE, ARR_SIZE, 0}, 4);
-    }
+		Graphics2D g = (Graphics2D) g1.create();
+		double dx = x2 - x1, dy = y2 - y1;
+		double angle = Math.atan2(dy, dx);
+		int len = (int) Math.sqrt(dx*dx + dy*dy);
+		AffineTransform at =affineTransforme(x1,y1,x2,y2);
+		at.concatenate(AffineTransform.getRotateInstance(angle));
+		g.transform(at);
+		g.fillPolygon(new int[] {len/2, len/2-ARR_SIZE, len/2-ARR_SIZE, len/2},
+				new int[] {0, -ARR_SIZE, ARR_SIZE, 0}, 4);
+	}
 
 	public AffineTransform affineTransforme(int x1, int y1, int x2, int y2){
-        AffineTransform at = AffineTransform.getTranslateInstance(x1, y1);
-        return at;
+		AffineTransform at = AffineTransform.getTranslateInstance(x1, y1);
+		return at;
 	}
 
 	void drawNode(Sommet s,Graphics g,int diametre,Color color){

@@ -80,39 +80,104 @@ public class Graphe {
 		}
 		return null;
 	}
-        
-        public Arc isArc(int diametre,MouseEvent e){
+
+	public Arc isArc(int diametre,MouseEvent e){
 		int rayon = diametre/2;
 		for(Arc a : this.arcs)
-                {
+		{
 			if(a.getCentre_posX()-rayon<=e.getX() && a.getCentre_posY()-rayon<=e.getY() && (a.getCentre_posX()+rayon)>=e.getX() && (a.getCentre_posY()+rayon)>=e.getY())
 				return a;
-                        
+
 		}
 		return null;
 	}
-	
+
 	public int positionSommets(Sommet s){
 		return this.sommets.indexOf(s);
 	}
-	
-	public int [][] matrice(){
-		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
-		ArrayList<Arc> tmpArc = new ArrayList<Arc>();
-		for(int i=0;i<this.sommets.size();i++){
-			tmpArc.addAll(this.sommets.get(i).getArcs());
+
+	public int nbArcs(){
+		int nb=0;
+		for(Sommet s : this.sommets){
+			nb+=s.nbArc();
 		}
-		for(int i=0;i<this.sommets.size();i++){
-				for(int j=0;j<this.sommets.get(i).getArcs().size();j++){
-					int pos = positionSommets(this.sommets.get(i).getArcs().get(j).getArrivee());
-					if(pos!=-1)
-						tab[i][pos]=1;
+		return nb;
+	}
+
+	public boolean metrique(){
+		for(Sommet s : sommets){
+			for(Arc a : s.getArcs()){
+				boolean ui =isNumeric(a.getNom());
+				if(!ui)
+					return ui;
+			}
+		}
+		return true;
+	}
+
+	public boolean isNumeric(String str)  
+	{  
+		try  
+		{  
+			double d = Double.parseDouble(str);  
+		}  
+		catch(NumberFormatException nfe)  
+		{  
+			return false;  
+		}  
+		return true;  
+	}
+
+	public double [][] matriceNonOriente(){
+		double tab[][]=new double[this.sommets.size()][this.sommets.size()];
+		int i=0;
+		boolean metrique = metrique();
+		for(Sommet s : this.sommets){
+			for(Arc a : s.getArcs()){
+				int pos=0;
+				if(a.getOrigine()==s)
+					pos = positionSommets(a.getArrivee());
+				else
+					pos = positionSommets(a.getOrigine());
+				if(pos!=-1){
+					if(metrique)
+						tab[i][pos]=Double.parseDouble(a.getNom());
 				}
+			}
+			i++;
 		}
-		
 		return tab;
 	}
 
+	public double [][] matriceOriente(){
+		double tab[][]=new double[this.sommets.size()][this.sommets.size()];
+		int i=0;
+		boolean metrique = metrique();
+		for(Sommet s : this.sommets){
+			System.out.println(s.getArcs());
+			for(Arc a : s.getArcs()){
+				int pos=0;
+				if(a.getOrigine()==s){
+					pos = positionSommets(a.getArrivee());
+					if(pos!=-1){
+						if(metrique)
+							tab[i][pos]=Double.parseDouble(a.getNom());
+					}
+				}
+			}
+			i++;
+		}
+		return tab;
+	}
+
+	public double[][]matrice(){
+		if(this.type==Graphe.ORIENTE){
+			return matriceOriente();
+		}
+		else{
+			return matriceNonOriente();
+		}
+	}
 	public boolean arcInGraphe(Arc arc_g)
 	{
 		boolean ui = false;

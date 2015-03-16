@@ -7,22 +7,22 @@ public class Sommet {
 	private ArrayList<Arc> arcs;
 	private int posX;
 	private int posY;
-	
+
 	public Sommet(String nom, ArrayList<Arc> arcs, int posX, int posY) {
 		this.nom = nom;
 		this.arcs = arcs;
 		this.posX = posX;
 		this.posY = posY;
 	}
-	
+
 	public Sommet(){
 		this("",new ArrayList<Arc>(),0,0);
 	}
-        
-        public void ajouterArc(Arc arc)
-        {
-            arcs.add(arc);
-        }
+
+	public void ajouterArc(Arc arc)
+	{
+		arcs.add(arc);
+	}
 
 	public String getNom() {
 		return nom;
@@ -31,16 +31,16 @@ public class Sommet {
 	public ArrayList<Arc> getArcs() {
 		return arcs;
 	}
-        
-        public Arc getArc(int indexu)
-        {
-            return arcs.get(indexu);
-        }
-        
-        public void setArc(int indexu, Arc arc)
-        {
-            arcs.set(indexu, arc);
-        }
+
+	public Arc getArc(int indexu)
+	{
+		return arcs.get(indexu);
+	}
+
+	public void setArc(int indexu, Arc arc)
+	{
+		arcs.set(indexu, arc);
+	}
 
 	public int getPosX() {
 		return posX;
@@ -70,17 +70,20 @@ public class Sommet {
 		return "Sommet [nom=" + nom /*+ ", arcs=" + arcs*/ + ", posX=" + posX
 				+ ", posY=" + posY + "]";
 	}
-	
-        @Override
-        public boolean equals(Object o)
-        {
-            if(o == null)
-                return false;
-            if(!(o instanceof Sommet))
-                return false;
-            
-            Sommet s = (Sommet)o;
-            return s.nom == this.nom && s.posX == this.posX && s.posY == this.posY
-                    && s.arcs.equals(this.arcs);
-        }
+	public int nbArc(){
+		return this.arcs.size();
+	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o == null)
+			return false;
+		if(!(o instanceof Sommet))
+			return false;
+
+		Sommet s = (Sommet)o;
+		return s.nom == this.nom && s.posX == this.posX && s.posY == this.posY
+				&& s.arcs.equals(this.arcs);
+	}
 }

@@ -2,7 +2,9 @@ package dialogue;
 
 import java.awt.*;
 import java.awt.geom.*;
+
 import javax.swing.*;
+
 import graphe.*;
 
 public class JPanelGraphe extends JPanel{
@@ -35,18 +37,20 @@ public class JPanelGraphe extends JPanel{
 	}
 
 	void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
-		QuadCurve2D.Float quadCurve = new QuadCurve2D.Float(); 
-		Graphics2D g = (Graphics2D) g1.create();
-		double dx = x2 - x1, dy = y2 - y1;
-		double angle = Math.atan2(dy, dx);
-		int len =  (int) Math.sqrt(dx*dx + dy*dy);
-		AffineTransform at = AffineTransform.getTranslateInstance(x1, y1);
-		at.concatenate(AffineTransform.getRotateInstance(angle));
-		g.transform(at);
-		quadCurve.setCurve(0,0,0,0,len,0);
-		g.fillPolygon(new int[] {len/2, len/2-ARR_SIZE, len/2-ARR_SIZE, len/2},
-				new int[] {0, -ARR_SIZE, ARR_SIZE, 0}, 4);
-		g.draw(quadCurve);
+        Graphics2D g = (Graphics2D) g1.create();
+        double dx = x2 - x1, dy = y2 - y1;
+        double angle = Math.atan2(dy, dx);
+        int len = (int) Math.sqrt(dx*dx + dy*dy);
+        AffineTransform at =affineTransforme(x1,y1,x2,y2);
+        at.concatenate(AffineTransform.getRotateInstance(angle));
+        g.transform(at);
+        g.fillPolygon(new int[] {len/2, len/2-ARR_SIZE, len/2-ARR_SIZE, len/2},
+                      new int[] {0, -ARR_SIZE, ARR_SIZE, 0}, 4);
+    }
+
+	public AffineTransform affineTransforme(int x1, int y1, int x2, int y2){
+        AffineTransform at = AffineTransform.getTranslateInstance(x1, y1);
+        return at;
 	}
 
 	void drawNode(Sommet s,Graphics g,int diametre,Color color){
@@ -62,10 +66,26 @@ public class JPanelGraphe extends JPanel{
 
 	public void drawLines(Graphics g, Arc a)
 	{
-		if(!this.graphe.isType())
-			g.drawLine(a.getOrigine().getPosX(),a.getOrigine().getPosY(),a.getArrivee().getPosX(),a.getArrivee().getPosY());
-		else
-			this.drawArrow(g, a.getOrigine().getPosX(), a.getOrigine().getPosY(), a.getArrivee().getPosX(), a.getArrivee().getPosY());
-		g.drawString(a.getNom(),(a.getOrigine().getPosX()+a.getArrivee().getPosX())/2,(a.getOrigine().getPosY()+a.getArrivee().getPosY())/2);
+		int x1=a.getOrigine().getPosX();
+		int x2=a.getArrivee().getPosX();
+		int y1=a.getOrigine().getPosY();
+		int y2=a.getArrivee().getPosY();
+		int ctrlx=a.getCentre_posX();
+		int ctrly=a.getCentre_posY();
+		Graphics2D g2D =(Graphics2D)g.create();
+		CubicCurve2D.Double cc = new CubicCurve2D.Double();
+		QuadCurve2D.Double cq = new QuadCurve2D.Double();
+		if(this.graphe.isType()){
+			drawArrow(g,x1,y1,x2,y2);
+			g.drawLine(x1, y1, x2, y2);
+		}
+		else{
+			cc.setCurve(x1, y1, ctrlx,(ctrly+y1)/2,(ctrlx+x2)/2,(ctrly+y2)/2, x2, y2);
+			/*cq.setCurve(x1, y1, (ctrlx+x1)/2, (ctrly+y1)/2, ctrlx, ctrly);
+			cq.setCurve(ctrlx, ctrly, (ctrlx+x2)/2, (ctrly+y2)/2, x2,y2);
+			g2D1.setTransform(affineTransforme((ctrlx+x1)/2,(ctrly+y1)/2,(ctrlx+x2)/2,(ctrly+y2)/2));*/
+		}
+		g.drawString(a.getNom(),ctrlx,ctrly);
+		g2D.draw(cc);
 	}
 }

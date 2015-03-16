@@ -22,9 +22,15 @@ public class ListenerMouseMotionGraphe implements MouseMotionListener  {
 			if(lbg.getsCourant()!=null){
 				lbg.getsCourant().setPosX(e.getX());
 				lbg.getsCourant().setPosY(e.getY());
-				this.gv.getJpg().repaint();
 			}
 		}
+		if(this.gv.getBclic().isSelected()){
+			if(lbg.getArcCourant()!=null){
+				lbg.getArcCourant().setCentre_posX(e.getX());
+				lbg.getArcCourant().setCentre_posY(e.getY());
+			}
+		}
+		this.gv.getJpg().repaint();
 	}
 
 	@Override

@@ -43,6 +43,7 @@ public class ListenerBoutonGraphe implements MouseListener {
                 this.gv.getGraphe().getArcs().remove(this.getsCourant().getArc(i));
             }
             this.gv.getGraphe().getSommets().remove(this.getsCourant());
+            
         }
         
         if (SwingUtilities.isRightMouseButton(e) && arcCourant != null)
@@ -107,6 +108,9 @@ public class ListenerBoutonGraphe implements MouseListener {
                 arcCourant_2 = new Arc();
                 arcCourant_2.setOrigine(sCourant);
             }
+        }
+        if(this.gv.getBclic().isSelected()){
+        	arcCourant = this.gv.getGraphe().isArc(50, e);
         }
     }
 

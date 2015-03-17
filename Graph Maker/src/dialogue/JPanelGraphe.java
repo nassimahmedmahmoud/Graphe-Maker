@@ -20,8 +20,13 @@ public class JPanelGraphe extends JPanel{
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		for(Arc a : graphe.getArcs())
-			this.drawLines(g, a);
+		for(Arc a : graphe.getArcs()){
+			if(!a.boucleMemeSommet())
+				this.drawLines(g, a);
+			else{
+				
+			}		
+		}
 		for( Sommet s : graphe.getSommets())
 			this.drawNode(s,g,50,Color.WHITE);
 		if(graphe.getSommets().size()>2 && graphe.getArcs().size()>2){

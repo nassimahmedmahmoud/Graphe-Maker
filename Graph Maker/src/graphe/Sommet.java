@@ -21,7 +21,16 @@ public class Sommet {
 
 	public void ajouterArc(Arc arc)
 	{
-		arcs.add(arc);
+		if(!containsArc(arc))
+			arcs.add(arc);
+	}
+	public boolean containsArc(Arc a){
+		for(Arc arc : arcs){
+			if(arc.getOrigine().equals(a.getOrigine()) && arc.getArrivee().equals(a.getArrivee())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public String getNom() {

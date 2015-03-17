@@ -128,8 +128,8 @@ public class Graphe {
 		return true;  
 	}
 
-	public double [][] matriceNonOriente(){
-		double tab[][]=new double[this.sommets.size()][this.sommets.size()];
+	public int [][] matriceNonOriente(){
+		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
 		int i=0;
 		boolean metrique = metrique();
 		for(Sommet s : this.sommets){
@@ -141,7 +141,9 @@ public class Graphe {
 					pos = positionSommets(a.getOrigine());
 				if(pos!=-1){
 					if(metrique)
-						tab[i][pos]=Double.parseDouble(a.getNom());
+						tab[i][pos]=Integer.parseInt(a.getNom());
+					else
+						tab[i][pos]=1;
 				}
 			}
 			i++;
@@ -149,19 +151,21 @@ public class Graphe {
 		return tab;
 	}
 
-	public double [][] matriceOriente(){
-		double tab[][]=new double[this.sommets.size()][this.sommets.size()];
+	public int[][] matriceOriente(){
+		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
 		int i=0;
 		boolean metrique = metrique();
 		for(Sommet s : this.sommets){
-			System.out.println(s.getArcs());
+			//System.out.println(s.getArcs());
 			for(Arc a : s.getArcs()){
 				int pos=0;
 				if(a.getOrigine()==s){
 					pos = positionSommets(a.getArrivee());
 					if(pos!=-1){
 						if(metrique)
-							tab[i][pos]=Double.parseDouble(a.getNom());
+							tab[i][pos]=Integer.parseInt(a.getNom());
+						else
+							tab[i][pos]=1;
 					}
 				}
 			}
@@ -170,7 +174,7 @@ public class Graphe {
 		return tab;
 	}
 
-	public double[][]matrice(){
+	public int[][]matrice(){
 		if(this.type==Graphe.ORIENTE){
 			return matriceOriente();
 		}

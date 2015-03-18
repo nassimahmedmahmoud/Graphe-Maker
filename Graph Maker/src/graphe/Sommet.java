@@ -36,7 +36,7 @@ public class Sommet {
 	public String getNom() {
 		return nom;
 	}
-
+        
 	public ArrayList<Arc> getArcs() {
 		return arcs;
 	}

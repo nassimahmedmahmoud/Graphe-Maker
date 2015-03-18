@@ -114,6 +114,18 @@ public class Graphe {
 		}
 		return true;
 	}
+        
+        public boolean voisins(Sommet s1, Sommet s2)
+        {
+            boolean ui = false;
+            
+            for(Arc a : arcs)
+            {
+                if((s1 == a.getOrigine() && s2 == a.getArrivee()) || (s2 == a.getOrigine() && s1 == a.getArrivee()))
+                    ui = true;
+            }
+            return ui;
+        }
 
 	public boolean isNumeric(String str)  
 	{  

@@ -21,11 +21,7 @@ public class JPanelGraphe extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		for(Arc a : graphe.getArcs()){
-			if(!a.boucleMemeSommet())
-				this.drawLines(g, a);
-			else{
-				
-			}		
+			this.drawLines(g, a);
 		}
 		for( Sommet s : graphe.getSommets())
 			this.drawNode(s,g,50,Color.WHITE);
@@ -78,11 +74,18 @@ public class JPanelGraphe extends JPanel{
 		int ctrlx=a.getCentre_posX();
 		int ctrly=a.getCentre_posY();
 		Graphics2D g2D =(Graphics2D)g.create();
+		Path2D p = new Path2D.Double();
 		CubicCurve2D.Double cc = new CubicCurve2D.Double();
 		QuadCurve2D.Double cq = new QuadCurve2D.Double();
 		if(this.graphe.isType()){
 			drawArrow(g,x1,y1,x2,y2);
 			g.drawLine(x1, y1, x2, y2);
+			if(a.boucleMemeSommet()){
+				//cc.setCurve(x1, y1, 0,0,0,0, x2, y2);
+				p.moveTo(x1, y1);
+				p.curveTo(x1, y1,x1/2, y2/2, x2, y2);
+				g2D.draw(p);
+			}
 		}
 		else{
 			cc.setCurve(x1, y1, ctrlx,(ctrly+y1)/2,(ctrlx+x2)/2,(ctrly+y2)/2, x2, y2);
@@ -92,5 +95,6 @@ public class JPanelGraphe extends JPanel{
 		}
 		g.drawString(a.getNom(),ctrlx,ctrly);
 		g2D.draw(cc);
+		
 	}
 }

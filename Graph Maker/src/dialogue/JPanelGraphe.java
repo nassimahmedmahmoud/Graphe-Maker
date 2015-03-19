@@ -33,6 +33,14 @@ public class JPanelGraphe extends JPanel{
 				}
 				System.out.println();
 			}
+			System.out.println("coloration");
+			int color[] = new int[this.graphe.getSommets().size()];
+			color[2]=1;
+			for(int i=0;i<this.graphe.getSommets().size();i++){
+				System.out.print(graphe.coloration()[i]+" ");
+			}
+			System.out.println();
+			System.out.println(graphe.plusGrandDegre(graphe.initialisation()));
 		}
 		//System.out.println(graphe.getSommets());
 	}

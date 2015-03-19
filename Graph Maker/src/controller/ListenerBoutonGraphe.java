@@ -104,7 +104,7 @@ public class ListenerBoutonGraphe implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e)
     {
-        this.setsCourant(e);
+        this.setsCourant(e);/*
         if (this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected())
         {
             sCourant = this.gv.getGraphe().isSommet(50, e);
@@ -113,7 +113,7 @@ public class ListenerBoutonGraphe implements MouseListener {
                 arcCourant_2 = new Arc();
                 arcCourant_2.setOrigine(sCourant);
             }
-        }
+        }*/
         if(this.gv.getBclic().isSelected()){
         	arcCourant = this.gv.getGraphe().isArc(50, e);
         }
@@ -125,8 +125,9 @@ public class ListenerBoutonGraphe implements MouseListener {
             arcCourant = null;
         }
 
+        /*
         if ((this.gv.getBarc().isSelected() || this.gv.getBarrete().isSelected()) && arcCourant_2 != null)
-       {
+        {
             sCourant = this.gv.getGraphe().isSommet(50, e);
             if (sCourant != null)
             {
@@ -146,7 +147,7 @@ public class ListenerBoutonGraphe implements MouseListener {
                     }
                 }
             }
-        }
+        }*/
         this.gv.getJpg().repaint();
     }
 

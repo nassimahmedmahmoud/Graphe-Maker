@@ -126,6 +126,127 @@ public class Graphe {
             }
             return ui;
         }
+        
+        public int voisinsColorie(Sommet s1, int[] dsat)
+        {
+            int color = 0;
+            
+            for(Arc a : arcs)
+            {
+                if((this.voisins(s1, a.getOrigine()) &&
+                        dsat[sommets.indexOf(a.getOrigine())] == Integer.MAX_VALUE)
+                        || (this.voisins(s1, a.getArrivee()) &&
+                        dsat[sommets.indexOf(a.getArrivee())] == Integer.MAX_VALUE))
+                    color++;
+            }
+            return color;
+        }
+        
+        public int[] initialisation()
+        {
+            if(!this.isType())
+            {
+                int DSAT[] = new int[this.getSommets().size()];
+                for(int i= 0; i<=this.getSommets().size(); i++)
+                    DSAT[i] = this.getSommets().get(i).getArcs().size();
+                return DSAT;
+            }
+            return null;
+        }
+ 
+    public boolean isColored(int[] tab)
+    {
+        boolean ui  = false;
+        for(int i=0; i<tab.length; i++)
+        {
+            if(tab[i] != Integer.MAX_VALUE)  // tant qu'il y a des elements non colories
+                ui = true; 
+        }
+        return ui;
+    }
+ 
+    /*
+    public int[] tri(int[] DSAT)
+    {
+        int tmp[]= new int[this.getSommets().size()];
+        for(int i=0;i<DSAT.length;i++){
+            for(int j=0;j<DSAT.length;j++){
+                if(DSAT[i]>DSAT[j])
+                    tmp[i]=DSAT[j];
+            }
+        }
+        return tmp;
+    }
+ 
+    public Sommet[] metAJourDSAT(int[] DSAT)
+    {
+        ArrayList<Sommet> tab = new ArrayList<Sommet>();
+        int val = -1;
+        for(int i=0; i<DSAT.length; i++)
+        {
+            if(DSAT[i] != Integer.MAX_VALUE)
+                tab.add(this.getSommets().get(i));
+        }
+    }*/
+ 
+    public void DSATAJour(int[] DSAT)
+    {
+        for(int i=0;i<DSAT.length;i++)
+        {
+            if(DSAT[i]!=Integer.MAX_VALUE &&
+                    voisinsColorie(this.getSommets().get(i),DSAT)!=0)
+                DSAT[i]=voisinsColorie(this.getSommets().get(i),DSAT);
+        }
+    }
+ 
+    public int plusGrandDegre(int[] DSAT)
+    {
+        int val=0;
+        for(int i=1;i<DSAT.length;i++)
+        {
+            if(DSAT[i-1]<DSAT[i])
+                val=i;
+        }
+        return val;
+    }
+    
+    public void defColor(int[] colors, int[] DSAT)
+    {
+        for(int i = 0; i < DSAT.length; i++)
+        {
+            for(int j = 0; j < colors.length; j++)
+            {
+                if(this.voisins(sommets.get(i), sommets.get(j)) && colors[j] != 0)
+                {
+                    
+                }
+            }
+        }
+    }
+    
+    public Sommet[] tabVoisins(Sommet s)
+    {
+        Sommet[] tab = new Sommet[s.getArcs().size()];
+        for(int i = 0; i < tab.length; i++)
+            tab[i] = s.getArc(i).getArrivee();
+        
+        return tab;
+    }
+            
+    public int[] coloration()
+    {
+        int color[] = new int[this.getSommets().size()];
+        int DSAT[] = initialisation();
+        int degree = -1;
+        
+        while(isColored(DSAT))
+        {
+            this.DSATAJour(DSAT);
+            degree = this.plusGrandDegre(DSAT);
+            color[degree] = 0;
+        }
+        return color;
+    }
 
 	public boolean isNumeric(String str)  
 	{  

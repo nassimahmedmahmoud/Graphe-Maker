@@ -202,33 +202,48 @@ public class Graphe {
 	public int plusGrandDegre(int[] DSAT)
 	{
 		int val=0;
-		for(int i=1;i<DSAT.length;i++)
-		{
-			if(DSAT[i-1]<DSAT[i])
-				val=i;
+		if(isColored(DSAT)){
+			for(int i=1;i<DSAT.length;i++)
+			{
+				if(DSAT[i-1]<DSAT[i] && DSAT[i]!=Integer.MAX_VALUE ||(DSAT[i-1]==Integer.MAX_VALUE && DSAT[i]!=Integer.MAX_VALUE))
+					val=i;
+			}
+			return val;
 		}
-		return val;
+		return -1;
 	}
 
-	public int defColor(int[] colors, int index)
+	public int defColor(int[] colors, int index) // definis la couleur du sommet à partir de l'index
 	{
-		int []tabVoisins = tabVoisins(index,colors);
-		this.tri(tabVoisins);
-		for(int j = 1; j <tabVoisins.length; j++)
-		{
-			if(tabVoisins[j]!=j && tabVoisins[j-1]!=tabVoisins[j])
-				return j;
+		int []tabVoisins = tabVoisins(index); // on recupere sous forme de tableau les voisins de l'index
+		int []colorsLocal = colors;
+		for(int i=0;i<tabVoisins.length;i++){
+			colorsLocal[i]=colors[tabVoisins[i]];
+		}
+		
+		this.tri(colorsLocal);// on trie le tableau de voisins pour faciliter la recherche des couleurs non utilisées dans le tableau
+		int valMax = colorsLocal[colorsLocal.length-1];
+		for(int i=0;i<valMax;i++){
+			for(int j = 1; j <colorsLocal.length; j++)
+			{
+				if(colorsLocal[j]!=i && colorsLocal[j]!=i+1)
+					return j;
+			}
 		}
 		return tabVoisins[tabVoisins.length-1]+1;
 	}
 
-	public int[] tabVoisins(int index,int[]color)
+	public int[] tabVoisins(int index) // renvoie les positions des voisins du sommet courant
 	{
-		int[]tab=new int[this.sommets.get(index).getArcs().size()];
+		int[]tab=new int[this.sommets.get(index).getArcs().size()]; // créé un tableau local a partir de la taille de son ArrayList d'arc qui correspond au nb de sommets voisin du sommet courant
 		for(int i = 0; i < this.sommets.get(index).getArcs().size(); i++){
-			int voisinArrivee=color[this.sommets.indexOf(this.sommets.get(index).getArcs().get(i).getArrivee())];
-			if(voisinArrivee!=index && color[voisinArrivee]!=0)
-				tab[i]=color[voisinArrivee];
+			int voisinArrivee=this.sommets.indexOf(this.sommets.get(index).getArcs().get(i).getArrivee()); // on récupère la position des sommets voisins et on les ajoute dans notre tableau local tab
+			if(voisinArrivee!=index) // si la position du voisin est different de la position du sommet courant et si sa couleur est differente de 0 alors on ajoute la position du voisin dans notre tableau
+				tab[i]=voisinArrivee;
+			else{
+				voisinArrivee=this.sommets.indexOf(this.sommets.get(index).getArcs().get(i).getOrigine());
+				tab[i]=voisinArrivee;
+			}
 		}
 		return tab;
 	}
@@ -242,10 +257,19 @@ public class Graphe {
 		while(isColored(DSAT))
 		{
 			degree = this.plusGrandDegre(DSAT);
-			color[degree] = defColor(color,degree);
-			System.out.println(defColor(color,degree));
-			DSAT[degree]=Integer.MAX_VALUE;
-			DSATAJour(DSAT);
+			if(degree!=-1){
+				color[degree] = defColor(color,degree);
+				//System.out.println(defColor(color,degree));
+
+				/*for(int i=0;i<color.length;i++)
+					System.out.print(color[i]+"|\t");
+				System.out.println();
+				for(int i=0;i<color.length;i++)
+					System.out.print(DSAT[i]+"|\t");*/
+
+				DSAT[degree]=Integer.MAX_VALUE;
+				DSATAJour(DSAT);
+			}
 		}
 		return color;
 	}
@@ -254,6 +278,7 @@ public class Graphe {
 	{  
 		try  
 		{  
+			@SuppressWarnings("unused")
 			double d = Double.parseDouble(str);  
 		}  
 		catch(NumberFormatException nfe)  

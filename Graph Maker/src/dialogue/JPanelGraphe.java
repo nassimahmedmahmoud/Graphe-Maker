@@ -20,6 +20,7 @@ public class JPanelGraphe extends JPanel{
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		for(Arc a : graphe.getArcs()){
 			this.drawLines(g, a);
 		}
@@ -34,8 +35,9 @@ public class JPanelGraphe extends JPanel{
 				System.out.println();
 			}*/
 			System.out.println("coloration");
-			for(int i=0;i<this.graphe.getSommets().size();i++){
-				System.out.print(graphe.coloration()[i]+" ");
+			int[]tabColoration = graphe.coloration();
+			for(int i=0;i<tabColoration.length;i++){
+				System.out.print(tabColoration[i]+" ");
 			}
 			System.out.println();
 			for(Sommet s : graphe.getSommets()){

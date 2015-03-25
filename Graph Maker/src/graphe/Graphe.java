@@ -6,23 +6,23 @@ import java.util.*;
 public class Graphe {
 	public static boolean ORIENTE = true;
 	public static boolean NON_ORIENTE = false;
-        
+
 	private String nom;
 	private boolean type;
 	private ArrayList<Sommet> sommets;
 	private ArrayList<Arc> arcs;
 
-        /**
-         * Constructeur champ a champ du graphe prend en paramètres :
-         * \n - Une chaine de caractère correspondant au nom du graphe
-         * \n - Un booleen indiquant si le graphe est orienté ou non
-         * \n - Une liste de sommets
-         * \n - Une liste d'arcs
-         * @param nom
-         * @param type
-         * @param sommets
-         * @param arcs 
-         */
+	/**
+	 * Constructeur champ a champ du graphe prend en paramètres :
+	 * \n - Une chaine de caractère correspondant au nom du graphe
+	 * \n - Un booleen indiquant si le graphe est orienté ou non
+	 * \n - Une liste de sommets
+	 * \n - Une liste d'arcs
+	 * @param nom
+	 * @param type
+	 * @param sommets
+	 * @param arcs 
+	 */
 	public Graphe(String nom, boolean type, ArrayList<Sommet> sommets,
 			ArrayList<Arc> arcs) {
 		this.nom = nom;
@@ -31,37 +31,37 @@ public class Graphe {
 		this.arcs = arcs;
 	}
 
-        /**
-         * Contructeur par défaut d'un graphe,
-         * Créer un graphe sans nom, non orienté sans, avec une liste de sommets vide
-         * et une liste d'arcs vide.
-         */
+	/**
+	 * Contructeur par défaut d'un graphe,
+	 * Créer un graphe sans nom, non orienté sans, avec une liste de sommets vide
+	 * et une liste d'arcs vide.
+	 */
 	public Graphe(){
 		this("",Graphe.NON_ORIENTE,new ArrayList<Sommet>(),new ArrayList<Arc>());
 	}
 
-        /**
-         * Méthode qui permet d'orienter un graphe non orienté, ou si celui-ci est orienté de
-         * le de-orienter.
-         */
+	/**
+	 * Méthode qui permet d'orienter un graphe non orienté, ou si celui-ci est orienté de
+	 * le de-orienter.
+	 */
 	public void switchTypeOfGraphe(){
 		if(this.type)
 			this.setType(Graphe.NON_ORIENTE);
 		else
 			this.setType(Graphe.ORIENTE);
-        }
+	}
 
-        /**
-         * La méthode isSommet prend en paramètre un entier correspondant au diamètre
-         * d'un sommet, et d'un objet de la classe MouseEvent permettant de connaître
-         * les coordonnées où l'utilisateur a cliqué dans la fenêtre de graphe,
-         * Cette méthode retourne un objet de type Sommet qui correspond au sommet
-         * corresponant au sommet présent a l'endroit ou l'utilisateur a cliqué, ou null
-         * si l'utilisateur n'a pas cliqué sur un sommet.
-         * @param diametre
-         * @param e
-         * @return Sommet
-         */
+	/**
+	 * La méthode isSommet prend en paramètre un entier correspondant au diamètre
+	 * d'un sommet, et d'un objet de la classe MouseEvent permettant de connaître
+	 * les coordonnées où l'utilisateur a cliqué dans la fenêtre de graphe,
+	 * Cette méthode retourne un objet de type Sommet qui correspond au sommet
+	 * corresponant au sommet présent a l'endroit ou l'utilisateur a cliqué, ou null
+	 * si l'utilisateur n'a pas cliqué sur un sommet.
+	 * @param diametre
+	 * @param e
+	 * @return Sommet
+	 */
 	public Sommet isSommet(int diametre,MouseEvent e){
 		int rayon = diametre/2;
 		for(Sommet s : this.sommets){
@@ -72,17 +72,17 @@ public class Graphe {
 		return null;
 	}
 
-        /**
-         * La méthode isArc prend en paramètre un diamètre définit arbitrairement et un
-         * objet de la classe MouseEvent permettant de connaître les coordonnées où
-         * l'utilisateur a cliqué,
-         * Cette méthode retourne l'arc correspondant a l'arc auquel l'utilisateur a
-         * cliqué en son milieu, et null si l'utilisateur n'a pas cliqué sur le milieu
-         * d'un arc.
-         * @param diametre
-         * @param e
-         * @return Arc
-         */
+	/**
+	 * La méthode isArc prend en paramètre un diamètre définit arbitrairement et un
+	 * objet de la classe MouseEvent permettant de connaître les coordonnées où
+	 * l'utilisateur a cliqué,
+	 * Cette méthode retourne l'arc correspondant a l'arc auquel l'utilisateur a
+	 * cliqué en son milieu, et null si l'utilisateur n'a pas cliqué sur le milieu
+	 * d'un arc.
+	 * @param diametre
+	 * @param e
+	 * @return Arc
+	 */
 	public Arc isArc(int diametre,MouseEvent e){
 		int rayon = diametre/2;
 		for(Arc a : this.arcs)
@@ -94,30 +94,30 @@ public class Graphe {
 		return null;
 	}
 
-        /**
-         * La méthode positionSommets prend en paramètre un Sommet et retourne 
-         * son indice dans la liste des sommets du graphe.
-         * @param s
-         * @return int
-         */
+	/**
+	 * La méthode positionSommets prend en paramètre un Sommet et retourne 
+	 * son indice dans la liste des sommets du graphe.
+	 * @param s
+	 * @return int
+	 */
 	public int positionSommets(Sommet s){
 		return this.sommets.indexOf(s);
 	}
 
-        
+
 	/*public int nbArcs(){
 		int nb=0;
 		for(Sommet s : this.sommets)
 			nb+=s.nbArc();
-		
+
 		return nb;
 	}*/
 
-        /**
-         * La méthode metrique revoie un booléen indiquant si le graphe est métrique
-         * ou non.
-         * @return 
-         */
+	/**
+	 * La méthode metrique revoie un booléen indiquant si le graphe est métrique
+	 * ou non.
+	 * @return 
+	 */
 	public boolean metrique(){
 		for(Sommet s : sommets){
 			for(Arc a : s.getArcs()){
@@ -129,13 +129,13 @@ public class Graphe {
 		return true;
 	}
 
-        /**
-         * La méthode voisins prend en paramètre deux sommets s1 et s2 et renvoie true
-         * si ceux-ci sont voisins (ont un arc en commun) et false sinon.
-         * @param s1
-         * @param s2
-         * @return 
-         */
+	/**
+	 * La méthode voisins prend en paramètre deux sommets s1 et s2 et renvoie true
+	 * si ceux-ci sont voisins (ont un arc en commun) et false sinon.
+	 * @param s1
+	 * @param s2
+	 * @return 
+	 */
 	public boolean voisins(Sommet s1, Sommet s2)
 	{
 		boolean ui = false;
@@ -148,15 +148,15 @@ public class Graphe {
 		return ui;
 	}
 
-        /**
-         * La méthode voisinsColorie prend en paramètre un sommet s1 et un tableau d'entiers
-         * correspondant au nombre de degrés (arcs sortants/entrants) de chaque sommet du
-         * graphe, Cette méthode retourne un entier correspondant au nombre de sommets
-         * voisins du sommet s1 qui sont coloriés.
-         * @param s1
-         * @param dsat
-         * @return 
-         */
+	/**
+	 * La méthode voisinsColorie prend en paramètre un sommet s1 et un tableau d'entiers
+	 * correspondant au nombre de degrés (arcs sortants/entrants) de chaque sommet du
+	 * graphe, Cette méthode retourne un entier correspondant au nombre de sommets
+	 * voisins du sommet s1 qui sont coloriés.
+	 * @param s1
+	 * @param dsat
+	 * @return 
+	 */
 	public int voisinsColorie(Sommet s1, int[] dsat)
 	{
 		int color = 0;
@@ -172,13 +172,13 @@ public class Graphe {
 		return color;
 	}
 
-        /**
-         * La méthode initialisation créer un tableau d'entier d'une taille correspondant
-         * au nombre de sommet présents dans le graphe, et pour chaque sommet correspondant
-         * effecte a la case correspondant a son indice le degré ou nombre d'arcs associé
-         * a ce sommet, et retourne ce tableau.
-         * @return 
-         */
+	/**
+	 * La méthode initialisation créer un tableau d'entier d'une taille correspondant
+	 * au nombre de sommet présents dans le graphe, et pour chaque sommet correspondant
+	 * effecte a la case correspondant a son indice le degré ou nombre d'arcs associé
+	 * a ce sommet, et retourne ce tableau.
+	 * @return 
+	 */
 	public int[] initialisation()
 	{
 		if(!this.isType())
@@ -191,15 +191,15 @@ public class Graphe {
 		return null;
 	}
 
-        /**
-         * La méthode isNotColored prend en paramètre un tableau d'entiers correspondant au
-         * degré de chaque sommet du graphe, Cette fonction parcours tout ce tableau et
-         * si un sommet est colorié (la case correspondant a ce sommet est à 
-         * Integer.MAX_VALUE) renverra false, et true sinon (alors tous les sommets du
-         * graphe seront coloriés).
-         * @param tab
-         * @return 
-         */
+	/**
+	 * La méthode isNotColored prend en paramètre un tableau d'entiers correspondant au
+	 * degré de chaque sommet du graphe, Cette fonction parcours tout ce tableau et
+	 * si un sommet est colorié (la case correspondant a ce sommet est à 
+	 * Integer.MAX_VALUE) renverra false, et true sinon (alors tous les sommets du
+	 * graphe seront coloriés).
+	 * @param tab
+	 * @return 
+	 */
 	public boolean isNotColored(int[] tab)
 	{
 		boolean ui  = false;
@@ -212,13 +212,13 @@ public class Graphe {
 	}
 
 
-        /**
-         * La méthode trie prend en paramètre un tableau d'entiers correspondant au degré
-         * de chaque sommet et renvoie un tableau temporaire trié décroissant du tableau
-         * DSAT.
-         * @param DSAT
-         * @return 
-         */
+	/**
+	 * La méthode trie prend en paramètre un tableau d'entiers correspondant au degré
+	 * de chaque sommet et renvoie un tableau temporaire trié décroissant du tableau
+	 * DSAT.
+	 * @param DSAT
+	 * @return 
+	 */
 	public int[] tri(int[] DSAT)
 	{
 		int tmp[]= new int[this.getSommets().size()];
@@ -242,39 +242,39 @@ public class Graphe {
         }
     }*/
 
-        /**
-         * La méthode DSATAJour prend en paramètre un tableau d'entiers correspondant
-         * au degré de chaque sommets du graphe, Cette méthode met à jour ce tableau
-         * lorsqu'un sommet a été colorié.
-         * @param DSAT 
-         */
+	/**
+	 * La méthode DSATAJour prend en paramètre un tableau d'entiers correspondant
+	 * au degré de chaque sommets du graphe, Cette méthode met à jour ce tableau
+	 * lorsqu'un sommet a été colorié.
+	 * @param DSAT 
+	 */
 	public void DSATAJour(int[] DSAT)
 	{
-             if(isNotColored(DSAT))
-             {
-		for(int i=0;i<DSAT.length;i++)
+		if(isNotColored(DSAT))
 		{
-			if(DSAT[i]!=Integer.MAX_VALUE &&
-					voisinsColorie(this.getSommets().get(i),DSAT)!=0)
-				DSAT[i]=voisinsColorie(this.getSommets().get(i),DSAT);
+			for(int i=0;i<DSAT.length;i++)
+			{
+				if(DSAT[i]!=Integer.MAX_VALUE &&
+						voisinsColorie(this.getSommets().get(i),DSAT)!=0)
+					DSAT[i]=voisinsColorie(this.getSommets().get(i),DSAT);
+			}
 		}
-             }
 	}
 
-        /**
-         * La méthode plusGrandDegre prend en paramètre un tableau d'entiers DSAT
-         * correspondant au degré de chaque sommet du graphe et si ce graphe n'est pas
-         * pas entièrement colorié renvoie la plus grande valeur présente dans ce tableau
-         * (excepté Integer.MAX_VALUE car correspond a un sommet colorié), renvoie -1
-         * si le graphe est entièrement colorié.
-         * @param DSAT
-         * @return 
-         */
+	/**
+	 * La méthode plusGrandDegre prend en paramètre un tableau d'entiers DSAT
+	 * correspondant au degré de chaque sommet du graphe et si ce graphe n'est pas
+	 * pas entièrement colorié renvoie la plus grande valeur présente dans ce tableau
+	 * (excepté Integer.MAX_VALUE car correspond a un sommet colorié), renvoie -1
+	 * si le graphe est entièrement colorié.
+	 * @param DSAT
+	 * @return 
+	 */
 	public int plusGrandDegre(int[] DSAT)
 	{
 		int val=-1;
 		if(isNotColored(DSAT)){
-                    val = 0;
+			val = 0;
 			for(int i=1;i<DSAT.length;i++)
 			{
 				if(DSAT[i-1]<DSAT[i] && DSAT[i]!=Integer.MAX_VALUE ||(DSAT[i-1]==Integer.MAX_VALUE && DSAT[i]!=Integer.MAX_VALUE))
@@ -284,39 +284,58 @@ public class Graphe {
 		return val;
 	}
 
-        
-	public void defColor(int[] colors, int index,int[] DSAT) // definis la couleur du sommet à partir de l'index
-        {
-            int []tabVoisins = tabVoisins(index); // on recupere sous forme de tableau les voisins de l'index
-            int []colorsLocal = colors;
-            for(int i=0;i<tabVoisins.length;i++){
-                if(tabVoisins.length<colors.length)
-                    colorsLocal[i]=colors[tabVoisins[i]];
-            }
-            this.tri(colorsLocal);// on trie le tableau de voisins pour faciliter la recherche des couleurs non utilisées dans le tableau
-            int valMax = colorsLocal[0];
-  
-            if(this.voisinsColorie(this.sommets.get(index),DSAT)==0)
-                colors[index]=valMax+1;
-            else{
-                for(int i=0;i<valMax;i++){ // A FAIR A FAIR A FAIR
-                    for(int j = 0; j <colors.length; j++)
-                    {
-                        if(colorsLocal[i]!=j && colorsLocal[i]<j+1)
-                            colors[index]=i;
-                    }
-                }
-            }
-            //System.out.println("valMax : "+colors[index]);
-    }
 
-        /**
-         * La methode tabVoisins prend en paramètre un entier index et renvoie un tableau
-         * d'entiers correspondant au degré de chaque sommet voisin du sommet présent à
-         * l'index 
-         * @param index
-         * @return 
-         */
+	public void defColor(int[] colors, int index,int[] DSAT) // definis la couleur du sommet à partir de l'index
+	{
+		int []tabVoisins=tabVoisins(index);
+		int []color = new int[tabVoisins.length];
+		for(int i=0;i<color.length;i++){
+			color[i]=colors[tabVoisins[i]];
+		}
+		System.out.print("color | index "+index+" : ");
+		for(int i=0;i<color.length;i++){
+			System.out.print(color[i]+"-");
+		}
+		System.out.println();
+		System.out.print("tabVoisins | index "+index+" : ");
+		for(int i=0;i<tabVoisins.length;i++){
+			System.out.print(tabVoisins[i]+"-");
+		}
+		System.out.println();
+		this.tri(color);
+		int valMax = color[0];
+		colors[index]=valMax+1;
+		/*int []tabVoisins = tabVoisins(index); // on recupere sous forme de tableau les voisins de l'index
+		int []colorsLocal = colors;
+		for(int i=0;i<tabVoisins.length;i++){
+			if(tabVoisins.length<colors.length)
+				colorsLocal[i]=colors[tabVoisins[i]];
+		}
+		this.tri(colorsLocal);// on trie le tableau de voisins pour faciliter la recherche des couleurs non utilisées dans le tableau
+		int valMax = colorsLocal[0];
+
+		if(this.voisinsColorie(this.sommets.get(index),DSAT)==0)
+			colors[index]=valMax+1;
+		else{
+			/*for(int i=0;i<valMax;i++){ // A FAIR A FAIR A FAIR
+				for(int j = 0; j <colors.length; j++)
+				{
+					if(colorsLocal[i]!=j && colorsLocal[i]<j+1)
+						colors[index]=i;
+				}
+			}
+		}
+		System.out.println(colors[index]+"-");
+		//System.out.println("valMax : "+colors[index]);*/
+	}
+
+	/**
+	 * La methode tabVoisins prend en paramètre un entier index et renvoie un tableau
+	 * d'entiers correspondant au degré de chaque sommet voisin du sommet présent à
+	 * l'index 
+	 * @param index
+	 * @return 
+	 */
 	public int[] tabVoisins(int index) // renvoie les positions des voisins du sommet courant
 	{
 		int[]tab=new int[this.sommets.get(index).getArcs().size()]; // créé un tableau local a partir de la taille de son ArrayList d'arc qui correspond au nb de sommets voisin du sommet courant
@@ -333,37 +352,37 @@ public class Graphe {
 	}
 
 	public int[] coloration()
-        {
-            int color[] = new int[this.getSommets().size()];
-            int DSAT[] = initialisation();
-            int degree = -1;
+	{
+		int color[] = new int[this.getSommets().size()];
+		int DSAT[] = initialisation();
+		int degree = -1;
 
-            while(isNotColored(DSAT))
-            {
-                degree = this.plusGrandDegre(DSAT);
-                //System.out.println("degree "+degree+" : "+this.plusGrandDegre(DSAT));
-                if(degree!=-1)
-                {
-                    defColor(color,degree, DSAT);
-                //System.out.println(defColor(color,degree));
+		while(isNotColored(DSAT))
+		{
+			degree = this.plusGrandDegre(DSAT);
+			//System.out.println("degree "+degree+" : "+this.plusGrandDegre(DSAT));
+			if(degree!=-1)
+			{
+				defColor(color,degree, DSAT);
+				//System.out.println(defColor(color,degree));
 
-                /*for(int i=0;i<color.length;i++)
+				/*for(int i=0;i<color.length;i++)
                 System.out.print(color[i]+"|\t");
                 System.out.println();
                 for(int i=0;i<color.length;i++)
                     System.out.print(DSAT[i]+"|\t");*/
 
-                    DSAT[degree]=Integer.MAX_VALUE;
-                    DSATAJour(DSAT);
-                }
-            }
-            return color;
-        }
-        
-        public boolean connexe()
-        {
-            return true;
-        }
+				DSAT[degree]=Integer.MAX_VALUE;
+				DSATAJour(DSAT);
+			}
+		}
+		return color;
+	}
+
+	public boolean connexe()
+	{
+		return true;
+	}
 
 	public boolean isNumeric(String str)  
 	{  
@@ -444,8 +463,8 @@ public class Graphe {
 		}
 		return ui;
 	}
-        
-        public String getNom() {
+
+	public String getNom() {
 		return nom;
 	}
 
@@ -456,8 +475,8 @@ public class Graphe {
 	public ArrayList<Sommet> getSommets() {
 		return sommets;
 	}
-        
-        public Sommet getSommet(int posX, int posY){
+
+	public Sommet getSommet(int posX, int posY){
 		return null;
 	}
 

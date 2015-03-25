@@ -24,7 +24,10 @@ public class ListenerBoutonGraphe implements MouseListener {
             s.setPosX(e.getX());
             s.setPosY(e.getY());
             this.gv.getGraphe().getSommets().add(s);
-        }
+            /*if(this.gv.getGraphe().getSommets().size() > 2)
+                System.out.println(this.gv.getGraphe().voisins(this.gv.getGraphe().getSommets().get(0), this.gv.getGraphe().getSommets().get(1)));
+            */
+         }
         this.setsCourant(e);
 
         if (this.gv.getBclic().isSelected())

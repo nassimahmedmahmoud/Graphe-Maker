@@ -387,7 +387,23 @@ public class Graphe {
 	{
 		int color[] = new int[this.getSommets().size()];
 		int DSAT[] = initialisation();
-                
+                /*int x;
+                Sommet s;
+                for(int i = 0; i < DSAT.length; i++)
+                {
+                    for(int j = 0; j < DSAT.length-1; j++)
+                    {
+                        if(DSAT[j+1] > DSAT[j] && DSAT[j+1] != Integer.MAX_VALUE)
+                        {
+                            x = DSAT[j+1];
+                            DSAT[j+1] = DSAT[j];
+                            DSAT[j] = x;
+                            s = this.getSommets().get(j+1);
+                            this.getSommets().set(j+1,this.getSommets().get(j+1));
+                            this.getSommets().set(j, s);
+                        }
+                    }
+                }*/
                 
 		int degree = -1;
 

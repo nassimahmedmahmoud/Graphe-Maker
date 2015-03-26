@@ -2,9 +2,7 @@ package dialogue;
 
 import java.awt.*;
 import java.awt.geom.*;
-
 import javax.swing.*;
-
 import graphe.*;
 
 public class JPanelGraphe extends JPanel{
@@ -33,7 +31,7 @@ public class JPanelGraphe extends JPanel{
 					//System.out.println(pos);
 				}
 				System.out.println();
-			}*/
+			}
 			System.out.println("coloration");
 			int[]tabColoration = graphe.coloration();
 			for(int i=0;i<tabColoration.length;i++){
@@ -43,7 +41,7 @@ public class JPanelGraphe extends JPanel{
 			for(Sommet s : graphe.getSommets()){
 				System.out.print(s.getNom()+" ");
 			}
-			System.out.println();
+			System.out.println();*/
 		}
 		//System.out.println(graphe.getSommets());
 	}

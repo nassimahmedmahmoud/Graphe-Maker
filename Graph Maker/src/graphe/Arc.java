@@ -137,9 +137,8 @@ public class Arc {
 			return false;
 
 		Arc a = (Arc) o;
-		return a.nom == this.nom && a.arrivee.equals(this.arrivee)
-				&& a.origine.equals(this.origine) && a.centre_posX == this.centre_posX
-				&& a.centre_posY == this.centre_posY;
+		return  a.arrivee.equals(this.arrivee)
+				&& a.origine.equals(this.origine);
 	}
 
 	public boolean boucleMemeSommet(){

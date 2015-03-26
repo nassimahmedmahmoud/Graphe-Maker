@@ -1,8 +1,7 @@
 package controller;
 
 import java.awt.event.*;
-
-import dialogue.GrapheView;
+import dialogue.*;
 
 public class ListenerActionGraphe implements ActionListener {
 	
@@ -15,6 +14,11 @@ public class ListenerActionGraphe implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(this.gv.getBarcarrete()==e.getSource())
 			this.gv.getGraphe().switchTypeOfGraphe();
+                
+                if(this.gv.getBrelaz() == e.getSource())
+                    this.gv.setColors(this.gv.getGraphe().coloration());
+                
+                this.gv.getJpb().repaint();
 		this.gv.getJpg().repaint();
 	}
 }

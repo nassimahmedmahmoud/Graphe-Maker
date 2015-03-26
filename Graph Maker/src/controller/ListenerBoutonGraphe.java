@@ -18,6 +18,7 @@ public class ListenerBoutonGraphe implements MouseListener {
     }
 //arc sur lui meme / nom centré sur les sommets / ajouter un nom à un arc/	
 
+    @Override
     public void mouseClicked(MouseEvent e) {
         if (this.gv.getBsommet().isSelected() && SwingUtilities.isLeftMouseButton(e)) {
             Sommet s = new Sommet();
@@ -94,7 +95,8 @@ public class ListenerBoutonGraphe implements MouseListener {
                         arcCourant.getArrivee().ajouterArc(arcCourant);
                         arcCourant.getOrigine().ajouterArc(arcCourant);
                         arcCourant.milieu();
-                        this.gv.getGraphe().getArcs().add(arcCourant);
+                        if(!(this.gv.getGraphe().arcInGraphe(arcCourant)))
+                            this.gv.getGraphe().getArcs().add(arcCourant);
                         sCourant = null;
                         arcCourant = null;
                     }
@@ -117,9 +119,9 @@ public class ListenerBoutonGraphe implements MouseListener {
                 arcCourant_2.setOrigine(sCourant);
             }
         }*/
-        if(this.gv.getBclic().isSelected()){
+        if(this.gv.getBclic().isSelected())
         	arcCourant = this.gv.getGraphe().isArc(50, e);
-        }
+        
     }
 
     @Override

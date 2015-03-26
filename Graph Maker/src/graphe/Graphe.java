@@ -159,17 +159,15 @@ public class Graphe {
 	 */
 	public int voisinsColorie(Sommet s1, int[] dsat)
 	{
-		int color = 0;
+            int color = 0;
 
-		for(Arc a : arcs)
-		{
-			if((this.voisins(s1, a.getOrigine()) &&
-					dsat[sommets.indexOf(a.getOrigine())] == Integer.MAX_VALUE)
-					|| (this.voisins(s1, a.getArrivee()) &&
-							dsat[sommets.indexOf(a.getArrivee())] == Integer.MAX_VALUE))
-				color++;
-		}
-		return color;
+            for(Sommet s : sommets)
+            {
+		if((this.voisins(s1, s) &&
+                    dsat[sommets.indexOf(s)] == Integer.MAX_VALUE))
+                    color++;
+            }
+            return color;
 	}
 
 	/**
@@ -273,12 +271,17 @@ public class Graphe {
 	public int plusGrandDegre(int[] DSAT)
 	{
 		int val=-1;
+                int tmp = 0;
 		if(isNotColored(DSAT)){
 			val = 0;
-			for(int i=1;i<DSAT.length;i++)
+			for(int i=0;i<DSAT.length;i++)
 			{
-				if(DSAT[i-1]<DSAT[i] && DSAT[i]!=Integer.MAX_VALUE ||(DSAT[i-1]==Integer.MAX_VALUE && DSAT[i]!=Integer.MAX_VALUE))
+				if(tmp<DSAT[i] && DSAT[i]!=Integer.MAX_VALUE
+                                       /* && DSAT[i] > tmp || DSAT[i-1] == Integer.MAX_VALUE*/)
+                                    {
+                                        tmp = DSAT[i];
 					val=i;
+                                    }
 			}
 		}
 		return val;
@@ -288,23 +291,47 @@ public class Graphe {
 	public void defColor(int[] colors, int index,int[] DSAT) // definis la couleur du sommet à partir de l'index
 	{
 		int []tabVoisins=tabVoisins(index);
-		int []color = new int[tabVoisins.length];
-		for(int i=0;i<color.length;i++){
-			color[i]=colors[tabVoisins[i]];
-		}
-		System.out.print("color | index "+index+" : ");
-		for(int i=0;i<color.length;i++){
-			System.out.print(color[i]+"-");
-		}
-		System.out.println();
-		System.out.print("tabVoisins | index "+index+" : ");
-		for(int i=0;i<tabVoisins.length;i++){
-			System.out.print(tabVoisins[i]+"-");
-		}
-		System.out.println();
-		this.tri(color);
-		int valMax = color[0];
-		colors[index]=valMax+1;
+                if(tabVoisins.length>0)
+                {
+                    int []color = new int[tabVoisins.length];
+                    
+                    for(int i=0;i<color.length;i++)
+                    {
+                        if(tabVoisins[i]!=-1)
+                            color[i]=colors[tabVoisins[i]];
+                    }
+                    
+                    //System.out.print("color | index "+index+" : ");
+                    
+                    //for(int i=0;i<color.length;i++)
+                    //    System.out.print(color[i]+"-");
+                    
+                    //System.out.println();
+                    //System.out.print("tabVoisins | index "+index+" : ");
+                    
+                    //for(int i=0;i<tabVoisins.length;i++)
+                    //    System.out.print(tabVoisins[i]+"-");
+                
+                    System.out.println();
+                    Arrays.sort(color);
+                    int valMax = color[color.length-1];
+                    //System.out.println("valMax = "+valMax);
+                    colors[index]=valMax+1;
+                    
+                    if(color.length == 1)
+                    {
+                        if(color[0] > 1)
+                            colors[index] = 1;
+                        else
+                            colors[index] = 2;
+                    }   
+                    
+                    for(int i = 1; i < color.length; i++)
+                    {
+                        if(color[i] - color[i-1] > 1)
+                            colors[index] = color[i-1] + 1;
+                    }
+                }
 		/*int []tabVoisins = tabVoisins(index); // on recupere sous forme de tableau les voisins de l'index
 		int []colorsLocal = colors;
 		for(int i=0;i<tabVoisins.length;i++){
@@ -351,14 +378,24 @@ public class Graphe {
 		return tab;
 	}
 
+        public void sortSommets(int[] DSAT)
+        {
+            int x = this.plusGrandDegre(DSAT);
+        }
+        
 	public int[] coloration()
 	{
 		int color[] = new int[this.getSommets().size()];
 		int DSAT[] = initialisation();
+                
+                
 		int degree = -1;
 
+                //System.out.println("le plus grand degré : " + this.plusGrandDegre(DSAT));
 		while(isNotColored(DSAT))
 		{
+                    for(int i = 0; i < DSAT.length; i++)
+                        System.out.print("DSAT : " + DSAT[i] + " ");
 			degree = this.plusGrandDegre(DSAT);
 			//System.out.println("degree "+degree+" : "+this.plusGrandDegre(DSAT));
 			if(degree!=-1)
@@ -456,11 +493,24 @@ public class Graphe {
 	{
 		boolean ui = false;
 
-		for(Arc a : this.arcs)
-		{
+                if(this.isType() == ORIENTE)
+                {
+                    for(Arc a : this.arcs)
+                    {
 			if(arc_g.equals(a))
 				ui = true;
-		}
+                    }
+                }
+                else
+                {
+                    for(Arc a : this.arcs)
+                    {
+                        if(arc_g.equals(a) || 
+                                (arc_g.getArrivee()== a.getOrigine()
+                                && arc_g.getOrigine() == a.getArrivee()))
+                            ui = true;
+                    }
+                }    
 		return ui;
 	}
 

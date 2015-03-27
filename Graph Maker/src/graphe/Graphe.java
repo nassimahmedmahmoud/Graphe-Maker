@@ -419,7 +419,7 @@ public class Graphe {
 					if(DSATLocal[this.plusGrandDegre(DSATLocal)]!=Integer.MIN_VALUE){
 						DSATTemp[i]=DSATLocal[this.plusGrandDegre(DSATLocal)];
 					}
-					
+
 				}
 				DSATLocal[this.plusGrandDegre(DSATLocal)]=Integer.MIN_VALUE;
 			}
@@ -447,7 +447,7 @@ public class Graphe {
 		int DSAT[] = initialisation();
 		int degree = -1;
 		sortSommets(DSAT);
-		 /*int x;
+		/*int x;
         Sommet s;
         for(int i = 0; i < DSAT.length; i++)
         {
@@ -476,15 +476,17 @@ public class Graphe {
 		}
 		return color;
 	}
-
 	public int chromatique(int[]colors){
-		int val = colors[0];
-		for (int i = 1; i < colors.length; i++)
-			if (val<colors[i])
-				val = colors[i];
-		return val;
+		if(colors!=null && colors.length>1){
+			int val = colors[0];
+			for (int i = 1; i < colors.length; i++)
+				if (val<colors[i])
+					val = colors[i];
+			return val;
+		}
+		return -1;
 	}
-	
+
 	public boolean isTree(){
 		if(this.sommets.size()==1)
 			return false;
@@ -585,6 +587,13 @@ public class Graphe {
 			}
 		}    
 		return ui;
+	}
+	
+	public void ajouterSommet(Sommet s){
+		if(!sommets.contains(s)){
+			s.setNom(""+(sommets.size()+1));
+			sommets.add(s);
+		}
 	}
 
 	public String getNom() {

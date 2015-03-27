@@ -23,7 +23,7 @@ public class ListenerBoutonGraphe implements MouseListener {
             Sommet s = new Sommet();
             s.setPosX(e.getX());
             s.setPosY(e.getY());
-            this.gv.getGraphe().getSommets().add(s);
+            this.gv.getGraphe().ajouterSommet(s);
             /*if(this.gv.getGraphe().getSommets().size() > 2)
                 System.out.println(this.gv.getGraphe().voisins(this.gv.getGraphe().getSommets().get(0), this.gv.getGraphe().getSommets().get(1)));
             */

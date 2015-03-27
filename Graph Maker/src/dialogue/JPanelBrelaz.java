@@ -26,6 +26,11 @@ public class JPanelBrelaz extends JPanel
             this.drawLines(g, a);
         
         int[]tabColoration = gv.getGraphe().coloration();
+        System.out.print("color : ");
+        for(int i=0;i<tabColoration.length;i++){
+        	System.out.print(tabColoration[i]+"-");
+        }
+        System.out.println();
         Color c = new Color(0);
         //if(tabColoration != null)
         //{
@@ -36,7 +41,7 @@ public class JPanelBrelaz extends JPanel
                     c=Color.BLUE;
                 else if(tabColoration[i]==3)
                     c=Color.GREEN;
-                else if(tabColoration[i]==1)
+                else if(tabColoration[i]==1 && tabColoration[i]==0)
                     c=Color.RED;
                 else if(tabColoration[i]==5)
                     c=Color.YELLOW;
@@ -46,10 +51,10 @@ public class JPanelBrelaz extends JPanel
                     c=Color.PINK;
                 else
                     c=Color.CYAN;
-                this.drawNode(gv.getGraphe().getSommets().get(i),g,50,c);
+                this.drawNode(gv.getGraphe().getSommets().get(i),g,gv.getGraphe().getTailleSommet(),c);
             //}
-        }
- 
+                
+        } 
     }
  
     void drawNode(Sommet s,Graphics g,int diametre,Color color)

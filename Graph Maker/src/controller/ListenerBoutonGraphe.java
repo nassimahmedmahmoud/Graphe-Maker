@@ -11,7 +11,6 @@ public class ListenerBoutonGraphe implements MouseListener {
     private GrapheView gv;
     private Sommet sCourant;
     private Arc arcCourant;
-    private Arc arcCourant_2;
 
     public ListenerBoutonGraphe(GrapheView gv) {
         this.gv = gv;
@@ -55,7 +54,7 @@ public class ListenerBoutonGraphe implements MouseListener {
             this.gv.getGraphe().getArcs().remove(this.gv.getGraphe().isArc(50, e));
         }
         
-        if (SwingUtilities.isRightMouseButton(e) && arcCourant != null)
+        if (SwingUtilities.isRightMouseButton(e) && arcCourant != null && this.gv.getBarc().isSelected())
         {
             String val = (String) JOptionPane.showInputDialog(null,
                     "Modifier la valeur de l'arc", "Arc",
@@ -66,7 +65,7 @@ public class ListenerBoutonGraphe implements MouseListener {
                 arcCourant = null;
         }
 
-        if (SwingUtilities.isRightMouseButton(e) && sCourant != null) {
+        if (SwingUtilities.isRightMouseButton(e) && sCourant != null && this.gv.getBsommet().isSelected()) {
             String val = (String) JOptionPane.showInputDialog(null,
                     "Modifier la valeur du sommet", "Sommet", JOptionPane.QUESTION_MESSAGE, null, null, "");
             if (val != null) {

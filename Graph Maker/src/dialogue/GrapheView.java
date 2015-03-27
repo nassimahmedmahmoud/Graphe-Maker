@@ -19,6 +19,8 @@ public class GrapheView extends JFrame{
     private JButton brelaz;
     private JPanelGraphe jpg;
     private JPanelBrelaz jpb;
+    private JTextField jtfNode;
+    private JButton jlColors;
     private int[] colors;
  
     public GrapheView(String titre,int w,int h){
@@ -91,6 +93,9 @@ public class GrapheView extends JFrame{
         barrete = new JToggleButton("arête");
         barcarrete = new JButton("arc <-> arête");
         bgomme= new JToggleButton("gomme");
+        JLabel ltSizeNode = new JLabel("Taille du sommet : ");
+        jtfNode= new JTextField("50");
+        JButton breset = new JButton("reset");
         pgraphe.add(this.panelListenerTest(),"Center");
         btngrp.add(bclic);
         btngrp.add(bsommet);
@@ -103,7 +108,12 @@ public class GrapheView extends JFrame{
         pgraphe.add(barcarrete);
         pgraphe.add(bgomme);
         pgraphe.add(jpg);
+        pgraphe.add(ltSizeNode);
+        pgraphe.add(jtfNode);
+        pgraphe.add(breset);
         barcarrete.addActionListener(new ListenerActionGraphe(this));
+        breset.addActionListener(new ListenerActionGraphe(this));
+        jtfNode.addActionListener(new ListenerActionGraphe(this));
         return pgraphe;
     }
     public JPanel panel1(){
@@ -116,9 +126,10 @@ public class GrapheView extends JFrame{
     public JPanel panel2(){
         JPanel jp = new JPanel(new BorderLayout());
         jp.add(this.panelListenerTest2(),"Center");
-        this.brelaz = new JButton("Coloration");
-        brelaz.addActionListener(new ListenerActionGraphe(this));
-        jp.add(brelaz,"South");
+        jlColors = new JButton();
+       // jlColors.setBorderPainted( false );
+       
+        jp.add(jlColors,"South");
         return jp;
     }
      
@@ -257,6 +268,22 @@ public class GrapheView extends JFrame{
     public int[] getColors() {
         return colors;
     }
+
+	public JTextField getJtfNode() {
+		return jtfNode;
+	}
+
+	public void setJtfNode(JTextField jtfNode) {
+		this.jtfNode = jtfNode;
+	}
+
+	public JButton getJlColors() {
+		return jlColors;
+	}
+
+	public void setJlColors(JButton jlColors) {
+		this.jlColors = jlColors;
+	}
  
  
  

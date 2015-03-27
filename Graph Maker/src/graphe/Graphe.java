@@ -11,6 +11,7 @@ public class Graphe {
 	private boolean type;
 	private ArrayList<Sommet> sommets;
 	private ArrayList<Arc> arcs;
+	private int tailleSommet=50;
 
 	/**
 	 * Constructeur champ a champ du graphe prend en paramètres :
@@ -129,6 +130,67 @@ public class Graphe {
 		return true;
 	}
 
+	public boolean isClique(int[][]matrice){
+		boolean ui = true;
+		for(int i=0;i<matrice.length;i++){
+			for(int j=i+1; j < matrice[0].length ; j++){
+				if (matrice[i][j] != matrice[j][i]){
+					ui = false;
+					break;
+				}
+			}
+		}
+		return ui;
+	}
+
+	public int[][] createClique(int n){
+		int [][] matrice=new int[n][n];
+		for(int i=0;i<matrice.length;i++){
+			for(int j=0;j<matrice[i].length;j++)
+				matrice[i][j]=1;
+		}
+		return matrice;
+	}
+
+	public int isCliqueGraphe(int valMax){
+		int[][]matriceGraphe=this.matrice();
+		int val=0;
+		for(int i=0;i<valMax;i++){
+			int[][]clique=createClique(i);
+			int j=0;
+			for(int c=0;c<clique.length;c++){
+				for(int d=0;d<clique[c].length;d++){
+					for(int a=0;a<matriceGraphe.length;a++){
+						for(int b=0;b<matriceGraphe[a].length;b++){
+							if(clique[c][d]==matriceGraphe[a][b]){
+								j++;
+							}
+							/////a finir
+						}
+					}
+				}
+			}
+		}
+		return val;
+	}
+
+	public boolean connexeGraphe(){
+		int tab[]=new int[sommets.size()];
+		if(tab.length>0){
+			for(int i=0;i<tab.length;i++){
+				for(Arc a : sommets.get(i).getArcs()){
+					tab[sommets.indexOf(a.getArrivee())]=1;
+					tab[sommets.indexOf(a.getOrigine())]=1;
+				}
+			}
+			for(int i=0;i<tab.length;i++){
+				if(tab[i]==0)
+					return false;
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * La méthode voisins prend en paramètre deux sommets s1 et s2 et renvoie true
 	 * si ceux-ci sont voisins (ont un arc en commun) et false sinon.
@@ -159,15 +221,15 @@ public class Graphe {
 	 */
 	public int voisinsColorie(Sommet s1, int[] dsat)
 	{
-            int color = 0;
+		int color = 0;
 
-            for(Sommet s : sommets)
-            {
-		if((this.voisins(s1, s) &&
-                    dsat[sommets.indexOf(s)] == Integer.MAX_VALUE))
-                    color++;
-            }
-            return color;
+		for(Sommet s : sommets)
+		{
+			if((this.voisins(s1, s) &&
+					dsat[sommets.indexOf(s)] == Integer.MAX_VALUE))
+				color++;
+		}
+		return color;
 	}
 
 	/**
@@ -203,7 +265,7 @@ public class Graphe {
 		boolean ui  = false;
 		for(int i=0; i<tab.length; i++)
 		{
-			if(tab[i] != Integer.MAX_VALUE)  // tant qu'il y a des elements non colories
+			if(tab[i] != Integer.MAX_VALUE && tab[i]!=0)  // tant qu'il y a des elements non colories
 				ui = true; 
 		}
 		return ui;
@@ -271,17 +333,17 @@ public class Graphe {
 	public int plusGrandDegre(int[] DSAT)
 	{
 		int val=-1;
-                int tmp = 0;
+		int tmp = 0;
 		if(isNotColored(DSAT)){
 			val = 0;
 			for(int i=0;i<DSAT.length;i++)
 			{
 				if(tmp<DSAT[i] && DSAT[i]!=Integer.MAX_VALUE
-                                       /* && DSAT[i] > tmp || DSAT[i-1] == Integer.MAX_VALUE*/)
-                                    {
-                                        tmp = DSAT[i];
+						/* && DSAT[i] > tmp || DSAT[i-1] == Integer.MAX_VALUE*/)
+				{
+					tmp = DSAT[i];
 					val=i;
-                                    }
+				}
 			}
 		}
 		return val;
@@ -291,69 +353,35 @@ public class Graphe {
 	public void defColor(int[] colors, int index,int[] DSAT) // definis la couleur du sommet à partir de l'index
 	{
 		int []tabVoisins=tabVoisins(index);
-                if(tabVoisins.length>0)
-                {
-                    int []color = new int[tabVoisins.length];
-                    
-                    for(int i=0;i<color.length;i++)
-                    {
-                        if(tabVoisins[i]!=-1)
-                            color[i]=colors[tabVoisins[i]];
-                    }
-                    
-                    //System.out.print("color | index "+index+" : ");
-                    
-                    //for(int i=0;i<color.length;i++)
-                    //    System.out.print(color[i]+"-");
-                    
-                    //System.out.println();
-                    //System.out.print("tabVoisins | index "+index+" : ");
-                    
-                    //for(int i=0;i<tabVoisins.length;i++)
-                    //    System.out.print(tabVoisins[i]+"-");
-                
-                    System.out.println();
-                    Arrays.sort(color);
-                    int valMax = color[color.length-1];
-                    //System.out.println("valMax = "+valMax);
-                    colors[index]=valMax+1;
-                    
-                    if(color.length == 1)
-                    {
-                        if(color[0] > 1)
-                            colors[index] = 1;
-                        else
-                            colors[index] = 2;
-                    }   
-                    
-                    for(int i = 1; i < color.length; i++)
-                    {
-                        if(color[i] - color[i-1] > 1)
-                            colors[index] = color[i-1] + 1;
-                    }
-                }
-		/*int []tabVoisins = tabVoisins(index); // on recupere sous forme de tableau les voisins de l'index
-		int []colorsLocal = colors;
-		for(int i=0;i<tabVoisins.length;i++){
-			if(tabVoisins.length<colors.length)
-				colorsLocal[i]=colors[tabVoisins[i]];
-		}
-		this.tri(colorsLocal);// on trie le tableau de voisins pour faciliter la recherche des couleurs non utilisées dans le tableau
-		int valMax = colorsLocal[0];
+		if(tabVoisins.length>0)
+		{
+			int []color = new int[tabVoisins.length];
 
-		if(this.voisinsColorie(this.sommets.get(index),DSAT)==0)
+			for(int i=0;i<color.length;i++)
+			{
+				if(tabVoisins[i]!=-1)
+					color[i]=colors[tabVoisins[i]];
+			}
+			System.out.println();
+			Arrays.sort(color);
+			int valMax = color[color.length-1];
+			//System.out.println("valMax = "+valMax);
 			colors[index]=valMax+1;
-		else{
-			/*for(int i=0;i<valMax;i++){ // A FAIR A FAIR A FAIR
-				for(int j = 0; j <colors.length; j++)
-				{
-					if(colorsLocal[i]!=j && colorsLocal[i]<j+1)
-						colors[index]=i;
-				}
+
+			if(color.length == 1)
+			{
+				if(color[0] > 1)
+					colors[index] = 1;
+				else
+					colors[index] = 2;
+			}   
+
+			for(int i = 1; i < color.length; i++)
+			{
+				if(color[i] - color[i-1] > 1)
+					colors[index] = color[i-1] + 1;
 			}
 		}
-		System.out.println(colors[index]+"-");
-		//System.out.println("valMax : "+colors[index]);*/
 	}
 
 	/**
@@ -378,53 +406,70 @@ public class Graphe {
 		return tab;
 	}
 
-        public void sortSommets(int[] DSAT)
-        {
-            int x = this.plusGrandDegre(DSAT);
-        }
-        
+	public void sortSommets(int[] DSAT)
+	{
+		int[] DSATLocal = DSAT;
+		int[] DSATTemp =new int[DSAT.length];
+		ArrayList<Sommet> sTab = new ArrayList<Sommet>();
+		for(int i=0;i<DSATLocal.length;i++){
+			if(this.plusGrandDegre(DSATLocal)>-1){
+				Sommet s = this.sommets.get(this.plusGrandDegre(DSATLocal));
+				if(!sTab.contains(s)){
+					sTab.add(s);
+					if(DSATLocal[this.plusGrandDegre(DSATLocal)]!=Integer.MIN_VALUE){
+						DSATTemp[i]=DSATLocal[this.plusGrandDegre(DSATLocal)];
+					}
+					
+				}
+				DSATLocal[this.plusGrandDegre(DSATLocal)]=Integer.MIN_VALUE;
+			}
+		}
+		for(Sommet s : sommets){
+			if(!sTab.contains(s))
+				sTab.add(s);
+		}
+
+		this.sommets=sTab;
+		DSAT=DSATTemp;
+		System.out.print("sommets  : ");
+		for(Sommet s : sommets){
+			System.out.print(s.getNom()+"-");
+		}
+		System.out.println();
+		for(int i = 0; i < DSAT.length; i++)
+			System.out.print("DSAT : " + DSAT[i] + " ");
+
+	}
+
 	public int[] coloration()
 	{
 		int color[] = new int[this.getSommets().size()];
 		int DSAT[] = initialisation();
-                /*int x;
-                Sommet s;
-                for(int i = 0; i < DSAT.length; i++)
-                {
-                    for(int j = 0; j < DSAT.length-1; j++)
-                    {
-                        if(DSAT[j+1] > DSAT[j] && DSAT[j+1] != Integer.MAX_VALUE)
-                        {
-                            x = DSAT[j+1];
-                            DSAT[j+1] = DSAT[j];
-                            DSAT[j] = x;
-                            s = this.getSommets().get(j+1);
-                            this.getSommets().set(j+1,this.getSommets().get(j+1));
-                            this.getSommets().set(j, s);
-                        }
-                    }
-                }*/
-                
 		int degree = -1;
-
-                //System.out.println("le plus grand degré : " + this.plusGrandDegre(DSAT));
+		sortSommets(DSAT);
+		 /*int x;
+        Sommet s;
+        for(int i = 0; i < DSAT.length; i++)
+        {
+            for(int j = 0; j < DSAT.length-1; j++)
+            {
+                if(DSAT[j+1] > DSAT[j] && DSAT[j+1] != Integer.MAX_VALUE)
+                {
+                    x = DSAT[j+1];
+                    DSAT[j+1] = DSAT[j];
+                    DSAT[j] = x;
+                    s = this.getSommets().get(j+1);
+                    this.getSommets().set(j+1,this.getSommets().get(j+1));
+                    this.getSommets().set(j, s);
+                }
+            }
+        }*/
 		while(isNotColored(DSAT))
 		{
-                    for(int i = 0; i < DSAT.length; i++)
-                        System.out.print("DSAT : " + DSAT[i] + " ");
 			degree = this.plusGrandDegre(DSAT);
-			//System.out.println("degree "+degree+" : "+this.plusGrandDegre(DSAT));
 			if(degree!=-1)
 			{
 				defColor(color,degree, DSAT);
-				//System.out.println(defColor(color,degree));
-
-				/*for(int i=0;i<color.length;i++)
-                System.out.print(color[i]+"|\t");
-                System.out.println();
-                for(int i=0;i<color.length;i++)
-                    System.out.print(DSAT[i]+"|\t");*/
-
 				DSAT[degree]=Integer.MAX_VALUE;
 				DSATAJour(DSAT);
 			}
@@ -432,9 +477,21 @@ public class Graphe {
 		return color;
 	}
 
-	public boolean connexe()
-	{
-		return true;
+	public int chromatique(int[]colors){
+		int val = colors[0];
+		for (int i = 1; i < colors.length; i++)
+			if (val<colors[i])
+				val = colors[i];
+		return val;
+	}
+	
+	public boolean isTree(){
+		if(this.sommets.size()==1)
+			return false;
+
+		if(this.sommets.size()-1==this.arcs.size() && this.type==NON_ORIENTE)
+			return true;
+		return false;
 	}
 
 	public boolean isNumeric(String str)  
@@ -509,24 +566,24 @@ public class Graphe {
 	{
 		boolean ui = false;
 
-                if(this.isType() == ORIENTE)
-                {
-                    for(Arc a : this.arcs)
-                    {
-			if(arc_g.equals(a))
-				ui = true;
-                    }
-                }
-                else
-                {
-                    for(Arc a : this.arcs)
-                    {
-                        if(arc_g.equals(a) || 
-                                (arc_g.getArrivee()== a.getOrigine()
-                                && arc_g.getOrigine() == a.getArrivee()))
-                            ui = true;
-                    }
-                }    
+		if(this.isType() == ORIENTE)
+		{
+			for(Arc a : this.arcs)
+			{
+				if(arc_g.equals(a))
+					ui = true;
+			}
+		}
+		else
+		{
+			for(Arc a : this.arcs)
+			{
+				if(arc_g.equals(a) || 
+						(arc_g.getArrivee()== a.getOrigine()
+						&& arc_g.getOrigine() == a.getArrivee()))
+					ui = true;
+			}
+		}    
 		return ui;
 	}
 
@@ -564,6 +621,16 @@ public class Graphe {
 
 	public void setArcs(ArrayList<Arc> arcs) {
 		this.arcs = arcs;
+	}
+
+
+
+	public int getTailleSommet() {
+		return tailleSommet;
+	}
+
+	public void setTailleSommet(int tailleSommet) {
+		this.tailleSommet = tailleSommet;
 	}
 
 	public String toString() {

@@ -2,7 +2,9 @@ package dialogue;
 
 import java.awt.*;
 import java.awt.geom.*;
+
 import javax.swing.*;
+
 import graphe.*;
 
 public class JPanelGraphe extends JPanel{
@@ -23,27 +25,7 @@ public class JPanelGraphe extends JPanel{
 			this.drawLines(g, a);
 		}
 		for( Sommet s : graphe.getSommets())
-			this.drawNode(s,g,50,Color.WHITE);
-		if(graphe.getSommets().size()>2 && graphe.getArcs().size()>2){
-			/*for(int i=0;i<graphe.getSommets().size();i++){
-				for(int j=0;j<graphe.getSommets().size();j++){
-					System.out.print(graphe.matrice()[i][j]);
-					//System.out.println(pos);
-				}
-				System.out.println();
-			}
-			System.out.println("coloration");
-			int[]tabColoration = graphe.coloration();
-			for(int i=0;i<tabColoration.length;i++){
-				System.out.print(tabColoration[i]+" ");
-			}
-			System.out.println();
-			for(Sommet s : graphe.getSommets()){
-				System.out.print(s.getNom()+" ");
-			}
-			System.out.println();*/
-		}
-		//System.out.println(graphe.getSommets());
+			this.drawNode(s,g,graphe.getTailleSommet(),Color.WHITE);
 	}
 
 	void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {

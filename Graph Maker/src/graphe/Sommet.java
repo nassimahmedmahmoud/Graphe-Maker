@@ -18,6 +18,11 @@ public class Sommet {
 	public Sommet(){
 		this("",new ArrayList<Arc>(),0,0);
 	}
+	
+	public Sommet(Sommet s)
+    {
+        this(s.nom,s.arcs,s.posX,s.posY);
+    }
 
 	public void ajouterArc(Arc arc)
 	{

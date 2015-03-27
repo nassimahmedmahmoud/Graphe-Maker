@@ -290,18 +290,6 @@ public class Graphe {
 		}
 		return tmp;
 	}
-	/*
-    public Sommet[] metAJourDSAT(int[] DSAT)
-    {
-        ArrayList<Sommet> tab = new ArrayList<Sommet>();
-        int val = -1;
-        for(int i=0; i<DSAT.length; i++)
-        {
-            if(DSAT[i] != Integer.MAX_VALUE)
-                tab.add(this.getSommets().get(i));
-        }
-    }*/
-
 	/**
 	 * La méthode DSATAJour prend en paramètre un tableau d'entiers correspondant
 	 * au degré de chaque sommets du graphe, Cette méthode met à jour ce tableau
@@ -365,16 +353,24 @@ public class Graphe {
 			System.out.println();
 			Arrays.sort(color);
 			int valMax = color[color.length-1];
-			//System.out.println("valMax = "+valMax);
 			colors[index]=valMax+1;
 
-			if(color.length == 1)
+
+			if(color.length <= 1)
 			{
-				if(color[0] > 1)
+				System.out.print("indice : "+sommets.get(index).getNom()+"Color : ");
+				for(int i=0;i<color.length;i++){
+					System.out.print(color[i]+"-");
+				}
+				System.out.println();
+				if(color[0]==0)
+					colors[index] = 1;
+				else if(color[0] > 1)
 					colors[index] = 1;
 				else
 					colors[index] = 2;
 			}   
+
 
 			for(int i = 1; i < color.length; i++)
 			{
@@ -382,6 +378,14 @@ public class Graphe {
 					colors[index] = color[i-1] + 1;
 			}
 		}
+	}
+	
+	public boolean isColoried(int[]colors){
+		for(int i=0;i<colors.length;i++){
+			if(colors[i]==0)
+				return false;
+		}
+		return true;
 	}
 
 	/**
@@ -406,7 +410,7 @@ public class Graphe {
 		return tab;
 	}
 
-	public void sortSommets(int[] DSAT)
+	public int[] sortSommets(int[] DSAT)
 	{
 		int[] DSATLocal = DSAT;
 		int[] DSATTemp =new int[DSAT.length];
@@ -416,12 +420,12 @@ public class Graphe {
 				Sommet s = this.sommets.get(this.plusGrandDegre(DSATLocal));
 				if(!sTab.contains(s)){
 					sTab.add(s);
-					if(DSATLocal[this.plusGrandDegre(DSATLocal)]!=Integer.MIN_VALUE){
+					if(DSATLocal[this.plusGrandDegre(DSATLocal)]!=Integer.MAX_VALUE){
 						DSATTemp[i]=DSATLocal[this.plusGrandDegre(DSATLocal)];
 					}
 
 				}
-				DSATLocal[this.plusGrandDegre(DSATLocal)]=Integer.MIN_VALUE;
+			DSATLocal[this.plusGrandDegre(DSATLocal)]=Integer.MAX_VALUE;
 			}
 		}
 		for(Sommet s : sommets){
@@ -430,48 +434,43 @@ public class Graphe {
 		}
 
 		this.sommets=sTab;
-		DSAT=DSATTemp;
-		System.out.print("sommets  : ");
-		for(Sommet s : sommets){
-			System.out.print(s.getNom()+"-");
-		}
+		System.out.print("DSATTemp : ");
+		for(int i = 0; i < DSATTemp.length; i++)
+			System.out.print(+ DSATTemp[i] + " ");
 		System.out.println();
-		for(int i = 0; i < DSAT.length; i++)
-			System.out.print("DSAT : " + DSAT[i] + " ");
-
+		return DSATTemp;
 	}
 
 	public int[] coloration()
 	{
 		int color[] = new int[this.getSommets().size()];
 		int DSAT[] = initialisation();
+		System.out.print("DSAT : ");
+		for(int i = 0; i < DSAT.length; i++)
+			System.out.print(+ DSAT[i] + " ");
+		System.out.println();
 		int degree = -1;
-		sortSommets(DSAT);
-		/*int x;
-        Sommet s;
-        for(int i = 0; i < DSAT.length; i++)
-        {
-            for(int j = 0; j < DSAT.length-1; j++)
-            {
-                if(DSAT[j+1] > DSAT[j] && DSAT[j+1] != Integer.MAX_VALUE)
-                {
-                    x = DSAT[j+1];
-                    DSAT[j+1] = DSAT[j];
-                    DSAT[j] = x;
-                    s = this.getSommets().get(j+1);
-                    this.getSommets().set(j+1,this.getSommets().get(j+1));
-                    this.getSommets().set(j, s);
-                }
-            }
-        }*/
+		DSAT = sortSommets(DSAT);
+		
+		System.out.print("sommets  : ");
+		for(Sommet s : sommets){
+			System.out.print(s.getNom()+"-");
+		}
+		
+
 		while(isNotColored(DSAT))
 		{
 			degree = this.plusGrandDegre(DSAT);
 			if(degree!=-1)
 			{
+
 				defColor(color,degree, DSAT);
 				DSAT[degree]=Integer.MAX_VALUE;
 				DSATAJour(DSAT);
+				System.out.print("DSAT new : ");
+				for(int i = 0; i < DSAT.length; i++)
+					System.out.print(+ DSAT[i] + " ");
+				System.out.println();
 			}
 		}
 		return color;

@@ -41,7 +41,7 @@ public class JPanelBrelaz extends JPanel
                     c=Color.BLUE;
                 else if(tabColoration[i]==3)
                     c=Color.GREEN;
-                else if(tabColoration[i]==1 && tabColoration[i]==0)
+                else if(tabColoration[i]==1 || tabColoration[i]==0)
                     c=Color.RED;
                 else if(tabColoration[i]==5)
                     c=Color.YELLOW;

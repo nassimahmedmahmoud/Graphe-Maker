@@ -3,7 +3,6 @@ package graphe;
 import java.util.*;
 
 public class Dijkstra {
-<<<<<<< Updated upstream
     /*// creation du graphe
 =======
 	/* // creation du graphe
@@ -151,8 +150,6 @@ public class Dijkstra {
         System.out.println();
 <<<<<<< Updated upstream
     }
-      */
-=======
     }*/
 
 	private int[] dmin;
@@ -318,6 +315,4 @@ public class Dijkstra {
 	public void setMarquage(boolean[] marquage) {
 		this.marquage = marquage;
 	}
-
->>>>>>> Stashed changes
 }

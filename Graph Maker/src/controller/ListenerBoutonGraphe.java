@@ -32,7 +32,7 @@ public class ListenerBoutonGraphe implements MouseListener {
 
         if (this.gv.getBclic().isSelected())
         {
-            arcCourant = this.gv.getGraphe().isArc(50, e);
+            arcCourant = this.gv.getGraphe().isArc(this.gv.getGraphe().getTailleSommet(), e);
             //System.out.println(this.gv.getGraphe().isArc(50, e));
             //System.out.println(this.gv.getGraphe().getArcs());
             //System.out.println(arcCourant);
@@ -50,11 +50,11 @@ public class ListenerBoutonGraphe implements MouseListener {
             this.gv.getGraphe().getSommets().remove(this.getsCourant());
         }
         
-        if (this.gv.getBgomme().isSelected() && SwingUtilities.isLeftMouseButton(e) && this.gv.getGraphe().isArc(50, e)!=null) {
-            this.gv.getGraphe().getArcs().remove(this.gv.getGraphe().isArc(50, e));
+        if (this.gv.getBgomme().isSelected() && SwingUtilities.isLeftMouseButton(e) && this.gv.getGraphe().isArc(this.gv.getGraphe().getTailleSommet(), e)!=null) {
+            this.gv.getGraphe().getArcs().remove(this.gv.getGraphe().isArc(this.gv.getGraphe().getTailleSommet(), e));
         }
         
-        if (SwingUtilities.isRightMouseButton(e) && arcCourant != null && this.gv.getBarc().isSelected())
+        if (SwingUtilities.isRightMouseButton(e) && arcCourant != null && (this.gv.getBarc().isSelected() || this.gv.getBclic().isSelected()))
         {
             String val = (String) JOptionPane.showInputDialog(null,
                     "Modifier la valeur de l'arc", "Arc",
@@ -77,11 +77,16 @@ public class ListenerBoutonGraphe implements MouseListener {
 
         if (this.gv.getBarc().isSelected())
         {
-            sCourant = this.gv.getGraphe().isSommet(50, e);
+            sCourant = this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e);
             if (sCourant != null && arcCourant == null)
             {
                 arcCourant = new Arc();
                 arcCourant.setOrigine(sCourant);
+            }
+            else if(sCourant == null && arcCourant != null)
+            {
+                arcCourant = null;
+                sCourant = null;
             }
             else if (sCourant != null)
             {
@@ -119,7 +124,7 @@ public class ListenerBoutonGraphe implements MouseListener {
             }
         }*/
         if(this.gv.getBclic().isSelected())
-        	arcCourant = this.gv.getGraphe().isArc(50, e);
+        	arcCourant = this.gv.getGraphe().isArc(this.gv.getGraphe().getTailleSommet(), e);
         
     }
 
@@ -180,7 +185,7 @@ public class ListenerBoutonGraphe implements MouseListener {
 
     public void setsCourant(MouseEvent e) {
         if (this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected() || this.gv.getBgomme().isSelected()) {
-            this.sCourant = this.gv.getGraphe().isSommet(50, e);
+            this.sCourant = this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e);
         }
     }
 }

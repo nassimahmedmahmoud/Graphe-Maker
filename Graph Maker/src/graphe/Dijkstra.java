@@ -3,7 +3,7 @@ package graphe;
 import java.util.*;
  
 public class Dijkstra {
-    // creation du graphe
+    /*// creation du graphe
     public static final int INFINITE = Integer.MAX_VALUE;
     private int x0;
     private int [] S;//ensemble de sommets dont les distances les plus courtes à la source sont connues au départ seulement Source
@@ -140,5 +140,5 @@ public class Dijkstra {
         }
         System.out.println();
     }
-      
+      */
 }

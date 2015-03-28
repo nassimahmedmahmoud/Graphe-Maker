@@ -2,9 +2,7 @@ package dialogue;
 
 import java.awt.*;
 import java.awt.geom.*;
-
 import javax.swing.*;
-
 import graphe.*;
 
 public class JPanelGraphe extends JPanel{
@@ -27,9 +25,9 @@ public class JPanelGraphe extends JPanel{
 		for( Sommet s : graphe.getSommets())
 			this.drawNode(s,g,graphe.getTailleSommet(),Color.WHITE);
 		if(graphe.getSommets().size()>2 && graphe.getArcs().size()>2){
-		Dijkstra d= new Dijkstra(0,graphe);
+		/*Dijkstra d= new Dijkstra(0,graphe);
 				
-				d.afficheChemin(3);
+				d.afficheChemin(3);*/
 		}
 		
 	}

@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import controller.*;
 import graphe.*;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
  
  
  
@@ -21,6 +22,7 @@ public class GrapheView extends JFrame{
     private JPanelBrelaz jpb;
     private JTextField jtfNode;
     private JButton jlColors;
+    private JButton clik;
     private int[] colors;
  
     public GrapheView(String titre,int w,int h){
@@ -45,7 +47,7 @@ public class GrapheView extends JFrame{
         onglets.addTab("Graphe", null,this.panel1());
         onglets.addTab("Djikstra", null, jp1);
         onglets.addTab("Coloration", null, panel2());
-        onglets.addTab("Général", null, this.panel4());
+        onglets.addTab("GÃ©nÃ©ral", null, this.panel4());
         c.add(onglets);
     }
  
@@ -58,7 +60,7 @@ public class GrapheView extends JFrame{
     }
     public JMenu menuFile(){
         JMenu menufichier=new JMenu("Fichier");
-        JMenuItem menugraphe=new JMenuItem("Réinitialiser un graphe");
+        JMenuItem menugraphe=new JMenuItem("RÃ©initialiser un graphe");
         JMenuItem menusave = new JMenuItem("sauvegarder graphe");
         JMenuItem menuload = new JMenuItem("charger graphe");
         menufichier.add(menugraphe);
@@ -90,12 +92,13 @@ public class GrapheView extends JFrame{
         bclic = new JToggleButton("clic");
         bsommet = new JToggleButton("sommet");
         barc = new JToggleButton("arc");
-        barrete = new JToggleButton("arête");
-        barcarrete = new JButton("arc <-> arête");
+        barrete = new JToggleButton("arÃªte");
+        barcarrete = new JButton("arc <-> arÃªte");
         bgomme= new JToggleButton("gomme");
         JLabel ltSizeNode = new JLabel("Taille du sommet : ");
         jtfNode= new JTextField("50");
         JButton breset = new JButton("reset");
+        clik = new JButton("Clique");
         pgraphe.add(this.panelListenerTest(),"Center");
         btngrp.add(bclic);
         btngrp.add(bsommet);
@@ -107,10 +110,12 @@ public class GrapheView extends JFrame{
         pgraphe.add(barc);
         pgraphe.add(barcarrete);
         pgraphe.add(bgomme);
+        pgraphe.add(clik);
         pgraphe.add(jpg);
         pgraphe.add(ltSizeNode);
         pgraphe.add(jtfNode);
         pgraphe.add(breset);
+        clik.addActionListener(new ListenerActionGraphe(this));
         barcarrete.addActionListener(new ListenerActionGraphe(this));
         breset.addActionListener(new ListenerActionGraphe(this));
         jtfNode.addActionListener(new ListenerActionGraphe(this));
@@ -192,6 +197,10 @@ public class GrapheView extends JFrame{
     {
         bgomme = butgomme;
     }
+
+    public JButton getClik() {
+        return clik;
+    }
  
     public JTabbedPane getOnglets() {
         return onglets;
@@ -215,6 +224,10 @@ public class GrapheView extends JFrame{
  
     public void setBclic(JToggleButton bclic) {
         this.bclic = bclic;
+    }
+
+    public void setClik(JButton clik) {
+        this.clik = clik;
     }
  
     public void setGrapheReset(){

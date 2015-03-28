@@ -8,6 +8,16 @@ import javax.swing.*;
 public class JPanelBrelaz extends JPanel
 {
     public final int ARR_SIZE=6;
+    public static final Color[] colors = 
+    {
+        Color.RED,Color.RED,Color.BLUE,Color.GREEN,Color.BLACK,
+        Color.YELLOW,Color.GRAY,Color.PINK,Color.CYAN,Color.ORANGE,
+        Color.DARK_GRAY,Color.LIGHT_GRAY,Color.MAGENTA,new Color(200,255,200),
+        new Color(255,215,215), new Color(50,156,207), new Color(150,30,255),
+        new Color(30,50,80),new Color(230, 230, 230), new Color(90,20,10),
+        new Color(255,255,200), new Color(50,255,160), new Color(200,200,50),
+        new Color(255,0,100), new Color(200,0,0), new Color(0,200,0)
+    };
     
     private Arc arc;
     private GrapheView gv;
@@ -34,23 +44,12 @@ public class JPanelBrelaz extends JPanel
         Color c = new Color(0);
         //if(tabColoration != null)
         //{
-            for(int i=0;i<gv.getGraphe().getSommets().size();i++){
-                if(tabColoration[i]==4)
-                    c=Color.BLACK;
-                else if(tabColoration[i]==2)
-                    c=Color.BLUE;
-                else if(tabColoration[i]==3)
-                    c=Color.GREEN;
-                else if(tabColoration[i]==1 || tabColoration[i]==0)
-                    c=Color.RED;
-                else if(tabColoration[i]==5)
-                    c=Color.YELLOW;
-                else if(tabColoration[i]==6)
-                    c=Color.GRAY;
-                else if(tabColoration[i]==7)
-                    c=Color.PINK;
-                else
-                    c=Color.CYAN;
+            for(int i=0;i<gv.getGraphe().getSommets().size();i++)
+            {
+                    if(tabColoration[i] >= colors.length)
+                        c=colors[colors.length-1];
+                    else
+                        c=colors[tabColoration[i]];
                 this.drawNode(gv.getGraphe().getSommets().get(i),g,gv.getGraphe().getTailleSommet(),c);
             //}
                 
@@ -61,7 +60,11 @@ public class JPanelBrelaz extends JPanel
     {
         g.setColor(color);
         g.fillOval(s.getPosX()-diametre/2, s.getPosY()-diametre/2,diametre, diametre);
-        g.setColor(Color.BLACK);
+        if(color == colors[4] || color == colors[10] || color == colors[17]
+                || color == colors[19])
+            g.setColor(Color.WHITE);
+        else
+            g.setColor(Color.BLACK);
         g.drawOval(s.getPosX()-diametre/2, s.getPosY()-diametre/2,diametre, diametre);
         FontMetrics fm = g.getFontMetrics();
         double text = fm.getStringBounds(s.getNom(), g).getWidth();   

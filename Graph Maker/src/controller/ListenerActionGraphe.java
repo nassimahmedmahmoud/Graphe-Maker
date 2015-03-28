@@ -24,6 +24,8 @@ public class ListenerActionGraphe implements ActionListener {
 			this.gv.getGraphe().setTailleSommet(isInteger(gv.getJtfNode().getText()));
 			this.gv.getJtfNode().setText("");
 		}
+                if(e.getSource() == gv.getClik())
+                    this.gv.getGraphe().createClique();
 		if(this.gv.getBrelaz() == e.getSource())
 			this.gv.setColors(this.gv.getGraphe().coloration());
 		if(e.getSource()==gv.getJlColors())

@@ -26,6 +26,12 @@ public class JPanelGraphe extends JPanel{
 		}
 		for( Sommet s : graphe.getSommets())
 			this.drawNode(s,g,graphe.getTailleSommet(),Color.WHITE);
+		if(graphe.getSommets().size()>2 && graphe.getArcs().size()>2){
+		Dijkstra d= new Dijkstra(0,graphe);
+				
+				d.afficheChemin(3);
+		}
+		
 	}
 
 	void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {

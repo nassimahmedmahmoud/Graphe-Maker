@@ -3,7 +3,7 @@ package graphe;
 import java.util.*;
 
 public class Dijkstra {
-    /*// creation du graphe
+	/*// creation du graphe
 =======
 	/* // creation du graphe
 >>>>>>> Stashed changes
@@ -167,9 +167,9 @@ public class Dijkstra {
 		this.dmin =new int[graphe.getSommets().size()];
 		boolean ui = initialisation();
 		if(ui && graphe.metrique()){
+			
 			System.out.println("le sommet choisis est bien dans l'arrayList de sommets");
-
-			System.out.println(initialisation());
+			dijkstraAlgorithm();
 			System.out.print("Dmin : ");
 			for(int i=0;i<dmin.length;i++){
 				System.out.print(dmin[i]+"-");
@@ -212,7 +212,7 @@ public class Dijkstra {
 		}
 		return false;
 	}
-	
+
 	public void dijkstraAlgorithm(){
 		int index =-1;
 		while(!isMarqued()){
@@ -250,7 +250,7 @@ public class Dijkstra {
 			}
 		}
 	}
-	
+
 	public boolean isMarqued(){
 		boolean ui=true;
 		for(int i=0;i<marquage.length;i++){
@@ -259,7 +259,7 @@ public class Dijkstra {
 		}
 		return ui;
 	}
-	
+
 	public int marquageFirstIndex(){
 		for(int i=0;i<marquage.length;i++){
 			if(!marquage[i])
@@ -267,17 +267,19 @@ public class Dijkstra {
 		}
 		return -1;
 	}
-	
+
 	public int valArc(Sommet a,Sommet b){
-		for(Arc arc : a.getArcs()){
-			if(graphe.isType()==Graphe.ORIENTE){
-				if(arc.getArrivee().equals(b)){
-					return Integer.parseInt(arc.getNom());
+		if(graphe.metrique()){
+			for(Arc arc : a.getArcs()){
+				if(graphe.isType()==Graphe.ORIENTE){
+					if(arc.getArrivee().equals(b)){
+						return Integer.parseInt(arc.getNom());
+					}
 				}
-			}
-			else{
-				if(arc.getArrivee().equals(b) || arc.getOrigine().equals(b)){
-					return Integer.parseInt(arc.getNom());
+				else{
+					if(arc.getArrivee().equals(b) || arc.getOrigine().equals(b)){
+						return Integer.parseInt(arc.getNom());
+					}
 				}
 			}
 		}

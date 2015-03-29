@@ -127,7 +127,7 @@ public class Graphe {
                     {
                         a = new Arc("",s,d,0,0);
                         a.milieu();
-                        if(!arcInGraphe(a))
+                        if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && s != d))
                         {
                             arcs.add(a);
                             a.getOrigine().getArcs().add(a);
@@ -149,7 +149,7 @@ public class Graphe {
                     {
                         a = new Arc("",s,d,0,0);
                         a.milieu();
-                        if(!arcInGraphe(a))
+                        if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && s != d))
                         {
                             arcs.add(a);
                             a.getOrigine().getArcs().add(a);

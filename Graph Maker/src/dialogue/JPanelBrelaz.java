@@ -61,7 +61,7 @@ public class JPanelBrelaz extends JPanel
         g.setColor(color);
         g.fillOval(s.getPosX()-diametre/2, s.getPosY()-diametre/2,diametre, diametre);
         if(color == colors[4] || color == colors[10] || color == colors[17]
-                || color == colors[19])
+                || color == colors[19] || color == colors[6])
             g.setColor(Color.WHITE);
         else
             g.setColor(Color.BLACK);

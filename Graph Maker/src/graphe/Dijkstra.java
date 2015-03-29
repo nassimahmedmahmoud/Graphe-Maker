@@ -158,133 +158,149 @@ public class Dijkstra {
 	private Graphe graphe;
 	private boolean[] marquage;
 
-	public Dijkstra(Sommet source, Graphe graphe) {
-		super();
-		this.source = source;
-		this.graphe = graphe;
-		this.sommetProche= new int[graphe.getSommets().size()];
-		this.marquage= new boolean[graphe.getSommets().size()];
-		this.dmin =new int[graphe.getSommets().size()];
-		boolean ui = initialisation();
-		if(ui && graphe.metrique()){
-			
-			System.out.println("le sommet choisis est bien dans l'arrayList de sommets");
-			dijkstraAlgorithm();
-			System.out.print("Dmin : ");
-			for(int i=0;i<dmin.length;i++){
-				System.out.print(dmin[i]+"-");
-			}
-			System.out.println();
-			System.out.print("sommetProche : ");
-			for(int i=0;i<sommetProche.length;i++){
-				System.out.print("|"+sommetProche[i]+"|");
-			}
-			System.out.println();
-			System.out.print("marquage : ");
-			for(int i=0;i<marquage.length;i++){
-				System.out.print("|"+marquage[i]+"|");
-			}
-			System.out.println();
+        public Dijkstra(Sommet source, Graphe graphe) {
+            super();
+            this.source = source;
+            this.graphe = graphe;
+            this.sommetProche = new int[graphe.getSommets().size()];
+            this.marquage = new boolean[graphe.getSommets().size()];
+            this.dmin = new int[graphe.getSommets().size()];
+            boolean ui = initialisation();
+            if (ui) {
+                System.out.println("le sommet choisis est bien dans l'arrayList de sommets");
+                int indexSource = graphe.getSommets().indexOf(source);
+                dijkstraAlgorithm(indexSource);
+                System.out.print("Dmin : ");
+                for (int i = 0; i < dmin.length; i++) {
+                    System.out.print(dmin[i] + "-");
+                }
+                System.out.println();
+                System.out.print("sommetProche : ");
+                for (int i = 0; i < sommetProche.length; i++) {
+                    System.out.print("|" + sommetProche[i] + "|");
+                }
+                System.out.println();
+                System.out.print("marquage : ");
+                for (int i = 0; i < marquage.length; i++) {
+                    System.out.print("|" + marquage[i] + "|");
+                }
+                System.out.println();
 
-		}
-		else{
-			System.out.println("Le sommet choisis n'est pas dans l'arrayList de sommets :(");
-		}
+            } else {
+                System.out.println("Le sommet choisis n'est pas dans l'arrayList de sommets :(");
+            }
 
-	}
+        }
 
-	public boolean initialisation(){
-		if(graphe.getSommets().contains(source)){
-			for(int i = 0;i<graphe.getSommets().size();i++){
-				if(!graphe.getSommets().get(i).equals(source))
-					dmin[i]=Integer.MAX_VALUE;
-				sommetProche[i]=-1;
-				marquage[i]=false;
-			}
-			int indexSource = graphe.getSommets().indexOf(source);
-			int smallestValue = smallestValue();
-			marquage[smallestValue]=true;
-			int[] tabVoisins = graphe.tabVoisins(indexSource);
-			dminAJour(smallestValue);
-			smallestValue = smallestValue();
-			marquage[smallestValue]=true;
-			return true;
-		}
-		return false;
-	}
+        public boolean initialisation() {
+            if (graphe.getSommets().contains(source)) {
+                for (int i = 0; i < graphe.getSommets().size(); i++) {
+                    if (!graphe.getSommets().get(i).equals(source)) {
+                        dmin[i] = Integer.MAX_VALUE;
+                    }
+                    sommetProche[i] = -1;
+                    marquage[i] = false;
+                }
+                return true;
+            }
+            return false;
+        }
 
-	public void dijkstraAlgorithm(){
-		int index =-1;
-		while(!isMarqued()){
-			index = smallestValue();
-			if(index==-1)
-				index = marquageFirstIndex();
-			dminAJour(index);
-			marquage[index]=true;
-		}
-	}
+        public void dijkstraAlgorithm(int index) {
+            while (!isMarqued()) {
+                int[] tabVoisins = graphe.tabVoisins(index);
+                index = smallestValue(tabVoisins);
+                if (index == -1) {
+                    index = smallestValue(tabVoisins);
+                }
+                if (index == -1) {
+                    index = marquageFirstIndex();
+                }
+                dminAJour(index);
+                marquage[index] = true;
+            }
+        }
 
-	public int smallestValue(){
-		int smallest = Integer.MAX_VALUE;
-		if(dmin.length==0)
-			return 0;
-		int val =-1;
-		for(int i=0;i<dmin.length;i++){
-			if(smallest > dmin[i] && !marquage[i]){
-				smallest = dmin[i];
-				val=i;
-			}
-		}
-		return val;
-	}
+        public int smallestValue() {
+            int smallest = Integer.MAX_VALUE;
+            if (dmin.length == 0) {
+                return 0;
+            }
+            int val = -1;
+            for (int i = 0; i < dmin.length; i++) {
+                if (smallest > dmin[i] && !marquage[i]) {
+                    smallest = dmin[i];
+                    val = i;
+                }
+            }
+            return val;
+        }
 
-	public void dminAJour(int sommetMarque){
-		int[] tabVoisins = graphe.tabVoisins(sommetMarque);
-		if(tabVoisins.length==0)
-			return;
-		for(int i=0;i<tabVoisins.length;i++){
-			int sommeDmin =dmin[sommetMarque]+valArc(graphe.getSommets().get(sommetMarque),graphe.getSommets().get(tabVoisins[i]));
-			if(dmin[tabVoisins[i]]> sommeDmin){
-				sommetProche[tabVoisins[i]]=sommetMarque;
-				dmin[tabVoisins[i]]=sommeDmin;
-			}
-		}
-	}
+        public int smallestValue(int[] tabVoisins) {
+            int smallest = Integer.MAX_VALUE;
+            if (dmin.length == 0) {
+                return 0;
+            }
+            int val = -1;
+            for (int i = 0; i < tabVoisins.length; i++) {
+                if (smallest > dmin[tabVoisins[i]] && !marquage[i]) {
+                    smallest = dmin[tabVoisins[i]];
+                    val = i;
+                }
+            }
+            return val;
+        }
 
-	public boolean isMarqued(){
-		boolean ui=true;
-		for(int i=0;i<marquage.length;i++){
-			if(!marquage[i])
-				ui=false;
-		}
-		return ui;
-	}
+        public void dminAJour(int sommetMarque) {
+            int[] tabVoisins = graphe.tabVoisins(sommetMarque);
+            if (tabVoisins.length == 0) {
+                return;
+            }
+            for (int i = 0; i < tabVoisins.length; i++) {
+                int sommeDmin = dmin[sommetMarque] + valArc(graphe.getSommets().get(sommetMarque), graphe.getSommets().get(tabVoisins[i]));
+                if (dmin[tabVoisins[i]] > sommeDmin) {
+                    sommetProche[tabVoisins[i]] = sommetMarque;
+                    dmin[tabVoisins[i]] = sommeDmin;
+                }
+            }
+        }
 
-	public int marquageFirstIndex(){
-		for(int i=0;i<marquage.length;i++){
-			if(!marquage[i])
-				return i;
-		}
-		return -1;
-	}
+        public boolean isMarqued() {
+            boolean ui = true;
+            for (int i = 0; i < marquage.length; i++) {
+                if (!marquage[i]) {
+                    ui = false;
+                }
+            }
+            return ui;
+        }
 
-	public int valArc(Sommet a,Sommet b){
-		if(graphe.metrique()){
-			for(Arc arc : a.getArcs()){
-				if(graphe.isType()==Graphe.ORIENTE){
-					if(arc.getArrivee().equals(b)){
-						return Integer.parseInt(arc.getNom());
-					}
-				}
-				else{
-					if(arc.getArrivee().equals(b) || arc.getOrigine().equals(b)){
-						return Integer.parseInt(arc.getNom());
-					}
-				}
-			}
-		}
-		return 0;
-	}
+        public int marquageFirstIndex() {
+            for (int i = 0; i < marquage.length; i++) {
+                if (!marquage[i]) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public int valArc(Sommet a, Sommet b) {
+            if (graphe.metrique()) {
+                for (Arc arc : a.getArcs()) {
+                    if (graphe.isType() == Graphe.ORIENTE) {
+                        if (arc.getArrivee().equals(b)) {
+                            return Integer.parseInt(arc.getNom());
+                        }
+                    } else {
+                        if (arc.getArrivee().equals(b) || arc.getOrigine().equals(b)) {
+                            return Integer.parseInt(arc.getNom());
+                        }
+                    }
+                }
+            }
+            return 0;
+        }
+ 
 	public int[] getDmin() {
 		return dmin;
 	}

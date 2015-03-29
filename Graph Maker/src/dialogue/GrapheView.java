@@ -155,12 +155,12 @@ public class GrapheView extends JFrame{
  
     public JPanelBrelaz panelListenerTest2(){
         jpb = new JPanelBrelaz(new BorderLayout(),this.graphe, this);
-        jpb.setBackground(Color.GRAY);
+        jpb.setBackground(new Color(250,245,220));
         return jpb;
     }
     public JPanelGraphe panelListenerTest(){
         jpg = new JPanelGraphe(new BorderLayout(),this.graphe);
-        jpg.setBackground(Color.GRAY);
+        jpg.setBackground(new Color(250,245,220));
         ListenerBoutonGraphe lbg = new ListenerBoutonGraphe(this);
         ListenerMouseMotionGraphe lmmg = new ListenerMouseMotionGraphe(this,lbg);
         jpg.addMouseListener(lbg);

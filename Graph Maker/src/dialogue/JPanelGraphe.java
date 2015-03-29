@@ -16,6 +16,7 @@ public class JPanelGraphe extends JPanel{
 		this.graphe=graphe;
 	}
 
+        @Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -23,7 +24,7 @@ public class JPanelGraphe extends JPanel{
 			this.drawLines(g, a);
 		}
 		for( Sommet s : graphe.getSommets())
-			this.drawNode(s,g,graphe.getTailleSommet(),Color.WHITE);
+			this.drawNode(s,g,graphe.getTailleSommet(),new Color(240,240,240));
 		if(graphe.getSommets().size()>2 && graphe.getArcs().size()>2){
 		Dijkstra d= new Dijkstra(graphe.getSommets().get(0),graphe);
 		}
@@ -51,7 +52,7 @@ public class JPanelGraphe extends JPanel{
 		g.setColor(color);
 		g.fillOval(s.getPosX()-diametre/2, s.getPosY()-diametre/2,diametre, diametre);
 		g.setColor(Color.BLACK);
-		g.drawOval(s.getPosX()-diametre/2, s.getPosY()-diametre/2,diametre+1, diametre+1);
+		g.drawOval(s.getPosX()-diametre/2, s.getPosY()-diametre/2,diametre, diametre);
 		FontMetrics fm = g.getFontMetrics();
 		double text = fm.getStringBounds(s.getNom(), g).getWidth();    
 		g.drawString(s.getNom(),(int)(s.getPosX()-text/2),(int)(s.getPosY()));

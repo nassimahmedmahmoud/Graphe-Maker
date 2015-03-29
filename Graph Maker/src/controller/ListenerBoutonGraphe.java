@@ -1,7 +1,6 @@
 package controller;
 
 import graphe.*;
-
 import java.awt.event.*;
 import javax.swing.*;
 import dialogue.*;
@@ -99,6 +98,16 @@ public class ListenerBoutonGraphe implements MouseListener {
                 }
             }
         }
+        
+        if(gv.getClikc().isSelected())
+        {
+            //Graphe gr = gv.getGraphe();
+            sCourant = this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e);
+            if(sCourant != null && (!(gv.getGraphe().sommetInGraphe(gv.getGraphe().getTabCick(),sCourant))))
+                gv.getGraphe().getTabCick().add(sCourant);
+            System.out.println(gv.getGraphe().getTabCick());
+        }
+        
         this.gv.getJpg().repaint();
     }
 

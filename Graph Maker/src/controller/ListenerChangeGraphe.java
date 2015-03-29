@@ -23,7 +23,7 @@ public class ListenerChangeGraphe implements ChangeListener {
 			gv.getJlca().repaint();
 		}
 		if(gv.getOnglets().getSelectedIndex()==GrapheView.ONGLET_BRELAZ){
-			gv.getJlColors().setText("X(G) <= "+gv.getGraphe().chromatique());
+			gv.getJlColors().setText("Le nombre de couleurs est majoré par : "+gv.getGraphe().chromatique());
 			gv.getJlColors().repaint();
 		}
 		

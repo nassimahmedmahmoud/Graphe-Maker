@@ -12,6 +12,7 @@ public class Graphe {
 	private ArrayList<Sommet> sommets;
 	private ArrayList<Arc> arcs;
 	private int tailleSommet=50;
+        private ArrayList<Sommet> tabCick;
 
 	/**
 	 * Constructeur champ a champ du graphe prend en paramÃ¨tres :
@@ -30,6 +31,7 @@ public class Graphe {
 		this.type = type;
 		this.sommets = sommets;
 		this.arcs = arcs;
+                this.tabCick = new ArrayList<Sommet>();
 	}
 
 	/**
@@ -122,6 +124,28 @@ public class Graphe {
                 for(Sommet s : sommets)
                 {
                     for(Sommet d : sommets)
+                    {
+                        a = new Arc("",s,d,0,0);
+                        a.milieu();
+                        if(!arcInGraphe(a))
+                        {
+                            arcs.add(a);
+                            a.getOrigine().getArcs().add(a);
+                            a.getArrivee().getArcs().add(a);
+                        }
+                    }
+                }
+            }
+        }
+        
+        public void createClique(ArrayList<Sommet> tab)
+        {
+            if(tab.size() > 1)
+            {
+                Arc a;
+                for(Sommet s : tab)
+                {
+                    for(Sommet d : tab)
                     {
                         a = new Arc("",s,d,0,0);
                         a.milieu();
@@ -230,6 +254,170 @@ public class Graphe {
 				ui = true;
 		}
 		return ui;
+	}
+        
+        public boolean isNumeric(String str)  
+	{  
+		try  
+		{  
+			@SuppressWarnings("unused")
+			double d = Double.parseDouble(str);  
+		}  
+		catch(NumberFormatException nfe)  
+		{  
+			return false;  
+		}  
+		return true;  
+	}
+
+	public int [][] matriceNonOriente(){
+		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
+		int i=0;
+		boolean metrique = metrique();
+		for(Sommet s : this.sommets){
+			for(Arc a : s.getArcs()){
+				int pos=0;
+				if(a.getOrigine()==s)
+					pos = positionSommets(a.getArrivee());
+				else
+					pos = positionSommets(a.getOrigine());
+				if(pos!=-1){
+					if(metrique)
+						tab[i][pos]=Integer.parseInt(a.getNom());
+					else
+						tab[i][pos]=1;
+				}
+			}
+			i++;
+		}
+		return tab;
+	}
+
+	public int[][] matriceOriente(){
+		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
+		int i=0;
+		boolean metrique = metrique();
+		for(Sommet s : this.sommets){
+			//System.out.println(s.getArcs());
+			for(Arc a : s.getArcs()){
+				int pos=0;
+				if(a.getOrigine()==s){
+					pos = positionSommets(a.getArrivee());
+					if(pos!=-1){
+						if(metrique)
+							tab[i][pos]=Integer.parseInt(a.getNom());
+						else
+							tab[i][pos]=1;
+					}
+				}
+			}
+			i++;
+		}
+		return tab;
+	}
+
+	public int[][]matrice(){
+		if(this.type==Graphe.ORIENTE){
+			return matriceOriente();
+		}
+		else{
+			return matriceNonOriente();
+		}
+	}
+        
+        public boolean sommetInGraphe(ArrayList<Sommet> tab, Sommet somm_s)
+        {
+            boolean ui = false;
+            
+            for(Sommet s : tab)
+                if(somm_s.equals(s))
+                    ui = true;
+            
+            return ui;
+        }
+        
+	public boolean arcInGraphe(Arc arc_g)
+	{
+		boolean ui = false;
+
+		if(this.isType() == ORIENTE)
+		{
+			for(Arc a : this.arcs)
+			{
+				if(arc_g.equals(a))
+					ui = true;
+			}
+		}
+		else
+		{
+			for(Arc a : this.arcs)
+			{
+				if(arc_g.equals(a) || 
+						(arc_g.getArrivee()== a.getOrigine()
+						&& arc_g.getOrigine() == a.getArrivee()))
+					ui = true;
+			}
+		}    
+		return ui;
+	}
+	
+	public void ajouterSommet(Sommet s){
+		if(!sommets.contains(s)){
+			s.setNom(""+(sommets.size()+1));
+			sommets.add(s);
+		}
+	}
+	
+	public String stringMatrice(){
+        String s="<html>";
+        int[][]tab =matrice();
+        for(int i=0;i< tab.length;i++){
+            for(int j=0;j< tab.length;j++){
+                s+=tab[i][j]+"\t";
+            }
+            s+="<br/>";
+        }
+        s+="</html>";
+        return s;
+	}
+	
+	public String connexeArbre(){
+		String s ="<html>";
+		if(connexeGraphe())
+    		s+="Le graphe est connexe<br/>";
+    	else
+    		s+="Le graphe n'est pas connexe<br/>";
+        if(isTree())
+        	s+="Le graphe est un arbre<br/>";
+        else
+        	s+="Le graphe n'est pas un arbre<br/>";
+		s+="</html>";
+		return s;
+	}
+        
+        public int chromatique(){
+		int [] colors = coloration();
+                int val;
+		if(colors!=null && colors.length>1){
+			val = colors[0];
+			for (int i = 1; i < colors.length; i++)
+				if (val<colors[i])
+					val = colors[i];
+		}
+                else if(this.sommets.size() == 1)
+                    val = 1;
+                else
+                    val = 0;
+		return val;
+	}
+
+	public boolean isTree(){
+		if(this.sommets.size()==1)
+			return false;
+
+		if(this.sommets.size()-1==this.arcs.size() && this.type==NON_ORIENTE)
+			return true;
+		return false;
 	}
 
 	/**
@@ -497,154 +685,6 @@ public class Graphe {
 		}
 		return color;
 	}
-	public int chromatique(){
-		int [] colors = coloration();
-		if(colors!=null && colors.length>1){
-			int val = colors[0];
-			for (int i = 1; i < colors.length; i++)
-				if (val<colors[i])
-					val = colors[i];
-			return val;
-		}
-		return 0;
-	}
-
-	public boolean isTree(){
-		if(this.sommets.size()==1)
-			return false;
-
-		if(this.sommets.size()-1==this.arcs.size() && this.type==NON_ORIENTE)
-			return true;
-		return false;
-	}
-
-	public boolean isNumeric(String str)  
-	{  
-		try  
-		{  
-			@SuppressWarnings("unused")
-			double d = Double.parseDouble(str);  
-		}  
-		catch(NumberFormatException nfe)  
-		{  
-			return false;  
-		}  
-		return true;  
-	}
-
-	public int [][] matriceNonOriente(){
-		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
-		int i=0;
-		boolean metrique = metrique();
-		for(Sommet s : this.sommets){
-			for(Arc a : s.getArcs()){
-				int pos=0;
-				if(a.getOrigine()==s)
-					pos = positionSommets(a.getArrivee());
-				else
-					pos = positionSommets(a.getOrigine());
-				if(pos!=-1){
-					if(metrique)
-						tab[i][pos]=Integer.parseInt(a.getNom());
-					else
-						tab[i][pos]=1;
-				}
-			}
-			i++;
-		}
-		return tab;
-	}
-
-	public int[][] matriceOriente(){
-		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
-		int i=0;
-		boolean metrique = metrique();
-		for(Sommet s : this.sommets){
-			//System.out.println(s.getArcs());
-			for(Arc a : s.getArcs()){
-				int pos=0;
-				if(a.getOrigine()==s){
-					pos = positionSommets(a.getArrivee());
-					if(pos!=-1){
-						if(metrique)
-							tab[i][pos]=Integer.parseInt(a.getNom());
-						else
-							tab[i][pos]=1;
-					}
-				}
-			}
-			i++;
-		}
-		return tab;
-	}
-
-	public int[][]matrice(){
-		if(this.type==Graphe.ORIENTE){
-			return matriceOriente();
-		}
-		else{
-			return matriceNonOriente();
-		}
-	}
-	public boolean arcInGraphe(Arc arc_g)
-	{
-		boolean ui = false;
-
-		if(this.isType() == ORIENTE)
-		{
-			for(Arc a : this.arcs)
-			{
-				if(arc_g.equals(a))
-					ui = true;
-			}
-		}
-		else
-		{
-			for(Arc a : this.arcs)
-			{
-				if(arc_g.equals(a) || 
-						(arc_g.getArrivee()== a.getOrigine()
-						&& arc_g.getOrigine() == a.getArrivee()))
-					ui = true;
-			}
-		}    
-		return ui;
-	}
-	
-	public void ajouterSommet(Sommet s){
-		if(!sommets.contains(s)){
-			s.setNom(""+(sommets.size()+1));
-			sommets.add(s);
-		}
-	}
-	
-	public String stringMatrice(){
-        String s="<html>";
-        int[][]tab =matrice();
-        for(int i=0;i< tab.length;i++){
-            for(int j=0;j< tab.length;j++){
-                s+=tab[i][j]+"\t";
-            }
-            s+="<br/>";
-        }
-        s+="</html>";
-        return s;
-	}
-	
-	public String connexeArbre(){
-		String s ="<html>";
-		if(connexeGraphe())
-    		s+="Le graphe est connexe<br/>";
-    	else
-    		s+="Le graphe n'est pas connexe<br/>";
-        if(isTree())
-        	s+="Le graphe est un arbre<br/>";
-        else
-        	s+="Le graphe n'est pas un arbre<br/>";
-		s+="</html>";
-		return s;
-	}
-	
 
 	public String getNom() {
 		return nom;
@@ -691,6 +731,14 @@ public class Graphe {
 	public void setTailleSommet(int tailleSommet) {
 		this.tailleSommet = tailleSommet;
 	}
+
+        public ArrayList<Sommet> getTabCick() {
+            return tabCick;
+        }
+
+        public void setTabCick(ArrayList<Sommet> tabCick) {
+            this.tabCick = tabCick;
+        }
 
 	public String toString() {
 		return "Graphe [nom=" + nom + ", type=" + type + ", sommets=" + sommets

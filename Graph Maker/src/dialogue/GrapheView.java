@@ -1,12 +1,10 @@
 package dialogue;
  
 import java.awt.*;
-
 import javax.swing.*;
-
 import controller.*;
 import graphe.*;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import static javax.swing.JFrame.*;
  
  
  
@@ -25,9 +23,11 @@ public class GrapheView extends JFrame{
     private JTextField jtfNode;
     private JLabel jlColors;
     private JButton clik;
+    private JToggleButton clikc;
+    private JButton create;
     private int[] colors;
     private JLabel jl ;
-	private JLabel jlca;
+    private JLabel jlca;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -106,6 +106,8 @@ public class GrapheView extends JFrame{
         barcarrete = new JButton("arc <-> arÃªte");
         bgomme= new JToggleButton("gomme");
         clik = new JButton("Clique");
+        clikc = new JToggleButton("Clique Custom");
+        create = new JButton("Append");
         JLabel ltSizeNode = new JLabel("Taille du sommet : ");
         jtfNode= new JTextField("50");
         JButton breset = new JButton("reset");
@@ -115,17 +117,21 @@ public class GrapheView extends JFrame{
         btngrp.add(barc);
         btngrp.add(barrete);
         btngrp.add(bgomme);
+        btngrp.add(clikc);
         pgraphe.add(bclic);
         pgraphe.add(bsommet);
         pgraphe.add(barc);
         pgraphe.add(barcarrete);
         pgraphe.add(bgomme);
         pgraphe.add(clik);
+        pgraphe.add(clikc);
+        pgraphe.add(create);
         pgraphe.add(jpg);
         pgraphe.add(ltSizeNode);
         pgraphe.add(jtfNode);
         pgraphe.add(breset);
         clik.addActionListener(new ListenerActionGraphe(this));
+        create.addActionListener(new ListenerActionGraphe(this));
         barcarrete.addActionListener(new ListenerActionGraphe(this));
         breset.addActionListener(new ListenerActionGraphe(this));
         jtfNode.addActionListener(new ListenerActionGraphe(this));
@@ -158,7 +164,7 @@ public class GrapheView extends JFrame{
     	jlColors= new JLabel();
         jlColors.setHorizontalAlignment(JLabel.CENTER);
     	jlColors.setVerticalAlignment(JLabel.CENTER);
-    	jlColors.setPreferredSize(new Dimension(70,70));
+    	jlColors.setPreferredSize(new Dimension(400,70));
     	String s = "";
     	s+=""+graphe.chromatique();
         jlColors.setText(s);
@@ -356,7 +362,20 @@ public class GrapheView extends JFrame{
 	public void setJlca(JLabel jlca) {
 		this.jlca = jlca;
 	}
- 
- 
- 
+
+        public JToggleButton getClikc() {
+            return clikc;
+        } 
+
+        public void setClikc(JToggleButton clikc) {
+            this.clikc = clikc;
+        }
+
+        public JButton getCreate() {
+            return create;
+        }
+
+        public void setCreate(JButton create) {
+            this.create = create;
+        }
 }

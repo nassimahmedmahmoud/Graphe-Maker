@@ -20,6 +20,7 @@ public class GrapheView extends JFrame{
     private JButton brelaz;
     private JPanelGraphe jpg;
     private JPanelBrelaz jpb;
+    private JPanelDijkstra jpd;
     private JTextField jtfNode;
     private JLabel jlColors;
     private JButton clik;
@@ -54,8 +55,8 @@ public class GrapheView extends JFrame{
         jp1.add(jl);
  
         onglets.addTab("Graphe", null,this.panel1());
-        onglets.addTab("Dijkstra", null, jp1);
-        onglets.addTab("Coloration", null, panel2());
+        onglets.addTab("Dijkstra", null, this.panel2());
+        onglets.addTab("Coloration", null, panel3());
         onglets.addTab("Général", null, this.panel4());
         onglets.addChangeListener(new ListenerChangeGraphe(this));
         c.add(onglets);
@@ -70,7 +71,7 @@ public class GrapheView extends JFrame{
     }
     public JMenu menuFile(){
         JMenu menufichier=new JMenu("Fichier");
-        JMenuItem menugraphe=new JMenuItem("RÃ©initialiser un graphe");
+        JMenuItem menugraphe=new JMenuItem("Réinitialiser un graphe");
         JMenuItem menusave = new JMenuItem("sauvegarder graphe");
         JMenuItem menuload = new JMenuItem("charger graphe");
         menufichier.add(menugraphe);
@@ -126,7 +127,6 @@ public class GrapheView extends JFrame{
         pgraphe.add(clik);
         pgraphe.add(clikc);
         pgraphe.add(create);
-        pgraphe.add(jpg);
         pgraphe.add(ltSizeNode);
         pgraphe.add(jtfNode);
         pgraphe.add(breset);
@@ -144,10 +144,16 @@ public class GrapheView extends JFrame{
         return jp;
     }
  
-    public JPanel panel2(){
+    public JPanel panel3(){
         JPanel jp = new JPanel(new BorderLayout());
         jp.add(this.panelListenerTest2(),"Center");
         jp.add(nbChromatique(),"South");
+        return jp;
+    }
+    
+    public JPanel panel2(){
+        JPanel jp = new JPanel(new BorderLayout());
+        jp.add(this.panelListenerTest3(),"Center");
         return jp;
     }
      
@@ -179,7 +185,7 @@ public class GrapheView extends JFrame{
     	jl= new JLabel();
     	jl.setHorizontalAlignment(JLabel.CENTER);
     	jl.setVerticalAlignment(JLabel.CENTER);
-    	jl.setPreferredSize(new Dimension(70,70));
+    	jl.setMinimumSize(new Dimension(70,70));
     	String s = this.graphe.stringMatrice();
         jl.setText(s);
         jp.add(jl);
@@ -205,6 +211,12 @@ public class GrapheView extends JFrame{
         jpb.setBorder(BorderFactory.createTitledBorder("Coloration"));
         jpb.setBackground(new Color(250,245,220));
         return jpb;
+    }
+    public JPanelDijkstra panelListenerTest3(){
+        jpd = new JPanelDijkstra(new BorderLayout(),this.graphe, this);
+        jpd.setBorder(BorderFactory.createTitledBorder("Dijkstra"));
+        jpd.setBackground(new Color(250,245,220));
+        return jpd;
     }
     public JPanelGraphe panelListenerTest(){
         jpg = new JPanelGraphe(new BorderLayout(),this.graphe);

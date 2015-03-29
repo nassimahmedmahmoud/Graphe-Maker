@@ -3,155 +3,6 @@ package graphe;
 import java.util.*;
 
 public class Dijkstra {
-	/*// creation du graphe
-=======
-	/* // creation du graphe
->>>>>>> Stashed changes
-    public static final int INFINITE = Integer.MAX_VALUE;
-    private int x0;
-    private int [] S;//ensemble de sommets dont les distances les plus courtes à la source sont connues au depart seulement Source
-    private int [] sommetProche;//ensemble des predecesseur des sommets de 0 à N-1;
-    private Graphe graphe;
-    private int [] d_min;//tableau des valeurs du meilleur raccourci pour se rendre à chaque sommet
-    // rajout
-    private boolean [] noeudsMarques;
-    private static int DIMENSION_MATRICE;//je rajoute ça pour simplifier le code.
-    private static int NOMBRE_ARCS;//je rajoute ça pour simplifier le code.
-
-    public Dijkstra( int x, Graphe graphe){   
-        x0 = x;
-        this.graphe= graphe;
-        DIMENSION_MATRICE = graphe.getSommets().size();
-        NOMBRE_ARCS=graphe.getArcs().size();
-        S = new int [DIMENSION_MATRICE];//sommets atteints
-        d_min = new int [DIMENSION_MATRICE];//distances
-        noeudsMarques = new boolean[DIMENSION_MATRICE];
-        sommetProche = new int [DIMENSION_MATRICE];
-        calculePlusCourtChemin();
-    }
-
-    private void calculePlusCourtChemin(){
-        int n =0;
-        for (int a = 0; a < DIMENSION_MATRICE; a++){
-            noeudsMarques[a] =false;
-            S[a]=-1; //en supposant qu'on numerote les sommets de 0 ou de 1 à n.
-            sommetProche[a]=-1; // pour les noeuds qui n'ont pas de predecesseur
-            d_min[a]=INFINITE;
-        }
-        S[n]=x0;
-        d_min[x0]=0;
-        sommetProche[x0]=x0;
-
-        initDistMin();
-
-        for (int i = 0; i< DIMENSION_MATRICE ;i++){   
-            if (!noeudsMarques[i]){
-                int t = choixSommet();
-                noeudsMarques[t] = true;
-                n++;
-                S[n]=t;
-                majDistMin(t);
-            }
-        }
-    }
-
-    //implementation de initDistMin
-    private void initDistMin(){
-        noeudsMarques[x0]=true;
-        int[][] matrice = graphe.matrice();
-        System.out.println("Matrice : ");
-        for(int i=0;i<matrice.length;i++){
-        	for(int j =0;j<matrice[i].length;j++){
-        		System.out.print(matrice[i][j]+"-");
-        	}
-        	System.out.println();
-        }
-        for (int i=0; i<graphe.getSommets().get(x0).getArcs().size();i++){
-            if(graphe.getSommets().get(x0).getArc(i)!=null){
-              d_min[i] =matrice[x0][i];
-                sommetProche[i] = x0;
-            }
-            else {
-                if (!graphe.getSommets().get(x0).equals(graphe.getSommets().get(i)))
-                     d_min[i]=INFINITE;
-            }
-        }
-    }
-
-    private void majDistMin(int n){
-        for (int i = 0; i < graphe.getSommets().get(n).getArcs().size(); i++){           
-                if (!noeudsMarques[i]){
-                    //D[i] = min(D[i], D[n] + distanceDsGraphe(n,i));
-                    if (d_min[n] + distanceDsGraphe(n,i)<d_min[i]){
-                        d_min[i]=d_min[n] + distanceDsGraphe(n,i);
-                        sommetProche[i]=n;
-                    }
-                }
-        }
-    }
-    private int distanceDsGraphe (int t, int s){
-        if (graphe.getSommets().get(t).getArc(s)!=null){       
-            return graphe.matrice()[t][s];
-        }
-        else {
-            return INFINITE;
-        }
-    }
-
-    public int choixSommet(){
-        int valeurMin = INFINITE;
-        int min = x0;
-        for (int i=0; i<DIMENSION_MATRICE ;i++){
-            if (!noeudsMarques[i])
-                if (d_min[i]<=valeurMin){
-                    min = i;
-                    valeurMin = d_min[i];
-                }
-        }
-        return min;
-    }
-
-
-
-    public int longueurChemin (int i){
-        return d_min[i];
-    }
-    //fonction à definir min
-    private int min (int i, int j){
-        if (i<=j)
-            return i;
-        else return j;
-    }
-    public void afficheChemin(int i){
-        int source = x0;
-        int antecedent = i;
-        ArrayList<Integer> lesNoeudsIntermediaires = new ArrayList<Integer>();;
-        System.out.println("Chemin de "+x0+" à "+ i+":");
-    	System.out.println("Antecedent : "+antecedent);
-    	System.out.println("Source : "+source);
-    	System.out.print("Sommet proche : ");
-    	for(int j=0;j<sommetProche.length;j++)
-    		System.out.print(sommetProche[i]+"-");
-    	System.out.println();
-        while (antecedent!=source){	
-        	System.out.println("Antecedent : "+antecedent);
-
-            if(antecedent!=-1){
-            	lesNoeudsIntermediaires.add(antecedent);
-            	antecedent = sommetProche[antecedent];     	  
-            }
-            else
-            	antecedent=0;
-        }
-        lesNoeudsIntermediaires.add(source);
-        for (int j= lesNoeudsIntermediaires.size()-1; j>0;j--){
-            System.out.print("-->"+(lesNoeudsIntermediaires.get(j)+1));
-        }
-        System.out.println();
-<<<<<<< Updated upstream
-    }
-    }*/
-
 	private int[] dmin;
 	private Sommet source;
 	private int[] sommetProche;
@@ -169,14 +20,9 @@ public class Dijkstra {
 		if (ui) {
 			int indexSource = graphe.getSommets().indexOf(source);
 			dijkstraAlgorithm(indexSource);
-			System.out.print("Dmin : ");
-			for (int i = 0; i < dmin.length; i++) {
-				System.out.print(dmin[i] + "-");
-			}
-			System.out.println();
 			System.out.print("sommetProche : ");
-			for (int i = 0; i < sommetProche.length; i++) {
-				System.out.print("|"+sommetProche[i]+"|");
+			for (int j = 0; j < sommetProche.length; j++) {
+				System.out.print("|"+sommetProche[j]+"|");
 			}
 		}
 	}
@@ -289,6 +135,44 @@ public class Dijkstra {
 		}
 		return 0;
 	}
+
+	public ArrayList<Sommet> distanceSource(Sommet arrive){
+		ArrayList<Sommet> tabFinal = new ArrayList<Sommet>();
+
+		int indexLocal = graphe.getSommets().indexOf(arrive);
+		int i=1;
+		tabFinal.add(graphe.getSommets().get(indexLocal));
+		while(indexLocal!=-1){
+			if(indexLocal!=-1){
+				tabFinal.add(graphe.getSommets().get(indexLocal));
+				indexLocal=sommetProche[indexLocal];
+			}
+		}
+		System.out.print("tabFinal : ");
+		for (int j = 0; j < tabFinal.size(); j++) {
+			System.out.print("|"+tabFinal.get(j)+"|");
+		}
+		return tabFinal;
+	}
+	
+	/*public ArrayList<Arc> distanceSourceArc(Sommet arrive){
+		ArrayList<Arc> tabFinal = new ArrayList<Arc>();
+
+		int indexLocal = graphe.getSommets().indexOf(arrive);
+		int i=1;
+		tabFinal.add(graphe.getSommets().get(indexLocal));
+		while(indexLocal!=-1){
+			if(indexLocal!=-1){
+				tabFinal.add(graphe.getSommets().get(indexLocal));
+				indexLocal=sommetProche[indexLocal];
+			}
+		}
+		System.out.print("tabFinal : ");
+		for (int j = 0; j < tabFinal.size(); j++) {
+			System.out.print("|"+tabFinal.get(j)+"|");
+		}
+		return tabFinal;
+	}*/
 
 	public int[] getDmin() {
 		return dmin;

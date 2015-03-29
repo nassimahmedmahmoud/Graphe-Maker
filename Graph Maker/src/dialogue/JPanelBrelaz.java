@@ -18,8 +18,6 @@ public class JPanelBrelaz extends JPanel
         new Color(255,255,200), new Color(50,255,160), new Color(200,200,50),
         new Color(255,0,100), new Color(200,0,0), new Color(0,200,0)
     };
-    
-    private Arc arc;
     private GrapheView gv;
  
     public JPanelBrelaz(LayoutManager layout,Graphe graphe, GrapheView gv)

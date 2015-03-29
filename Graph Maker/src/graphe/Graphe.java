@@ -497,7 +497,8 @@ public class Graphe {
 		}
 		return color;
 	}
-	public int chromatique(int[]colors){
+	public int chromatique(){
+		int [] colors = coloration();
 		if(colors!=null && colors.length>1){
 			int val = colors[0];
 			for (int i = 1; i < colors.length; i++)
@@ -505,7 +506,7 @@ public class Graphe {
 					val = colors[i];
 			return val;
 		}
-		return -1;
+		return 0;
 	}
 
 	public boolean isTree(){
@@ -616,6 +617,34 @@ public class Graphe {
 			sommets.add(s);
 		}
 	}
+	
+	public String stringMatrice(){
+        String s="<html>";
+        int[][]tab =matrice();
+        for(int i=0;i< tab.length;i++){
+            for(int j=0;j< tab.length;j++){
+                s+=tab[i][j]+"\t";
+            }
+            s+="<br/>";
+        }
+        s+="</html>";
+        return s;
+	}
+	
+	public String connexeArbre(){
+		String s ="<html>";
+		if(connexeGraphe())
+    		s+="Le graphe est connexe<br/>";
+    	else
+    		s+="Le graphe n'est pas connexe<br/>";
+        if(isTree())
+        	s+="Le graphe est un arbre<br/>";
+        else
+        	s+="Le graphe n'est pas un arbre<br/>";
+		s+="</html>";
+		return s;
+	}
+	
 
 	public String getNom() {
 		return nom;

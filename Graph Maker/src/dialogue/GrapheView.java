@@ -1,7 +1,9 @@
 package dialogue;
  
 import java.awt.*;
+
 import javax.swing.*;
+
 import controller.*;
 import graphe.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -21,9 +23,16 @@ public class GrapheView extends JFrame{
     private JPanelGraphe jpg;
     private JPanelBrelaz jpb;
     private JTextField jtfNode;
-    private JButton jlColors;
+    private JLabel jlColors;
     private JButton clik;
     private int[] colors;
+    private JLabel jl ;
+	private JLabel jlca;
+    
+    public static final int ONGLET_GRAPHE =0;
+    public static final int ONGLET_DIJKSTRA =1;
+    public static final int ONGLET_BRELAZ =2;
+    public static final int ONGLET_GENERAL =3;
  
     public GrapheView(String titre,int w,int h){
         super(titre);
@@ -45,9 +54,10 @@ public class GrapheView extends JFrame{
         jp1.add(jl);
  
         onglets.addTab("Graphe", null,this.panel1());
-        onglets.addTab("Djikstra", null, jp1);
+        onglets.addTab("Dijkstra", null, jp1);
         onglets.addTab("Coloration", null, panel2());
-        onglets.addTab("GÃ©nÃ©ral", null, this.panel4());
+        onglets.addTab("Général", null, this.panel4());
+        onglets.addChangeListener(new ListenerChangeGraphe(this));
         c.add(onglets);
     }
  
@@ -95,10 +105,10 @@ public class GrapheView extends JFrame{
         barrete = new JToggleButton("arÃªte");
         barcarrete = new JButton("arc <-> arÃªte");
         bgomme= new JToggleButton("gomme");
+        clik = new JButton("Clique");
         JLabel ltSizeNode = new JLabel("Taille du sommet : ");
         jtfNode= new JTextField("50");
         JButton breset = new JButton("reset");
-        clik = new JButton("Clique");
         pgraphe.add(this.panelListenerTest(),"Center");
         btngrp.add(bclic);
         btngrp.add(bsommet);
@@ -131,35 +141,68 @@ public class GrapheView extends JFrame{
     public JPanel panel2(){
         JPanel jp = new JPanel(new BorderLayout());
         jp.add(this.panelListenerTest2(),"Center");
-        jlColors = new JButton();
-       // jlColors.setBorderPainted( false );
-       
-        jp.add(jlColors,"South");
+        jp.add(nbChromatique(),"South");
         return jp;
     }
      
     public JPanel panel4(){
         JPanel jp=new JPanel();
-        JLabel jl = new JLabel();
-        this.graphe.matrice();
-        String s="";
-        int[][]tab =this.graphe.matrice();
-        for(int i=0;i< tab.length;i++)
-            for(int j=0;j< tab.length;j++){
-                s+=tab[i][j];
-            }
+        jp.add(panelMatrice(),"North");
+        jp.add(panelConnexeArbre(),"South");
+        return jp;
+    }
+    
+    public JPanel nbChromatique(){
+    	JPanel jp=new JPanel(); 
+    	jp.setBorder(BorderFactory.createTitledBorder("Nombre Chromatique"));
+    	jlColors= new JLabel();
+        jlColors.setHorizontalAlignment(JLabel.CENTER);
+    	jlColors.setVerticalAlignment(JLabel.CENTER);
+    	jlColors.setPreferredSize(new Dimension(70,70));
+    	String s = "";
+    	s+=""+graphe.chromatique();
+        jlColors.setText(s);
+        jp.add(jlColors);
+        jlColors.repaint();
+        return jp;
+    }
+    
+    public JPanel panelMatrice(){
+    	JPanel jp=new JPanel(); 
+    	jp.setBorder(BorderFactory.createTitledBorder("Matrice"));
+    	jl= new JLabel();
+    	jl.setHorizontalAlignment(JLabel.CENTER);
+    	jl.setVerticalAlignment(JLabel.CENTER);
+    	jl.setPreferredSize(new Dimension(70,70));
+    	String s = this.graphe.stringMatrice();
         jl.setText(s);
         jp.add(jl);
+        jl.repaint();
+        return jp;
+    }
+    
+    public JPanel panelConnexeArbre(){
+    	JPanel jp=new JPanel(); 
+    	jp.setBorder(BorderFactory.createTitledBorder("Informations complémentaires"));
+    	jlca= new JLabel();
+    	jlca.setHorizontalAlignment(JLabel.CENTER);
+    	jlca.setVerticalAlignment(JLabel.CENTER);
+    	jlca.setPreferredSize(new Dimension(300,40));
+    	jlca.setText(graphe.connexeArbre());
+        jp.add(jlca);
+        jlca.repaint();
         return jp;
     }
  
     public JPanelBrelaz panelListenerTest2(){
         jpb = new JPanelBrelaz(new BorderLayout(),this.graphe, this);
+        jpb.setBorder(BorderFactory.createTitledBorder("Coloration"));
         jpb.setBackground(new Color(250,245,220));
         return jpb;
     }
     public JPanelGraphe panelListenerTest(){
         jpg = new JPanelGraphe(new BorderLayout(),this.graphe);
+        jpg.setBorder(BorderFactory.createTitledBorder("Editer le graphe"));
         jpg.setBackground(new Color(250,245,220));
         ListenerBoutonGraphe lbg = new ListenerBoutonGraphe(this);
         ListenerMouseMotionGraphe lmmg = new ListenerMouseMotionGraphe(this,lbg);
@@ -290,12 +333,28 @@ public class GrapheView extends JFrame{
 		this.jtfNode = jtfNode;
 	}
 
-	public JButton getJlColors() {
+	public JLabel getJlColors() {
 		return jlColors;
 	}
 
-	public void setJlColors(JButton jlColors) {
+	public void setJlColors(JLabel jlColors) {
 		this.jlColors = jlColors;
+	}
+
+	public JLabel getJl() {
+		return jl;
+	}
+
+	public void setJl(JLabel jl) {
+		this.jl = jl;
+	}
+
+	public JLabel getJlca() {
+		return jlca;
+	}
+
+	public void setJlca(JLabel jlca) {
+		this.jlca = jlca;
 	}
  
  

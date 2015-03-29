@@ -28,8 +28,6 @@ public class ListenerActionGraphe implements ActionListener {
                     this.gv.getGraphe().createClique();
 		if(this.gv.getBrelaz() == e.getSource())
 			this.gv.setColors(this.gv.getGraphe().coloration());
-		if(e.getSource()==gv.getJlColors())
-			this.gv.getJlColors().setText(""+this.gv.getGraphe().chromatique(this.gv.getColors()));
 		this.gv.getJpb().repaint();
 		this.gv.getJpg().repaint();
 	}

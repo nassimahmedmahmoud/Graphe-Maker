@@ -1,9 +1,7 @@
 package controller;
 
 import graphe.*;
-
 import java.awt.event.*;
-
 import dialogue.*;
 
 public class ListenerMouseMotionGraphe implements MouseMotionListener  {

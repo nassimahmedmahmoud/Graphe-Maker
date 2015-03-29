@@ -20,7 +20,7 @@ public class JPanelBrelaz extends JPanel
     };
     private GrapheView gv;
  
-    public JPanelBrelaz(LayoutManager layout,Graphe graphe, GrapheView gv)
+    public JPanelBrelaz(LayoutManager layout/*,Graphe graphe*/, GrapheView gv)
     {
         super(layout);
         this.gv = gv;

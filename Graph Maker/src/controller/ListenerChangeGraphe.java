@@ -13,8 +13,7 @@ public class ListenerChangeGraphe implements ChangeListener {
 		this.gv = gv;
 	}
 
-
-
+        @Override
 	public void stateChanged(ChangeEvent e) {
 		if(gv.getOnglets().getSelectedIndex()==GrapheView.ONGLET_GENERAL){
 			gv.getJl().setText(gv.getGraphe().stringMatrice());
@@ -24,9 +23,8 @@ public class ListenerChangeGraphe implements ChangeListener {
 		}
 		if(gv.getOnglets().getSelectedIndex()==GrapheView.ONGLET_BRELAZ){
 			gv.getJlColors().setText("Le nombre de couleurs est majoré par : "+gv.getGraphe().chromatique());
-			gv.getJlColors().repaint();
-		}
-		
+                        gv.getJlColors().repaint();
+                }
 	}
 
 }

@@ -29,6 +29,7 @@ public class GrapheView extends JFrame{
     private int[] colors;
     private JLabel jl ;
     private JLabel jlca;
+    private ButtonGroup btngrp;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -43,7 +44,7 @@ public class GrapheView extends JFrame{
         this.setSize(w,h);
         this.setVisible(true);
     }
- 
+    
     public void initialise(){
         Container c = this.getContentPane();
         JPanel jp1 = new JPanel();
@@ -97,41 +98,66 @@ public class GrapheView extends JFrame{
         menuAide.add(menupropos);
         return menuAide;
     }
-    public JPanel panelGraphe(){
+    
+    public JPanel initAvc()
+    {
+        JPanel opt = new JPanel();
+        opt.setPreferredSize(new Dimension(200,this.getHeight()));
+        
+        JPanel clk = new JPanel();
+        JPanel cst = new JPanel();
+        clk.setBorder(BorderFactory.createTitledBorder("Clique générique"));
+        cst.setBorder(BorderFactory.createTitledBorder("<html><p>Clique avec"
+                + "<br />sommets spécifiques</p></html>"));
+        //clk.setLayout(new GridLayout(2,1));
+        //cst.setLayout(new GridLayout(3,1));
+        opt.setLayout(new GridLayout(2,1));
+        clik = new JButton("Clique");
+        clikc = new JToggleButton("Clique Custom");
+        create = new JButton("Append");
+        opt.setBorder(BorderFactory.createTitledBorder("Options Clique"));
+        JLabel labelclique = new JLabel("<html><p>Créer une clique"
+                + "<br/>comprenant tous les sommets</p></html>");
+        JLabel cliqueavc = new JLabel("<html><p>Cliquez sur les sommets pour"
+                + "<br />faire une clique customisée</p></html>");
+        btngrp.add(clikc);
+        clk.add(labelclique);
+        clk.add(clik);
+        cst.add(cliqueavc);
+        cst.add(clikc);
+        cst.add(create);
+        opt.add(clk);
+        opt.add(cst);
+        clik.addActionListener(new ListenerActionGraphe(this));
+        create.addActionListener(new ListenerActionGraphe(this));
+        return opt;
+    }
+
+public JPanel panelGraphe(){
         JPanel pgraphe = new JPanel();
-        ButtonGroup btngrp = new ButtonGroup();
+        btngrp = new ButtonGroup();
         bclic = new JToggleButton("clic");
         bsommet = new JToggleButton("sommet");
         barc = new JToggleButton("arc");
         barrete = new JToggleButton("arÃªte");
         barcarrete = new JButton("arc <-> arÃªte");
         bgomme= new JToggleButton("gomme");
-        clik = new JButton("Clique");
-        clikc = new JToggleButton("Clique Custom");
-        create = new JButton("Append");
         JLabel ltSizeNode = new JLabel("Taille du sommet : ");
         jtfNode= new JTextField("50");
         JButton breset = new JButton("reset");
-        pgraphe.add(this.panelListenerTest(),"Center");
         btngrp.add(bclic);
         btngrp.add(bsommet);
         btngrp.add(barc);
         btngrp.add(barrete);
         btngrp.add(bgomme);
-        btngrp.add(clikc);
         pgraphe.add(bclic);
         pgraphe.add(bsommet);
         pgraphe.add(barc);
         pgraphe.add(barcarrete);
         pgraphe.add(bgomme);
-        pgraphe.add(clik);
-        pgraphe.add(clikc);
-        pgraphe.add(create);
         pgraphe.add(ltSizeNode);
         pgraphe.add(jtfNode);
         pgraphe.add(breset);
-        clik.addActionListener(new ListenerActionGraphe(this));
-        create.addActionListener(new ListenerActionGraphe(this));
         barcarrete.addActionListener(new ListenerActionGraphe(this));
         breset.addActionListener(new ListenerActionGraphe(this));
         jtfNode.addActionListener(new ListenerActionGraphe(this));
@@ -141,6 +167,7 @@ public class GrapheView extends JFrame{
         JPanel jp = new JPanel(new BorderLayout());
         jp.add(this.panelGraphe(),"North");
         jp.add(this.panelListenerTest(),"Center");
+        jp.add(initAvc(),"East");
         return jp;
     }
  
@@ -207,7 +234,7 @@ public class GrapheView extends JFrame{
     }
  
     public JPanelBrelaz panelListenerTest2(){
-        jpb = new JPanelBrelaz(new BorderLayout(),this.graphe, this);
+        jpb = new JPanelBrelaz(new BorderLayout()/*,this.graphe*/, this);
         jpb.setBorder(BorderFactory.createTitledBorder("Coloration"));
         jpb.setBackground(new Color(250,245,220));
         return jpb;

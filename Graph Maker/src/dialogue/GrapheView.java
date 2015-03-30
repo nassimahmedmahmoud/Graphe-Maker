@@ -1,7 +1,9 @@
 package dialogue;
  
 import java.awt.*;
+
 import javax.swing.*;
+
 import controller.*;
 import graphe.*;
 import static javax.swing.JFrame.*;
@@ -36,6 +38,8 @@ public class GrapheView extends JFrame{
     private JLabel info;
     private ButtonGroup btngrp;
     private JTextField dist;
+    private JLabel jlDijkstra;
+    private Dijkstra d;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -207,7 +211,10 @@ public JPanel panelGraphe(){
     
     public JPanel panel2(){
         JPanel jp = new JPanel(new BorderLayout());
+        d=new Dijkstra(graphe);
         jp.add(this.panelListenerTest3(),"Center");
+        jlDijkstra = new JLabel(d.toString());
+        jp.add(jlDijkstra);
         return jp;
     }
      
@@ -279,15 +286,17 @@ public JPanel panelGraphe(){
     }
  
     public JPanelBrelaz panelListenerTest2(){
-        jpb = new JPanelBrelaz(new BorderLayout()/*,this.graphe*/, this);
+        jpb = new JPanelBrelaz(new BorderLayout(), this);
         jpb.setBorder(BorderFactory.createTitledBorder("Coloration"));
         jpb.setBackground(new Color(250,245,220));
         return jpb;
     }
     public JPanelDijkstra panelListenerTest3(){
-        jpd = new JPanelDijkstra(new BorderLayout(),this.graphe, this);
+        jpd = new JPanelDijkstra(new BorderLayout(),this);
         jpd.setBorder(BorderFactory.createTitledBorder("Dijkstra"));
         jpd.setBackground(new Color(250,245,220));
+        ListenerDijkstraGraphe ldg = new ListenerDijkstraGraphe(this,this.d);
+        jpd.addMouseListener(ldg);
         return jpd;
     }
     public JPanelGraphe panelListenerTest(){
@@ -526,4 +535,21 @@ public JPanel panelGraphe(){
         public void setCreate(JButton create) {
             this.create = create;
         }
+
+		public JLabel getJlDijkstra() {
+			return jlDijkstra;
+		}
+
+		public void setJlDijkstra(JLabel jlDijkstra) {
+			this.jlDijkstra = jlDijkstra;
+		}
+
+		public Dijkstra getD() {
+			return d;
+		}
+
+		public void setD(Dijkstra d) {
+			this.d = d;
+		}
+		
 }

@@ -8,22 +8,34 @@ public class Dijkstra {
 	private int[] sommetProche;
 	private Graphe graphe;
 	private boolean[] marquage;
+	private Sommet arrivee;
 
 	public Dijkstra(Sommet source, Graphe graphe) {
-		super();
 		this.source = source;
 		this.graphe = graphe;
 		this.sommetProche = new int[graphe.getSommets().size()];
 		this.marquage = new boolean[graphe.getSommets().size()];
 		this.dmin = new int[graphe.getSommets().size()];
 		boolean ui = initialisation();
-		if (ui) {
+		if (ui && source!=null) {
 			int indexSource = graphe.getSommets().indexOf(source);
 			dijkstraAlgorithm(indexSource);
-			System.out.print("sommetProche : ");
-			for (int j = 0; j < sommetProche.length; j++) {
-				System.out.print("|"+sommetProche[j]+"|");
-			}
+
+		}
+	}
+	
+	public Dijkstra(Graphe graphe){
+		this.graphe = graphe;
+		this.sommetProche = new int[graphe.getSommets().size()];
+		this.marquage = new boolean[graphe.getSommets().size()];
+		this.dmin = new int[graphe.getSommets().size()];
+	}
+	
+	public void algorithmDijkstra(){
+		boolean ui = initialisation();
+		if (ui && source!=null) {
+			int indexSource = graphe.getSommets().indexOf(source);
+			dijkstraAlgorithm(indexSource);
 		}
 	}
 
@@ -154,16 +166,21 @@ public class Dijkstra {
 		}
 		return tabFinal;
 	}
-	
-	public ArrayList<Arc> distanceSourceArc(Sommet arrive){
-		ArrayList<Arc> tabFinal = new ArrayList<Arc>();
 
-		int indexLocal = graphe.getSommets().indexOf(arrive);
+	public ArrayList<Arc> distanceSourceArc(){
+		ArrayList<Arc> tabFinal = new ArrayList<Arc>();
+		int indexLocal = graphe.getSommets().indexOf(arrivee);
 		while(indexLocal!=-1){
-			if(indexLocal!=-1 && sommetProche[indexLocal]!=-1){
-				tabFinal.add(graphe.arcaPartirSommets(graphe.getSommets().get(indexLocal),graphe.getSommets().get(sommetProche[indexLocal])));
-				indexLocal=sommetProche[indexLocal];
+			Arc a=null;
+			if(sommetProche[indexLocal]!=-1)
+				a= graphe.arcaPartirSommets(graphe.getSommets().get(indexLocal),graphe.getSommets().get(sommetProche[indexLocal]));
+			if(a!=null){
+				System.out.println("Arc : "+a.getNom());
+				tabFinal.add(a);
 			}
+			tabFinal.trimToSize();
+			indexLocal=sommetProche[indexLocal];
+			System.out.println("indexLocal : "+indexLocal);
 		}
 		System.out.print("tabFinal : ");
 		for (int j = 0; j < tabFinal.size(); j++) {
@@ -204,4 +221,27 @@ public class Dijkstra {
 	public void setMarquage(boolean[] marquage) {
 		this.marquage = marquage;
 	}
+	
+	public Sommet getArrivee() {
+		return arrivee;
+	}
+
+	public void setArrivee(Sommet arrivee) {
+		this.arrivee = arrivee;
+	}
+
+	public String toString(){
+		String s="<html><table><th>Dmin</th><tr>";
+		for(int i=0;i<dmin.length;i++){
+			s+="<td>"+graphe.getSommets().get(i).getNom()+"</td>";
+		}
+		s+="</tr>";
+		for(int i=0;i<dmin.length;i++){
+			s+="<td>"+dmin[i]+"</td>";
+		}
+		s+="</tr>";
+		s+="</html>";
+		return s;
+	}
+	
 }

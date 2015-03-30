@@ -46,7 +46,7 @@ public class Graphe {
 
 	public Arc arcaPartirSommets(Sommet s1,Sommet s2){
 		for(Arc a : arcs){
-			if(a.getOrigine().equals(s1) && a.getArrivee().equals(s2))
+			if(a.getOrigine().equals(s2) && a.getArrivee().equals(s1))
 				return a;
 		}
 		return null;

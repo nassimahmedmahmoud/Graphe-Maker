@@ -13,7 +13,7 @@ public class JPanelDijkstra extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private GrapheView gv;
 
-	public JPanelDijkstra(LayoutManager layout,Graphe graphe, GrapheView gv)
+	public JPanelDijkstra(LayoutManager layout,GrapheView gv)
 	{
 		super(layout);
 		this.gv = gv;
@@ -23,27 +23,22 @@ public class JPanelDijkstra extends JPanel{
 	{
 		super.paintComponent(g);
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		Dijkstra d = new Dijkstra(gv.getGraphe().getSommets().get(0),gv.getGraphe());
-		ArrayList<Sommet> tab = d.distanceSource(gv.getGraphe().getSommets().get(1));
+		gv.getD().algorithmDijkstra();
 		for(Arc a : gv.getGraphe().getArcs()){
-			if((tab.contains(a.getArrivee())))
-				this.drawLines(g,a,Color.CYAN);
-			else
-				this.drawLines(g,a,Color.BLACK);
+			this.drawLines(g,a,Color.BLACK);
 		}
+		
 		for(Sommet s : gv.getGraphe().getSommets()){
 			drawNode(s,g,gv.getGraphe().getTailleSommet(),Color.WHITE);
 		}
-		/*
-		 * 		ArrayList<Arc> tab = d.distanceSourceArc(gv.getGraphe().getSommets().get(1));
-		for(Arc a : gv.getGraphe().getArcs()){
-				this.drawLines(g,a,Color.BLACK);
+		if(gv.getD().getSource()!=null)
+			this.drawNode(gv.getD().getSource(), g,gv.getGraphe().getTailleSommet(), Color.CYAN);
+		if(gv.getD().getArrivee()!=null){
+			ArrayList<Arc> tab = gv.getD().distanceSourceArc();
+			for(Arc arc : tab)
+				this.drawLines(g,arc,Color.CYAN);
+			this.drawNode(gv.getD().getArrivee(), g,gv.getGraphe().getTailleSommet(), Color.CYAN);
 		}
-		for(Arc arc : tab)
-			this.drawLines(g,arc,Color.CYAN);
-		for(Sommet s : gv.getGraphe().getSommets()){
-			drawNode(s,g,gv.getGraphe().getTailleSommet(),Color.WHITE);
-		}*/
 	} 
 
 	void drawNode(Sommet s,Graphics g,int diametre,Color color)

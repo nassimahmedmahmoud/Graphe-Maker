@@ -34,6 +34,16 @@ public class JPanelDijkstra extends JPanel{
 		for(Sommet s : gv.getGraphe().getSommets()){
 			drawNode(s,g,gv.getGraphe().getTailleSommet(),Color.WHITE);
 		}
+		/*
+		 * 		ArrayList<Arc> tab = d.distanceSourceArc(gv.getGraphe().getSommets().get(1));
+		for(Arc a : gv.getGraphe().getArcs()){
+				this.drawLines(g,a,Color.BLACK);
+		}
+		for(Arc arc : tab)
+			this.drawLines(g,arc,Color.CYAN);
+		for(Sommet s : gv.getGraphe().getSommets()){
+			drawNode(s,g,gv.getGraphe().getTailleSommet(),Color.WHITE);
+		}*/
 	} 
 
 	void drawNode(Sommet s,Graphics g,int diametre,Color color)

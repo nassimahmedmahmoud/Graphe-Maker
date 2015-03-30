@@ -12,8 +12,8 @@ public class Graphe {
 	private ArrayList<Sommet> sommets;
 	private ArrayList<Arc> arcs;
 	private int tailleSommet=50;
-        private ArrayList<Sommet> tabCick;
-        private int dist;
+	private ArrayList<Sommet> tabCick;
+	private int dist;
 
 	/**
 	 * Constructeur champ a champ du graphe prend en paramÃ¨tres :
@@ -32,7 +32,7 @@ public class Graphe {
 		this.type = type;
 		this.sommets = sommets;
 		this.arcs = arcs;
-                this.tabCick = new ArrayList<Sommet>();
+		this.tabCick = new ArrayList<Sommet>();
 	}
 
 	/**
@@ -44,6 +44,14 @@ public class Graphe {
 		this("Graphe_1",Graphe.NON_ORIENTE,new ArrayList<Sommet>(),new ArrayList<Arc>());
 	}
 
+	public Arc arcaPartirSommets(Sommet s1,Sommet s2){
+		for(Arc a : arcs){
+			if(a.getOrigine().equals(s1) && a.getArrivee().equals(s2))
+				return a;
+		}
+		return null;
+	}
+	
 	/**
 	 * MÃ©thode qui permet d'orienter un graphe non orientÃ©, ou si celui-ci est orientÃ© de
 	 * le de-orienter.
@@ -116,56 +124,56 @@ public class Graphe {
 
 		return nb;
 	}*/
-        
-        public void createClique(int i)
-        {
-            if(this.sommets.size() > 1)
-            {
-                Arc a;
-                for(Sommet s : sommets)
-                {
-                    for(Sommet d : sommets)
-                    {
-                        if(i == 0)
-                            a = new Arc("",s,d,0,0);
-                        else
-                            a = new Arc(""+i,s,d,0,0);
-                        a.milieu();
-                        if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && s != d))
-                        {
-                            arcs.add(a);
-                            a.getOrigine().getArcs().add(a);
-                            a.getArrivee().getArcs().add(a);
-                        }
-                    }
-                }
-            }
-        }
-        
-        public void createClique(int i, ArrayList<Sommet> tab)
-        {
-            if(tab.size() > 1)
-            {
-                Arc a;
-                for(Sommet s : tab)
-                {
-                    for(Sommet d : tab)
-                    {
-                        if(i == 0)
-                            a = new Arc("",s,d,0,0);
-                        else
-                            a = new Arc(""+i,s,d,0,0);
-                        a.milieu();
-                        if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && s != d))
-                        {
-                            arcs.add(a);
-                            a.getOrigine().getArcs().add(a);
-                            a.getArrivee().getArcs().add(a);
-                        }
-                    }
-                }
-            }
-        }
+
+	public void createClique(int i)
+	{
+		if(this.sommets.size() > 1)
+		{
+			Arc a;
+			for(Sommet s : sommets)
+			{
+				for(Sommet d : sommets)
+				{
+					if(i == 0)
+						a = new Arc("",s,d,0,0);
+					else
+						a = new Arc(""+i,s,d,0,0);
+					a.milieu();
+					if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && s != d) || this.type == ORIENTE)
+					{
+						arcs.add(a);
+						a.getOrigine().getArcs().add(a);
+						a.getArrivee().getArcs().add(a);
+					}
+				}
+			}
+		}
+	}
+
+	public void createClique(int i, ArrayList<Sommet> tab)
+	{
+		if(tab.size() > 1)
+		{
+			Arc a;
+			for(Sommet s : tab)
+			{
+				for(Sommet d : tab)
+				{
+					if(i == 0)
+						a = new Arc("",s,d,0,0);
+					else
+						a = new Arc(""+i,s,d,0,0);
+					a.milieu();
+					if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && s != d) || this.type == ORIENTE)
+					{
+						arcs.add(a);
+						a.getOrigine().getArcs().add(a);
+						a.getArrivee().getArcs().add(a);
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * La mÃ©thode metrique revoie un boolÃ©en indiquant si le graphe est mÃ©trique
@@ -262,8 +270,8 @@ public class Graphe {
 		}
 		return ui;
 	}
-        
-        public boolean isNumeric(String str)  
+
+	public boolean isNumeric(String str)  
 	{  
 		try  
 		{  
@@ -331,18 +339,18 @@ public class Graphe {
 			return matriceNonOriente();
 		}
 	}
-        
-        public boolean sommetInGraphe(ArrayList<Sommet> tab, Sommet somm_s)
-        {
-            boolean ui = false;
-            
-            for(Sommet s : tab)
-                if(somm_s.equals(s))
-                    ui = true;
-            
-            return ui;
-        }
-        
+
+	public boolean sommetInGraphe(ArrayList<Sommet> tab, Sommet somm_s)
+	{
+		boolean ui = false;
+
+		for(Sommet s : tab)
+			if(somm_s.equals(s))
+				ui = true;
+
+		return ui;
+	}
+
 	public boolean arcInGraphe(Arc arc_g)
 	{
 		boolean ui = false;
@@ -367,54 +375,54 @@ public class Graphe {
 		}    
 		return ui;
 	}
-	
+
 	public void ajouterSommet(Sommet s){
 		if(!sommets.contains(s)){
 			s.setNom(""+(sommets.size()+1));
 			sommets.add(s);
 		}
 	}
-	
+
 	public String stringMatrice(){
-        String s="<html>";
-        int[][]tab =matrice();
-        for(int i=0;i< tab.length;i++){
-            for(int j=0;j< tab.length;j++){
-                s+=tab[i][j]+"\t";
-            }
-            s+="<br/>";
-        }
-        s+="</html>";
-        return s;
-	}
-	
-	public String connexeArbre(){
-		String s ="<html>";
-		if(connexeGraphe())
-    		s+="Le graphe est connexe<br/>";
-    	else
-    		s+="Le graphe n'est pas connexe<br/>";
-        if(isTree())
-        	s+="Le graphe est un arbre<br/>";
-        else
-        	s+="Le graphe n'est pas un arbre<br/>";
+		String s="<html>";
+		int[][]tab =matrice();
+		for(int i=0;i< tab.length;i++){
+			for(int j=0;j< tab.length;j++){
+				s+=tab[i][j]+"\t";
+			}
+			s+="<br/>";
+		}
 		s+="</html>";
 		return s;
 	}
-        
-        public int chromatique(){
+
+	public String connexeArbre(){
+		String s ="<html>";
+		if(connexeGraphe())
+			s+="Le graphe est connexe<br/>";
+		else
+			s+="Le graphe n'est pas connexe<br/>";
+		if(isTree())
+			s+="Le graphe est un arbre<br/>";
+		else
+			s+="Le graphe n'est pas un arbre<br/>";
+		s+="</html>";
+		return s;
+	}
+
+	public int chromatique(){
 		int [] colors = coloration();
-                int val;
+		int val;
 		if(colors!=null && colors.length>1){
 			val = colors[0];
 			for (int i = 1; i < colors.length; i++)
 				if (val<colors[i])
 					val = colors[i];
 		}
-                else if(this.sommets.size() == 1)
-                    val = 1;
-                else
-                    val = 0;
+		else if(this.sommets.size() == 1)
+			val = 1;
+		else
+			val = 0;
 		return val;
 	}
 
@@ -596,7 +604,7 @@ public class Graphe {
 			}
 		}
 	}
-	
+
 	public boolean isColoried(int[]colors){
 		for(int i=0;i<colors.length;i++){
 			if(colors[i]==0)
@@ -642,7 +650,7 @@ public class Graphe {
 					}
 
 				}
-			DSATLocal[this.plusGrandDegre(DSATLocal)]=Integer.MAX_VALUE;
+				DSATLocal[this.plusGrandDegre(DSATLocal)]=Integer.MAX_VALUE;
 			}
 		}
 		for(Sommet s : sommets){
@@ -668,12 +676,12 @@ public class Graphe {
 		System.out.println();
 		int degree = -1;
 		DSAT = sortSommets(DSAT);
-		
+
 		System.out.print("sommets  : ");
 		for(Sommet s : sommets){
 			System.out.print(s.getNom()+"-");
 		}
-		
+
 
 		while(isNotColored(DSAT))
 		{
@@ -739,49 +747,50 @@ public class Graphe {
 		this.tailleSommet = tailleSommet;
 	}
 
-        public ArrayList<Sommet> getTabCick() {
-            return tabCick;
-        }
+	public ArrayList<Sommet> getTabCick() {
+		return tabCick;
+	}
 
-        public void setTabCick(ArrayList<Sommet> tabCick) {
-            this.tabCick = tabCick;
-        }
+	public void setTabCick(ArrayList<Sommet> tabCick) {
+		this.tabCick = tabCick;
+	}
 
-        public int getDist() {
-            return dist;
-        }
+	public int getDist() {
+		return dist;
+	}
 
-        public void setDist(int dist) {
-            this.dist = dist;
-        }
+	public void setDist(int dist) {
+		this.dist = dist;
+	}
 
 	public String toString() {
 		return "Graphe [nom=" + nom + ", type=" + type + ", sommets=" + sommets
 				+ ", arcs=" + arcs + "]";
 	}
-        
-        public String toString(String s)
-        {
-            s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
-            if(this.isType() == Graphe.NON_ORIENTE)
-                s+="<p>Le graphe est <span style=\"color;red\">non orienté</span></p>";
-            else
-                s+="<p>Le graphe est <span style=\"color;green\">orienté</span></p>";
-            
-            if(sommets.isEmpty())
-                s+="<p>Le graphe ne contient aucun sommet</p>";
-            else
-                s+="<p>Le graphe contient " + sommets.size() + " sommets</p>";
-            
-            if(arcs.isEmpty() && this.isType() == ORIENTE)
-                s+="<p>Le graphe ne contient aucun arc</p>";
-            else if(arcs.isEmpty() && this.isType() == NON_ORIENTE)
-                s+="<p>Le graphe ne contient aucune arrête</p>";
-            else if(arcs.size() > 0 && this.isType() == ORIENTE)
-                s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
-            else
-                s+="<p>Le graphe contient " + arcs.size() + " arrêtes</p>";
-            return s;
-        }
+
+	public String toString(String s)
+	{
+		s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
+		if(this.isType() == Graphe.NON_ORIENTE)
+			s+="<p>Le graphe est <span style=\"color;red\">non orienté</span></p>";
+		else
+			s+="<p>Le graphe est <span style=\"color;green\">orienté</span></p>";
+
+		if(sommets.isEmpty())
+			s+="<p>Le graphe ne contient aucun sommet</p>";
+		else
+			s+="<p>Le graphe contient " + sommets.size() + " sommets</p>";
+
+		if(arcs.isEmpty() && this.isType() == ORIENTE)
+			s+="<p>Le graphe ne contient aucun arc</p>";
+		else if(arcs.isEmpty() && this.isType() == NON_ORIENTE)
+			s+="<p>Le graphe ne contient aucune arrête</p>";
+		else if(arcs.size() > 0 && this.isType() == ORIENTE)
+			s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
+		else
+			s+="<p>Le graphe contient " + arcs.size() + " arrêtes</p>";
+		return s;
+	}
+
 
 }

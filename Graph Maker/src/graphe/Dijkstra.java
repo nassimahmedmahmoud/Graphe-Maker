@@ -155,15 +155,13 @@ public class Dijkstra {
 		return tabFinal;
 	}
 	
-	/*public ArrayList<Arc> distanceSourceArc(Sommet arrive){
+	public ArrayList<Arc> distanceSourceArc(Sommet arrive){
 		ArrayList<Arc> tabFinal = new ArrayList<Arc>();
 
 		int indexLocal = graphe.getSommets().indexOf(arrive);
-		int i=1;
-		tabFinal.add(graphe.getSommets().get(indexLocal));
 		while(indexLocal!=-1){
-			if(indexLocal!=-1){
-				tabFinal.add(graphe.getSommets().get(indexLocal));
+			if(indexLocal!=-1 && sommetProche[indexLocal]!=-1){
+				tabFinal.add(graphe.arcaPartirSommets(graphe.getSommets().get(indexLocal),graphe.getSommets().get(sommetProche[indexLocal])));
 				indexLocal=sommetProche[indexLocal];
 			}
 		}
@@ -172,7 +170,7 @@ public class Dijkstra {
 			System.out.print("|"+tabFinal.get(j)+"|");
 		}
 		return tabFinal;
-	}*/
+	}
 
 	public int[] getDmin() {
 		return dmin;

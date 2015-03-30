@@ -20,6 +20,9 @@ public class ListenerChangeGraphe implements ChangeListener {
 			gv.getJl().repaint();
 			gv.getJlca().setText(gv.getGraphe().connexeArbre());
 			gv.getJlca().repaint();
+                        gv.getInfo().setText(gv.getGraphe().toString(" "));
+                        gv.getInfo().repaint();
+                        
 		}
 		if(gv.getOnglets().getSelectedIndex()==GrapheView.ONGLET_BRELAZ){
 			gv.getJlColors().setText("Le nombre de couleurs est majoré par : "+gv.getGraphe().chromatique());

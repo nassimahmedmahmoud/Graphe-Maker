@@ -40,7 +40,7 @@ public class Graphe {
 	 * et une liste d'arcs vide.
 	 */
 	public Graphe(){
-		this("",Graphe.NON_ORIENTE,new ArrayList<Sommet>(),new ArrayList<Arc>());
+		this("Graphe_1",Graphe.NON_ORIENTE,new ArrayList<Sommet>(),new ArrayList<Arc>());
 	}
 
 	/**
@@ -744,5 +744,29 @@ public class Graphe {
 		return "Graphe [nom=" + nom + ", type=" + type + ", sommets=" + sommets
 				+ ", arcs=" + arcs + "]";
 	}
+        
+        public String toString(String s)
+        {
+            s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
+            if(this.isType() == Graphe.NON_ORIENTE)
+                s+="<p>Le graphe est <span style=\"color;red\">non orienté</span></p>";
+            else
+                s+="<p>Le graphe est <span style=\"color;green\">orienté</span></p>";
+            
+            if(sommets.isEmpty())
+                s+="<p>Le graphe ne contient aucun sommet</p>";
+            else
+                s+="<p>Le graphe contient " + sommets.size() + " sommets</p>";
+            
+            if(arcs.isEmpty() && this.isType() == ORIENTE)
+                s+="<p>Le graphe ne contient aucun arc</p>";
+            else if(arcs.isEmpty() && this.isType() == NON_ORIENTE)
+                s+="<p>Le graphe ne contient aucune arrête</p>";
+            else if(arcs.size() > 0 && this.isType() == ORIENTE)
+                s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
+            else
+                s+="<p>Le graphe contient " + arcs.size() + "</p>";
+            return s;
+        }
 
 }

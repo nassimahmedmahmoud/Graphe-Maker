@@ -29,6 +29,7 @@ public class GrapheView extends JFrame{
     private int[] colors;
     private JLabel jl ;
     private JLabel jlca;
+    private JLabel info;
     private ButtonGroup btngrp;
     
     public static final int ONGLET_GRAPHE =0;
@@ -186,8 +187,13 @@ public JPanel panelGraphe(){
      
     public JPanel panel4(){
         JPanel jp=new JPanel();
+        JPanel east = new JPanel();
+        east.setLayout(new GridLayout(2,1));
         jp.add(panelMatrice(),"North");
-        jp.add(panelConnexeArbre(),"South");
+        east.add(panelInfoGeneral(),"North");
+        east.add(panelConnexeArbre(),"South");
+        jp.add(east,"East");
+        
         return jp;
     }
     
@@ -217,6 +223,19 @@ public JPanel panelGraphe(){
         jl.setText(s);
         jp.add(jl);
         jl.repaint();
+        return jp;
+    }
+    
+    public JPanel panelInfoGeneral()
+    {
+        JPanel jp = new JPanel();
+        jp.setBorder(BorderFactory.createTitledBorder("Informations générales"));
+        info = new JLabel(this.graphe.toString(" "));        
+        info.setPreferredSize(new Dimension(400,100));
+        info.setVerticalAlignment(JLabel.CENTER);
+        info.setHorizontalAlignment(JLabel.CENTER);        
+        jp.add(info);
+        
         return jp;
     }
     
@@ -408,6 +427,30 @@ public JPanel panelGraphe(){
 
         public void setClikc(JToggleButton clikc) {
             this.clikc = clikc;
+        }
+
+        public JPanelDijkstra getJpd() {
+            return jpd;
+        }
+
+        public JLabel getInfo() {
+            return info;
+        }
+
+        public ButtonGroup getBtngrp() {
+            return btngrp;
+        }
+
+        public void setJpd(JPanelDijkstra jpd) {
+            this.jpd = jpd;
+        }
+
+        public void setInfo(JLabel info) {
+            this.info = info;
+        }
+
+        public void setBtngrp(ButtonGroup btngrp) {
+            this.btngrp = btngrp;
         }
 
         public JButton getCreate() {

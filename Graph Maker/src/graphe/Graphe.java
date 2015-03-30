@@ -51,6 +51,27 @@ public class Graphe {
 		}
 		return null;
 	}
+        
+        public void supprimerDoublons()
+        {
+            ArrayList<Arc> tabl = new ArrayList<Arc>(arcs);
+            tabl.add(arcs.get(0));
+            /*for(int i = 0; i < arcs.size(); i++)
+            {
+                for(int j = 0; j < arcs.size(); j++)
+                    if((arcs.get(i).getOrigine() == arcs.get(j).getArrivee()) &&
+                        (arcs.get(i).getArrivee() == arcs.get(j).getOrigine()) && (arcInTab(tabl,tabl.get(i))))
+                        tabl.remove(arcs.get(i));
+            }*/
+            this.setArcs(tabl);
+            for(Sommet s : sommets)
+            {
+                //s.resetArcs();
+                for(Arc a : arcs)
+                    if(a.getArrivee() == s || a.getOrigine() == s)
+                        s.ajouterArc(a);
+            }
+        }
 	
 	/**
 	 * MÃ©thode qui permet d'orienter un graphe non orientÃ©, ou si celui-ci est orientÃ© de
@@ -58,8 +79,14 @@ public class Graphe {
 	 */
 	public void switchTypeOfGraphe(){
 		if(this.type)
-			this.setType(Graphe.NON_ORIENTE);
-		else
+                {
+                    this.setType(Graphe.NON_ORIENTE);
+                    /*System.out.println(arcs);
+                    if(this.arcs.size() > 0)
+                        this.supprimerDoublons();
+                    System.out.println(arcs);*/
+                }
+                else
 			this.setType(Graphe.ORIENTE);
 	}
 
@@ -125,6 +152,48 @@ public class Graphe {
 		return nb;
 	}*/
 
+        public void createChaine(int dist, ArrayList<Sommet> tab)
+        {
+            if(tab.size() > 1)
+            {
+                Arc a;
+                for(int i = 0; i < tab.size()-1; i++)
+                {
+                    if(dist == 0)
+			a = new Arc("",tab.get(i),tab.get(i+1),0,0);
+                    else
+			a = new Arc(""+dist,tab.get(i),tab.get(i+1),0,0);
+                    a.milieu();
+                    if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && tab.get(i) != tab.get(i+1)) || this.type == ORIENTE)
+                    {
+			arcs.add(a);
+			a.getOrigine().getArcs().add(a);
+			a.getArrivee().getArcs().add(a);
+                    }
+                }
+            }
+        }
+        
+        public void createCycle(int dist, ArrayList<Sommet> tab)
+        {
+            createChaine(dist, tab);
+            Arc a;
+            if(tab.size() > 2)
+            {
+                if(dist == 0)
+                    a = new Arc("",tab.get(tab.size()-1),tab.get(0),0,0);
+                else
+                    a = new Arc(""+dist,tab.get(tab.size()-1),tab.get(0),0,0);
+                a.milieu();
+                if(!(arcInGraphe(a))/* && (this.type == NON_ORIENTE && tab.get(i) != tab.get(i+1)) || this.type == ORIENTE*/)
+                {
+                    arcs.add(a);
+                    a.getOrigine().getArcs().add(a);
+                    a.getArrivee().getArcs().add(a);
+                }
+            }
+        }
+        
 	public void createClique(int i)
 	{
 		if(this.sommets.size() > 1)
@@ -351,6 +420,34 @@ public class Graphe {
 		return ui;
 	}
 
+        /*public boolean arcInTab(ArrayList<Arc> tab, Arc arc_g)
+	{
+		boolean ui = false;
+
+                if(tab.size() > 0)
+                {
+                    if(this.isType() == ORIENTE)
+                    {
+                            for(Arc a : tab)
+                            {
+                                    if(arc_g.equals(a))
+                                            ui = true;
+                            }
+                    }
+                    else
+                    {
+                            for(Arc a : tab)
+                            {
+                                    if(arc_g.equals(a) || 
+                                                    (arc_g.getArrivee()== a.getOrigine()
+                                                    && arc_g.getOrigine() == a.getArrivee()))
+                                            ui = true;
+                            }
+                    }
+                }
+		return ui;
+	}*/
+        
 	public boolean arcInGraphe(Arc arc_g)
 	{
 		boolean ui = false;

@@ -24,7 +24,11 @@ public class GrapheView extends JFrame{
     private JTextField jtfNode;
     private JLabel jlColors;
     private JButton clik;
+    private JButton cycle;
+    private JButton chaine;
     private JToggleButton clikc;
+    private JToggleButton cyclc;
+    private JToggleButton chainec;
     private JButton create;
     private int[] colors;
     private JLabel jl ;
@@ -109,35 +113,47 @@ public class GrapheView extends JFrame{
         JPanel clk = new JPanel();
         JPanel cst = new JPanel();
         JPanel dst = new JPanel();
-        clk.setBorder(BorderFactory.createTitledBorder("Clique générique"));
-        cst.setBorder(BorderFactory.createTitledBorder("<html><p>Clique avec"
+        clk.setBorder(BorderFactory.createTitledBorder("Graphes génériques"));
+        cst.setBorder(BorderFactory.createTitledBorder("<html><p>Graphes avec"
                 + "<br />sommets spécifiques</p></html>"));
         dst.setBorder(BorderFactory.createTitledBorder("Distance par defaut"));
         opt.setLayout(new GridLayout(3,1));
         dst.setLayout(new GridLayout(5,1));
         //opt.setLayout(new BorderLayout());
+        cycle = new JButton("Cycle");
         clik = new JButton("Clique");
+        chaine = new JButton("Chaine");
         clikc = new JToggleButton("Clique Custom");
+        cyclc = new JToggleButton("Cycle Custom");
+        chainec = new JToggleButton("Chaine Custom");
         create = new JButton("Append");
         opt.setBorder(BorderFactory.createTitledBorder("Options Clique"));
-        JLabel labelclique = new JLabel("<html><p>Créer une clique"
+        JLabel labelclique = new JLabel("<html><p>Créer un type de graphe"
                 + "<br/>comprenant tous les sommets</p></html>");
         JLabel cliqueavc = new JLabel("<html><p>Cliquez sur les sommets pour"
-                + "<br />faire une clique customisée</p></html>");
+                + "<br />faire une graphe customisée</p></html>");
         JLabel d = new JLabel("<html><p>Distance des arcs/arrêtes<br /></p></html>");
         dist = new JTextField("0");
         cst.setMinimumSize(new Dimension(200,400));
         dst.add(d);
         dst.add(dist);
         btngrp.add(clikc);
+        btngrp.add(cyclc);
+        btngrp.add(chainec);
         clk.add(labelclique);
         clk.add(clik);
+        clk.add(cycle);
+        clk.add(chaine);
         cst.add(cliqueavc);
         cst.add(clikc);
+        cst.add(cyclc);
+        cst.add(chainec);
         cst.add(create);
         opt.add(clk,"North");
         opt.add(cst,"Center");
         opt.add(dst,"South");
+        cycle.addActionListener(new ListenerActionGraphe(this));
+        chaine.addActionListener(new ListenerActionGraphe(this));
         clik.addActionListener(new ListenerActionGraphe(this));
         create.addActionListener(new ListenerActionGraphe(this));
         dist.addActionListener(new ListenerActionGraphe(this));
@@ -469,6 +485,38 @@ public JPanel panelGraphe(){
 
         public JTextField getDist() {
             return dist;
+        }
+
+        public JButton getCycle() {
+            return cycle;
+        }
+
+        public JButton getChaine() {
+            return chaine;
+        }
+
+        public JToggleButton getCyclc() {
+            return cyclc;
+        }
+
+        public JToggleButton getChainec() {
+            return chainec;
+        }
+
+        public void setCycle(JButton cycle) {
+            this.cycle = cycle;
+        }
+
+        public void setChaine(JButton chaine) {
+            this.chaine = chaine;
+        }
+
+        public void setCyclc(JToggleButton cyclc) {
+            this.cyclc = cyclc;
+        }
+
+        public void setChainec(JToggleButton chainec) {
+            this.chainec = chainec;
         }
 
         public void setDist(JTextField dist) {

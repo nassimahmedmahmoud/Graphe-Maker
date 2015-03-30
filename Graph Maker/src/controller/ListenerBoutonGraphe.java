@@ -103,7 +103,7 @@ public class ListenerBoutonGraphe implements MouseListener {
             }
         }
         
-        if(gv.getClikc().isSelected())
+        if(gv.getClikc().isSelected() || gv.getCyclc().isSelected() || gv.getChainec().isSelected())
         {
             //Graphe gr = gv.getGraphe();
             sCourant = this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e);

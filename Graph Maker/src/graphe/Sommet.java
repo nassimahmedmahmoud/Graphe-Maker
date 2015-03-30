@@ -20,15 +20,21 @@ public class Sommet {
 	}
 	
 	public Sommet(Sommet s)
-    {
-        this(s.nom,s.arcs,s.posX,s.posY);
-    }
+        {
+            this(s.nom,s.arcs,s.posX,s.posY);
+        }
 
 	public void ajouterArc(Arc arc)
 	{
 		if(!containsArc(arc))
 			arcs.add(arc);
 	}
+        
+        public void resetArcs()
+        {
+            this.arcs = new ArrayList<Arc>();
+        }
+        
 	public boolean containsArc(Arc a){
 		for(Arc arc : arcs){
 			if(arc.getOrigine().equals(a.getOrigine()) && arc.getArrivee().equals(a.getArrivee())){

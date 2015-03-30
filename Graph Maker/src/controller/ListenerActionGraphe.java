@@ -3,8 +3,8 @@ package controller;
 import dialogue.*;
 import graphe.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import javax.swing.SwingUtilities;
+import java.util.*;
+import javax.swing.*;
 
 
 public class ListenerActionGraphe implements ActionListener {
@@ -27,6 +27,7 @@ public class ListenerActionGraphe implements ActionListener {
 			this.gv.getGraphe().setTailleSommet(isInteger(gv.getJtfNode().getText()));
 			this.gv.getJtfNode().setText("");
 		}
+                
                 if(e.getSource() == gv.getDist())
                 {
                     this.gv.getGraphe().setDist(isInteger(gv.getDist().getText()));
@@ -40,13 +41,23 @@ public class ListenerActionGraphe implements ActionListener {
                     if(gv.getGraphe().getTabCick().size() > 1)
                     {
                         System.out.println(gv.getGraphe().getTabCick());
-                        gv.getGraphe().createClique(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
+                        if(gv.getClikc().isSelected())
+                            gv.getGraphe().createClique(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
+                        else if(gv.getChainec().isSelected())
+                            gv.getGraphe().createChaine(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
+                        else
+                            gv.getGraphe().createCycle(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
                         gv.getGraphe().setTabCick(new ArrayList<Sommet>());
                     }
                 }
                 if(e.getSource() == gv.getClik())
                     this.gv.getGraphe().createClique(gv.getGraphe().getDist());
-		if(this.gv.getBrelaz() == e.getSource())
+                if(e.getSource() == gv.getCycle())
+                    gv.getGraphe().createCycle(gv.getGraphe().getDist(),gv.getGraphe().getSommets());
+                if(e.getSource() == gv.getChaine())
+                    gv.getGraphe().createChaine(gv.getGraphe().getDist(),gv.getGraphe().getSommets());
+		
+                if(this.gv.getBrelaz() == e.getSource())
 			this.gv.setColors(this.gv.getGraphe().coloration());
                 
 		this.gv.getJpb().repaint();

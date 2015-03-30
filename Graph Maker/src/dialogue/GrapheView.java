@@ -31,6 +31,7 @@ public class GrapheView extends JFrame{
     private JLabel jlca;
     private JLabel info;
     private ButtonGroup btngrp;
+    private JTextField dist;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -107,12 +108,14 @@ public class GrapheView extends JFrame{
         
         JPanel clk = new JPanel();
         JPanel cst = new JPanel();
+        JPanel dst = new JPanel();
         clk.setBorder(BorderFactory.createTitledBorder("Clique générique"));
         cst.setBorder(BorderFactory.createTitledBorder("<html><p>Clique avec"
                 + "<br />sommets spécifiques</p></html>"));
-        //clk.setLayout(new GridLayout(2,1));
-        //cst.setLayout(new GridLayout(3,1));
-        opt.setLayout(new GridLayout(2,1));
+        dst.setBorder(BorderFactory.createTitledBorder("Distance par defaut"));
+        opt.setLayout(new GridLayout(3,1));
+        dst.setLayout(new GridLayout(5,1));
+        //opt.setLayout(new BorderLayout());
         clik = new JButton("Clique");
         clikc = new JToggleButton("Clique Custom");
         create = new JButton("Append");
@@ -121,16 +124,23 @@ public class GrapheView extends JFrame{
                 + "<br/>comprenant tous les sommets</p></html>");
         JLabel cliqueavc = new JLabel("<html><p>Cliquez sur les sommets pour"
                 + "<br />faire une clique customisée</p></html>");
+        JLabel d = new JLabel("<html><p>Distance des arcs/arrêtes<br /></p></html>");
+        dist = new JTextField("0");
+        cst.setMinimumSize(new Dimension(200,400));
+        dst.add(d);
+        dst.add(dist);
         btngrp.add(clikc);
         clk.add(labelclique);
         clk.add(clik);
         cst.add(cliqueavc);
         cst.add(clikc);
         cst.add(create);
-        opt.add(clk);
-        opt.add(cst);
+        opt.add(clk,"North");
+        opt.add(cst,"Center");
+        opt.add(dst,"South");
         clik.addActionListener(new ListenerActionGraphe(this));
         create.addActionListener(new ListenerActionGraphe(this));
+        dist.addActionListener(new ListenerActionGraphe(this));
         return opt;
     }
 
@@ -455,6 +465,14 @@ public JPanel panelGraphe(){
 
         public JButton getCreate() {
             return create;
+        }
+
+        public JTextField getDist() {
+            return dist;
+        }
+
+        public void setDist(JTextField dist) {
+            this.dist = dist;
         }
 
         public void setCreate(JButton create) {

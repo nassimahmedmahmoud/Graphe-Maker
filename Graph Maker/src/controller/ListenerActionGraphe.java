@@ -4,6 +4,7 @@ import dialogue.*;
 import graphe.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import javax.swing.SwingUtilities;
 
 
 public class ListenerActionGraphe implements ActionListener {
@@ -26,19 +27,25 @@ public class ListenerActionGraphe implements ActionListener {
 			this.gv.getGraphe().setTailleSommet(isInteger(gv.getJtfNode().getText()));
 			this.gv.getJtfNode().setText("");
 		}
+                if(e.getSource() == gv.getDist())
+                {
+                    this.gv.getGraphe().setDist(isInteger(gv.getDist().getText()));
+                    //this.gv.getDist().setText("");
+                }
+                
                 if(e.getSource() == gv.getCreate())
                 {
-                    System.out.println("lol");
+                    //System.out.println("lol");
                     System.out.println(gv.getGraphe().getTabCick());
                     if(gv.getGraphe().getTabCick().size() > 1)
                     {
                         System.out.println(gv.getGraphe().getTabCick());
-                        gv.getGraphe().createClique(gv.getGraphe().getTabCick());
+                        gv.getGraphe().createClique(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
                         gv.getGraphe().setTabCick(new ArrayList<Sommet>());
                     }
                 }
                 if(e.getSource() == gv.getClik())
-                    this.gv.getGraphe().createClique();
+                    this.gv.getGraphe().createClique(gv.getGraphe().getDist());
 		if(this.gv.getBrelaz() == e.getSource())
 			this.gv.setColors(this.gv.getGraphe().coloration());
                 

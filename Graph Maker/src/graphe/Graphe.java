@@ -13,6 +13,7 @@ public class Graphe {
 	private ArrayList<Arc> arcs;
 	private int tailleSommet=50;
         private ArrayList<Sommet> tabCick;
+        private int dist;
 
 	/**
 	 * Constructeur champ a champ du graphe prend en paramÃ¨tres :
@@ -116,7 +117,7 @@ public class Graphe {
 		return nb;
 	}*/
         
-        public void createClique()
+        public void createClique(int i)
         {
             if(this.sommets.size() > 1)
             {
@@ -125,7 +126,10 @@ public class Graphe {
                 {
                     for(Sommet d : sommets)
                     {
-                        a = new Arc("",s,d,0,0);
+                        if(i == 0)
+                            a = new Arc("",s,d,0,0);
+                        else
+                            a = new Arc(""+i,s,d,0,0);
                         a.milieu();
                         if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && s != d))
                         {
@@ -138,7 +142,7 @@ public class Graphe {
             }
         }
         
-        public void createClique(ArrayList<Sommet> tab)
+        public void createClique(int i, ArrayList<Sommet> tab)
         {
             if(tab.size() > 1)
             {
@@ -147,7 +151,10 @@ public class Graphe {
                 {
                     for(Sommet d : tab)
                     {
-                        a = new Arc("",s,d,0,0);
+                        if(i == 0)
+                            a = new Arc("",s,d,0,0);
+                        else
+                            a = new Arc(""+i,s,d,0,0);
                         a.milieu();
                         if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && s != d))
                         {
@@ -189,7 +196,7 @@ public class Graphe {
 		return ui;
 	}
 
-	public int[][] createClique(int n){
+	public int[][] createClique(int n, int a){
 		int [][] matrice=new int[n][n];
 		for(int i=0;i<matrice.length;i++){
 			for(int j=0;j<matrice[i].length;j++)
@@ -202,7 +209,7 @@ public class Graphe {
 		int[][]matriceGraphe=this.matrice();
 		int val=0;
 		for(int i=0;i<valMax;i++){
-			int[][]clique=createClique(i);
+			int[][]clique=createClique(i, i);
 			int j=0;
 			for(int c=0;c<clique.length;c++){
 				for(int d=0;d<clique[c].length;d++){
@@ -740,6 +747,14 @@ public class Graphe {
             this.tabCick = tabCick;
         }
 
+        public int getDist() {
+            return dist;
+        }
+
+        public void setDist(int dist) {
+            this.dist = dist;
+        }
+
 	public String toString() {
 		return "Graphe [nom=" + nom + ", type=" + type + ", sommets=" + sommets
 				+ ", arcs=" + arcs + "]";
@@ -765,7 +780,7 @@ public class Graphe {
             else if(arcs.size() > 0 && this.isType() == ORIENTE)
                 s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
             else
-                s+="<p>Le graphe contient " + arcs.size() + "</p>";
+                s+="<p>Le graphe contient " + arcs.size() + " arrêtes</p>";
             return s;
         }
 

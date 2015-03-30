@@ -1,9 +1,7 @@
 package dialogue;
  
 import java.awt.*;
-
 import javax.swing.*;
-
 import controller.*;
 import graphe.*;
 import static javax.swing.JFrame.*;
@@ -38,8 +36,8 @@ public class GrapheView extends JFrame{
     private JLabel info;
     private ButtonGroup btngrp;
     private JTextField dist;
-    private JLabel jlDijkstra;
-    private Dijkstra d;
+    private Dijkstra dijkstra;
+    private JLabel jld;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -57,14 +55,9 @@ public class GrapheView extends JFrame{
     
     public void initialise(){
         Container c = this.getContentPane();
-        JPanel jp1 = new JPanel();
-        JPanel jp2 = new JPanel();
-        JPanel jp3 = new JPanel();
-        JLabel jl = new JLabel("Saluuuuut");
         onglets = new JTabbedPane();
         this.graphe=new Graphe();
-        jp1.add(jl);
- 
+        this.dijkstra=new Dijkstra(graphe);
         onglets.addTab("Graphe", null,this.panel1());
         onglets.addTab("Dijkstra", null, this.panel2());
         onglets.addTab("Coloration", null, panel3());
@@ -211,10 +204,9 @@ public JPanel panelGraphe(){
     
     public JPanel panel2(){
         JPanel jp = new JPanel(new BorderLayout());
-        d=new Dijkstra(graphe);
         jp.add(this.panelListenerTest3(),"Center");
-        jlDijkstra = new JLabel(d.toString());
-        jp.add(jlDijkstra);
+        jld = new JLabel(dijkstra.toString());
+        jp.add(jld,"South");
         return jp;
     }
      
@@ -295,8 +287,7 @@ public JPanel panelGraphe(){
         jpd = new JPanelDijkstra(new BorderLayout(),this);
         jpd.setBorder(BorderFactory.createTitledBorder("Dijkstra"));
         jpd.setBackground(new Color(250,245,220));
-        ListenerDijkstraGraphe ldg = new ListenerDijkstraGraphe(this,this.d);
-        jpd.addMouseListener(ldg);
+        jpd.addMouseListener(new ListenerDijkstraGraphe(this));
         return jpd;
     }
     public JPanelGraphe panelListenerTest(){
@@ -536,20 +527,20 @@ public JPanel panelGraphe(){
             this.create = create;
         }
 
-		public JLabel getJlDijkstra() {
-			return jlDijkstra;
+		public Dijkstra getDijkstra() {
+			return dijkstra;
 		}
 
-		public void setJlDijkstra(JLabel jlDijkstra) {
-			this.jlDijkstra = jlDijkstra;
+		public void setDijkstra(Dijkstra dijkstra) {
+			this.dijkstra = dijkstra;
 		}
 
-		public Dijkstra getD() {
-			return d;
+		public JLabel getJld() {
+			return jld;
 		}
 
-		public void setD(Dijkstra d) {
-			this.d = d;
+		public void setJld(JLabel jld) {
+			this.jld = jld;
 		}
-		
+        
 }

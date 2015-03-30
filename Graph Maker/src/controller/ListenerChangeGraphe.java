@@ -29,9 +29,9 @@ public class ListenerChangeGraphe implements ChangeListener {
 			gv.getJlColors().repaint();
 		}
 		if(gv.getOnglets().getSelectedIndex()==GrapheView.ONGLET_DIJKSTRA){
-			gv.getD().algorithmDijkstra();
-			gv.getJlDijkstra().setText(gv.getD().toString());
-			gv.getJlDijkstra().repaint();
+			gv.getDijkstra().algorithmDijkstra();
+			gv.getJld().setText(gv.getDijkstra().toString());
+			gv.getJld().repaint();
 		}
 	}
 

@@ -7,28 +7,23 @@ import java.awt.event.*;
 
 public class ListenerDijkstraGraphe  implements MouseListener  {
 
-	private Dijkstra d;
     private GrapheView gv;
-    private Sommet sCourant;
-	private Sommet arrivee;
     
 	
-	public ListenerDijkstraGraphe(GrapheView gv,Dijkstra d) {
-		super();
-		this.d = d;
-		this.gv = gv;
-	}
+	public ListenerDijkstraGraphe(GrapheView gv) { this.gv = gv; }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(sCourant==null){
-			sCourant = this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e);
-			d.setSource(sCourant);
+		if(gv.getDijkstra().getSource()!=null){
+			gv.getDijkstra().setArrivee(this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e));
 		}
 		else{
-			d.setArrivee(this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e));
-			arrivee = d.getArrivee();
+			gv.setDijkstra(new Dijkstra(this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e),this.gv.getGraphe()));
+			gv.getDijkstra().algorithmDijkstra();
+			gv.getJld().setText(gv.getDijkstra().toString());
+			gv.getJld().repaint();
 		}
+		gv.getJpd().repaint();
 	}
 
 	@Override
@@ -49,13 +44,5 @@ public class ListenerDijkstraGraphe  implements MouseListener  {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		
-	}
-
-	public Sommet getArrivee() {
-		return arrivee;
-	}
-
-	public void setArrivee(Sommet arrivee) {
-		this.arrivee = arrivee;
 	}
 }

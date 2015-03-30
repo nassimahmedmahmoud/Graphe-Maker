@@ -23,7 +23,7 @@ public class JPanelDijkstra extends JPanel{
 	{
 		super.paintComponent(g);
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		gv.getD().algorithmDijkstra();
+		gv.getDijkstra().algorithmDijkstra();
 		for(Arc a : gv.getGraphe().getArcs()){
 			this.drawLines(g,a,Color.BLACK);
 		}
@@ -31,14 +31,16 @@ public class JPanelDijkstra extends JPanel{
 		for(Sommet s : gv.getGraphe().getSommets()){
 			drawNode(s,g,gv.getGraphe().getTailleSommet(),Color.WHITE);
 		}
-		if(gv.getD().getSource()!=null)
-			this.drawNode(gv.getD().getSource(), g,gv.getGraphe().getTailleSommet(), Color.CYAN);
-		if(gv.getD().getArrivee()!=null){
-			ArrayList<Arc> tab = gv.getD().distanceSourceArc();
+		if(gv.getDijkstra().getSource()!=null){
+			drawNode(gv.getDijkstra().getSource(), g,gv.getGraphe().getTailleSommet(), Color.CYAN);
+		}
+		if(gv.getDijkstra().getArrivee()!=null){
+			ArrayList<Arc> tab = gv.getDijkstra().distanceSourceArc();
 			for(Arc arc : tab)
 				this.drawLines(g,arc,Color.CYAN);
-			this.drawNode(gv.getD().getArrivee(), g,gv.getGraphe().getTailleSommet(), Color.CYAN);
+			drawNode(gv.getDijkstra().getArrivee(), g,gv.getGraphe().getTailleSommet(), Color.RED);
 		}
+		System.out.println(gv.getDijkstra().getSource());
 	} 
 
 	void drawNode(Sommet s,Graphics g,int diametre,Color color)

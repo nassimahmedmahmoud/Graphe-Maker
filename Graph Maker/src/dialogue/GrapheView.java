@@ -1,7 +1,9 @@
 package dialogue;
  
 import java.awt.*;
+
 import javax.swing.*;
+
 import controller.*;
 import graphe.*;
 import static javax.swing.JFrame.*;
@@ -38,6 +40,8 @@ public class GrapheView extends JFrame{
     private JTextField dist;
     private Dijkstra dijkstra;
     private JLabel jld;
+	private JToggleButton bsource;
+	private JToggleButton barrivee;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -204,8 +208,9 @@ public JPanel panelGraphe(){
     
     public JPanel panel2(){
         JPanel jp = new JPanel(new BorderLayout());
+        jp.add(this.panelDijkstra(),"North");
         jp.add(this.panelListenerTest3(),"Center");
-        jld = new JLabel(dijkstra.toString());
+        jld = new JLabel("");
         jp.add(jld,"South");
         return jp;
     }
@@ -220,6 +225,18 @@ public JPanel panelGraphe(){
         jp.add(east,"East");
         
         return jp;
+    }
+    
+    public JPanel panelDijkstra(){
+    	JPanel jp = new JPanel();
+    	ButtonGroup btnDijkstra = new ButtonGroup();
+    	bsource = new JToggleButton("Source");
+        barrivee = new JToggleButton("Arrivee");
+        btnDijkstra.add(bsource);
+        btnDijkstra.add(barrivee);
+        jp.add(bsource);
+        jp.add(barrivee);
+    	return jp;
     }
     
     public JPanel nbChromatique(){
@@ -542,5 +559,22 @@ public JPanel panelGraphe(){
 		public void setJld(JLabel jld) {
 			this.jld = jld;
 		}
+
+		public JToggleButton getBsource() {
+			return bsource;
+		}
+
+		public JToggleButton getBarrivee() {
+			return barrivee;
+		}
+
+		public void setBsource(JToggleButton bsource) {
+			this.bsource = bsource;
+		}
+
+		public void setBarrivee(JToggleButton barrivee) {
+			this.barrivee = barrivee;
+		}
         
+		
 }

@@ -6,9 +6,9 @@ import java.util.*;
 public class Graphe {
 	public static boolean ORIENTE = true;
 	public static boolean NON_ORIENTE = false;
-        public static final int GENERAL = 1;
-        public static final int CONNEXE_ARBRE = 2;
-        public static final int MATRIX = 3;
+	public static final int GENERAL = 1;
+	public static final int CONNEXE_ARBRE = 2;
+	public static final int MATRIX = 3;
 
 	private String nom;
 	private boolean type;
@@ -49,47 +49,47 @@ public class Graphe {
 
 	public Arc arcaPartirSommets(Sommet s1,Sommet s2){
 		for(Arc a : arcs){
-			if(a.getOrigine().equals(s2) && a.getArrivee().equals(s1))
+			if((a.getOrigine().equals(s2) && a.getArrivee().equals(s1)) || (a.getOrigine().equals(s1) && a.getArrivee().equals(s2)))
 				return a;
 		}
 		return null;
 	}
-        
-        public void supprimerDoublons()
-        {
-            ArrayList<Arc> tabl = new ArrayList<Arc>(arcs);
-            tabl.add(arcs.get(0));
-            /*for(int i = 0; i < arcs.size(); i++)
+
+	public void supprimerDoublons()
+	{
+		ArrayList<Arc> tabl = new ArrayList<Arc>(arcs);
+		tabl.add(arcs.get(0));
+		/*for(int i = 0; i < arcs.size(); i++)
             {
                 for(int j = 0; j < arcs.size(); j++)
                     if((arcs.get(i).getOrigine() == arcs.get(j).getArrivee()) &&
                         (arcs.get(i).getArrivee() == arcs.get(j).getOrigine()) && (arcInTab(tabl,tabl.get(i))))
                         tabl.remove(arcs.get(i));
             }*/
-            this.setArcs(tabl);
-            for(Sommet s : sommets)
-            {
-                //s.resetArcs();
-                for(Arc a : arcs)
-                    if(a.getArrivee() == s || a.getOrigine() == s)
-                        s.ajouterArc(a);
-            }
-        }
-	
+		this.setArcs(tabl);
+		for(Sommet s : sommets)
+		{
+			//s.resetArcs();
+			for(Arc a : arcs)
+				if(a.getArrivee() == s || a.getOrigine() == s)
+					s.ajouterArc(a);
+		}
+	}
+
 	/**
 	 * MÃ©thode qui permet d'orienter un graphe non orientÃ©, ou si celui-ci est orientÃ© de
 	 * le de-orienter.
 	 */
 	public void switchTypeOfGraphe(){
 		if(this.type)
-                {
-                    this.setType(Graphe.NON_ORIENTE);
-                    /*System.out.println(arcs);
+		{
+			this.setType(Graphe.NON_ORIENTE);
+			/*System.out.println(arcs);
                     if(this.arcs.size() > 0)
                         this.supprimerDoublons();
                     System.out.println(arcs);*/
-                }
-                else
+		}
+		else
 			this.setType(Graphe.ORIENTE);
 	}
 
@@ -155,48 +155,48 @@ public class Graphe {
 		return nb;
 	}*/
 
-        public void createChaine(int dist, ArrayList<Sommet> tab)
-        {
-            if(tab.size() > 1)
-            {
-                Arc a;
-                for(int i = 0; i < tab.size()-1; i++)
-                {
-                    if(dist == 0)
-			a = new Arc("",tab.get(i),tab.get(i+1),0,0);
-                    else
-			a = new Arc(""+dist,tab.get(i),tab.get(i+1),0,0);
-                    a.milieu();
-                    if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && tab.get(i) != tab.get(i+1)) || this.type == ORIENTE)
-                    {
-			arcs.add(a);
-			a.getOrigine().getArcs().add(a);
-			a.getArrivee().getArcs().add(a);
-                    }
-                }
-            }
-        }
-        
-        public void createCycle(int dist, ArrayList<Sommet> tab)
-        {
-            createChaine(dist, tab);
-            Arc a;
-            if(tab.size() > 2)
-            {
-                if(dist == 0)
-                    a = new Arc("",tab.get(tab.size()-1),tab.get(0),0,0);
-                else
-                    a = new Arc(""+dist,tab.get(tab.size()-1),tab.get(0),0,0);
-                a.milieu();
-                if(!(arcInGraphe(a))/* && (this.type == NON_ORIENTE && tab.get(i) != tab.get(i+1)) || this.type == ORIENTE*/)
-                {
-                    arcs.add(a);
-                    a.getOrigine().getArcs().add(a);
-                    a.getArrivee().getArcs().add(a);
-                }
-            }
-        }
-        
+	public void createChaine(int dist, ArrayList<Sommet> tab)
+	{
+		if(tab.size() > 1)
+		{
+			Arc a;
+			for(int i = 0; i < tab.size()-1; i++)
+			{
+				if(dist == 0)
+					a = new Arc("",tab.get(i),tab.get(i+1),0,0);
+				else
+					a = new Arc(""+dist,tab.get(i),tab.get(i+1),0,0);
+				a.milieu();
+				if(!(arcInGraphe(a)) && (this.type == NON_ORIENTE && tab.get(i) != tab.get(i+1)) || this.type == ORIENTE)
+				{
+					arcs.add(a);
+					a.getOrigine().getArcs().add(a);
+					a.getArrivee().getArcs().add(a);
+				}
+			}
+		}
+	}
+
+	public void createCycle(int dist, ArrayList<Sommet> tab)
+	{
+		createChaine(dist, tab);
+		Arc a;
+		if(tab.size() > 2)
+		{
+			if(dist == 0)
+				a = new Arc("",tab.get(tab.size()-1),tab.get(0),0,0);
+			else
+				a = new Arc(""+dist,tab.get(tab.size()-1),tab.get(0),0,0);
+			a.milieu();
+			if(!(arcInGraphe(a))/* && (this.type == NON_ORIENTE && tab.get(i) != tab.get(i+1)) || this.type == ORIENTE*/)
+			{
+				arcs.add(a);
+				a.getOrigine().getArcs().add(a);
+				a.getArrivee().getArcs().add(a);
+			}
+		}
+	}
+
 	public void createClique(int i)
 	{
 		if(this.sommets.size() > 1)
@@ -285,43 +285,26 @@ public class Graphe {
 		return matrice;
 	}
 
-	public int isCliqueGraphe(int valMax){
-		int[][]matriceGraphe=this.matrice();
-		int val=0;
-		for(int i=0;i<valMax;i++){
-			int[][]clique=createClique(i, i);
-			int j=0;
-			for(int c=0;c<clique.length;c++){
-				for(int d=0;d<clique[c].length;d++){
-					for(int a=0;a<matriceGraphe.length;a++){
-						for(int b=0;b<matriceGraphe[a].length;b++){
-							if(clique[c][d]==matriceGraphe[a][b]){
-								j++;
-							}
-							/////a finir
-						}
-					}
-				}
-			}
-		}
-		return val;
-	}
-
 	public boolean connexeGraphe(){
 		int tab[]=new int[sommets.size()];
 		if(tab.length>0){
-			for(int i=0;i<tab.length;i++){
-				for(Arc a : sommets.get(i).getArcs()){
-					tab[sommets.indexOf(a.getArrivee())]=1;
-					tab[sommets.indexOf(a.getOrigine())]=1;
+			if(type==Graphe.NON_ORIENTE)
+				return arcs.size()>sommets.size()+1;
+			else{
+				for(int i=0;i<tab.length;i++){
+					for(Arc a : sommets.get(i).getArcs()){
+						tab[sommets.indexOf(a.getArrivee())]=1;
+						tab[sommets.indexOf(a.getOrigine())]=1;
+					}
 				}
-			}
-			for(int i=0;i<tab.length;i++){
-				if(tab[i]==0)
-					return false;
+				for(int i=0;i<tab.length;i++){
+					if(tab[i]==0)
+						return false;
+				}
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -423,7 +406,7 @@ public class Graphe {
 		return ui;
 	}
 
-        /*public boolean arcInTab(ArrayList<Arc> tab, Arc arc_g)
+	/*public boolean arcInTab(ArrayList<Arc> tab, Arc arc_g)
 	{
 		boolean ui = false;
 
@@ -450,7 +433,7 @@ public class Graphe {
                 }
 		return ui;
 	}*/
-        
+
 	public boolean arcInGraphe(Arc arc_g)
 	{
 		boolean ui = false;
@@ -870,54 +853,54 @@ public class Graphe {
 
 	public String toString(int info)
 	{
-            String s = "";
-            if(info == GENERAL)
-            {
-		s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
-		if(this.isType() == Graphe.NON_ORIENTE)
-			s+="<p>Le graphe est <span style=\"color;red\">non orienté</span></p>";
-		else
-			s+="<p>Le graphe est <span style=\"color;green\">orienté</span></p>";
+		String s = "";
+		if(info == GENERAL)
+		{
+			s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
+			if(this.isType() == Graphe.NON_ORIENTE)
+				s+="<p>Le graphe est <span style=\"color;red\">non orienté</span></p>";
+			else
+				s+="<p>Le graphe est <span style=\"color;green\">orienté</span></p>";
 
-		if(sommets.isEmpty())
-			s+="<p>Le graphe ne contient aucun sommet</p>";
-		else
-			s+="<p>Le graphe contient " + sommets.size() + " sommets</p>";
+			if(sommets.isEmpty())
+				s+="<p>Le graphe ne contient aucun sommet</p>";
+			else
+				s+="<p>Le graphe contient " + sommets.size() + " sommets</p>";
 
-		if(arcs.isEmpty() && this.isType() == ORIENTE)
-			s+="<p>Le graphe ne contient aucun arc</p>";
-		else if(arcs.isEmpty() && this.isType() == NON_ORIENTE)
-			s+="<p>Le graphe ne contient aucune arrête</p>";
-		else if(arcs.size() > 0 && this.isType() == ORIENTE)
-			s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
-		else
-			s+="<p>Le graphe contient " + arcs.size() + " arrêtes</p>";
-            }
-            else if(info == CONNEXE_ARBRE)
-            {
-                s ="<html>";
-		if(connexeGraphe())
-			s+="Le graphe est connexe<br/>";
-		else
-			s+="Le graphe n'est pas connexe<br/>";
-		if(isTree())
-			s+="Le graphe est un arbre<br/>";
-		else
-			s+="Le graphe n'est pas un arbre<br/>";
-		s+="</html>";
-            }
-            else if(info == MATRIX)
-            {
-                s="<html>";
-		int[][]tab =matrice();
-		for(int i=0;i< tab.length;i++){
-			for(int j=0;j< tab.length;j++){
-				s+=tab[i][j]+"\t";
-			}
-			s+="<br/>";
+			if(arcs.isEmpty() && this.isType() == ORIENTE)
+				s+="<p>Le graphe ne contient aucun arc</p>";
+			else if(arcs.isEmpty() && this.isType() == NON_ORIENTE)
+				s+="<p>Le graphe ne contient aucune arrête</p>";
+			else if(arcs.size() > 0 && this.isType() == ORIENTE)
+				s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
+			else
+				s+="<p>Le graphe contient " + arcs.size() + " arrêtes</p>";
 		}
-		s+="</html>";
-            }
-            return s;
+		else if(info == CONNEXE_ARBRE)
+		{
+			s ="<html>";
+			if(connexeGraphe())
+				s+="Le graphe est connexe<br/>";
+			else
+				s+="Le graphe n'est pas connexe<br/>";
+			if(isTree())
+				s+="Le graphe est un arbre<br/>";
+			else
+				s+="Le graphe n'est pas un arbre<br/>";
+			s+="</html>";
+		}
+		else if(info == MATRIX)
+		{
+			s="<html>";
+			int[][]tab =matrice();
+			for(int i=0;i< tab.length;i++){
+				for(int j=0;j< tab.length;j++){
+					s+=tab[i][j]+"\t";
+				}
+				s+="<br/>";
+			}
+			s+="</html>";
+		}
+		return s;
 	}
 }

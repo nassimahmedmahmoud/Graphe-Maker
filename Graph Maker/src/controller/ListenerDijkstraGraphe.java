@@ -14,15 +14,17 @@ public class ListenerDijkstraGraphe  implements MouseListener  {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(gv.getDijkstra().getSource()!=null){
-			gv.getDijkstra().setArrivee(this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e));
-		}
-		else{
+		
+		if(gv.getBsource().isSelected())
 			gv.setDijkstra(new Dijkstra(this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e),this.gv.getGraphe()));
+		else if(gv.getBarrivee().isSelected() && gv.getDijkstra().getSource()!=null)
+			gv.getDijkstra().setArrivee(this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e));
+		
+		if(gv.getBsource().isSelected() || gv.getBarrivee().isSelected()){
 			gv.getDijkstra().algorithmDijkstra();
-			gv.getJld().setText(gv.getDijkstra().toString());
-			gv.getJld().repaint();
+			gv.getJld().setText(""+gv.getDijkstra().toString());
 		}
+		gv.getJld().repaint();
 		gv.getJpd().repaint();
 	}
 

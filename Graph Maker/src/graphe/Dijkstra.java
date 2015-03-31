@@ -9,7 +9,6 @@ public class Dijkstra {
 	private Graphe graphe;
 	private boolean[] marquage;
 	private Sommet arrivee;
-	public static final String TABLE_PROP = "style='border: 1px black solid; background-color: black' width='100%' cellspacing='1' cellpadding='2'";
 	public Dijkstra(Sommet source, Graphe graphe) {
 		this.source = source;
 		this.graphe = graphe;
@@ -23,14 +22,14 @@ public class Dijkstra {
 
 		}
 	}
-	
+
 	public Dijkstra(Graphe graphe){
 		this.graphe = graphe;
 		this.sommetProche = new int[graphe.getSommets().size()];
 		this.marquage = new boolean[graphe.getSommets().size()];
 		this.dmin = new int[graphe.getSommets().size()];
 	}
-	
+
 	public void algorithmDijkstra(){
 		boolean ui = initialisation();
 		if (ui && source!=null) {
@@ -221,7 +220,7 @@ public class Dijkstra {
 	public void setMarquage(boolean[] marquage) {
 		this.marquage = marquage;
 	}
-	
+
 	public Sommet getArrivee() {
 		return arrivee;
 	}
@@ -231,22 +230,15 @@ public class Dijkstra {
 	}
 
 	public String toString(){
-		String s="<html><table style="+TABLE_PROP+"><th>Dmin</th><tr>";
-		//////DMIN
+		String s="<html><table><tr><th>Nom des sommets</th>";
 		for(int i=0;i<dmin.length;i++){
 			s+="<td>"+graphe.getSommets().get(i).getNom()+"</td>";
 		}
-		s+="</tr><tr>";
+		s+="</tr><tr><th>Dmin</th>";
 		for(int i=0;i<dmin.length;i++){
 			s+="<td>"+dmin[i]+"</td>";
 		}
-		s+="</tr></table>";
-		//////////SOMMET_PROCHE
-		s+="<table style="+TABLE_PROP+"><th>Sommets proches</th><tr>";
-		for(int i=0;i<sommetProche.length;i++){
-			s+="<td>"+graphe.getSommets().get(i).getNom()+"</td>";
-		}
-		s+=s+="</tr><tr>";
+		s+=s+="</tr><tr><th>Sommet proche</th>";
 		for(int i=0;i<sommetProche.length;i++){
 			if(sommetProche[i]!=-1)
 				s+="<td>"+graphe.getSommets().get(sommetProche[i]).getNom()+"</td>";
@@ -256,5 +248,5 @@ public class Dijkstra {
 		s+="</tr></table></html>";
 		return s;
 	}
-	
+
 }

@@ -244,7 +244,7 @@ public JPanel panelGraphe(){
     	jl.setHorizontalAlignment(JLabel.CENTER);
     	jl.setVerticalAlignment(JLabel.CENTER);
     	jl.setMinimumSize(new Dimension(70,70));
-    	String s = this.graphe.stringMatrice();
+    	String s = this.graphe.toString(Graphe.MATRIX);
         jl.setText(s);
         jp.add(jl);
         jl.repaint();
@@ -255,7 +255,7 @@ public JPanel panelGraphe(){
     {
         JPanel jp = new JPanel();
         jp.setBorder(BorderFactory.createTitledBorder("Informations générales"));
-        info = new JLabel(this.graphe.toString(" "));        
+        info = new JLabel(this.graphe.toString(Graphe.GENERAL));        
         info.setPreferredSize(new Dimension(400,100));
         info.setVerticalAlignment(JLabel.CENTER);
         info.setHorizontalAlignment(JLabel.CENTER);        
@@ -271,7 +271,7 @@ public JPanel panelGraphe(){
     	jlca.setHorizontalAlignment(JLabel.CENTER);
     	jlca.setVerticalAlignment(JLabel.CENTER);
     	jlca.setPreferredSize(new Dimension(300,40));
-    	jlca.setText(graphe.connexeArbre());
+    	jlca.setText(graphe.toString(Graphe.CONNEXE_ARBRE));
         jp.add(jlca);
         jlca.repaint();
         return jp;

@@ -6,6 +6,9 @@ import java.util.*;
 public class Graphe {
 	public static boolean ORIENTE = true;
 	public static boolean NON_ORIENTE = false;
+        public static final int GENERAL = 1;
+        public static final int CONNEXE_ARBRE = 2;
+        public static final int MATRIX = 3;
 
 	private String nom;
 	private boolean type;
@@ -865,8 +868,11 @@ public class Graphe {
 				+ ", arcs=" + arcs + "]";
 	}
 
-	public String toString(String s)
+	public String toString(int info)
 	{
+            String s = "";
+            if(info == GENERAL)
+            {
 		s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
 		if(this.isType() == Graphe.NON_ORIENTE)
 			s+="<p>Le graphe est <span style=\"color;red\">non orienté</span></p>";
@@ -886,8 +892,32 @@ public class Graphe {
 			s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
 		else
 			s+="<p>Le graphe contient " + arcs.size() + " arrêtes</p>";
-		return s;
+            }
+            else if(info == CONNEXE_ARBRE)
+            {
+                s ="<html>";
+		if(connexeGraphe())
+			s+="Le graphe est connexe<br/>";
+		else
+			s+="Le graphe n'est pas connexe<br/>";
+		if(isTree())
+			s+="Le graphe est un arbre<br/>";
+		else
+			s+="Le graphe n'est pas un arbre<br/>";
+		s+="</html>";
+            }
+            else if(info == MATRIX)
+            {
+                s="<html>";
+		int[][]tab =matrice();
+		for(int i=0;i< tab.length;i++){
+			for(int j=0;j< tab.length;j++){
+				s+=tab[i][j]+"\t";
+			}
+			s+="<br/>";
+		}
+		s+="</html>";
+            }
+            return s;
 	}
-
-
 }

@@ -2,7 +2,7 @@ package controller;
 
 import javax.swing.*;
 import javax.swing.event.*;
-
+import graphe.*;
 import dialogue.*;
 
 public class ListenerChangeGraphe implements ChangeListener {
@@ -16,11 +16,13 @@ public class ListenerChangeGraphe implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		if(gv.getOnglets().getSelectedIndex()==GrapheView.ONGLET_GENERAL){
-			gv.getJl().setText(gv.getGraphe().stringMatrice());
+			gv.getJl().setText(gv.getGraphe().toString(Graphe.MATRIX));
+                        //gv.getJl().setText(gv.getGraphe().stringMatrice());
 			gv.getJl().repaint();
-			gv.getJlca().setText(gv.getGraphe().connexeArbre());
-			gv.getJlca().repaint();
-			gv.getInfo().setText(gv.getGraphe().toString(" "));
+			gv.getJlca().setText(gv.getGraphe().toString(Graphe.CONNEXE_ARBRE));
+			//gv.getJlca().setText(gv.getGraphe().connexeArbre());
+                        gv.getJlca().repaint();
+			gv.getInfo().setText(gv.getGraphe().toString(Graphe.GENERAL));
 			gv.getInfo().repaint();
 
 		}

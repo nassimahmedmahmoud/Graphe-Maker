@@ -34,6 +34,15 @@ public class ListenerActionGraphe implements ActionListener {
                     //this.gv.getDist().setText("");
                 }
                 
+                if(e.getSource() == gv.getRename())
+                {
+                    String val = (String) JOptionPane.showInputDialog(null,
+                    "Modifier le nom du graphe", "Nouvea nom", JOptionPane.QUESTION_MESSAGE, null, null, "");
+                    if (val != null) 
+                        gv.getGraphe().setNom(val);
+                     this.gv.getGen().repaint();
+                }
+                
                 if(e.getSource() == gv.getCreate())
                 {
                     //System.out.println("lol");

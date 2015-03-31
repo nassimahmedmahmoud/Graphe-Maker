@@ -40,8 +40,10 @@ public class GrapheView extends JFrame{
     private JTextField dist;
     private Dijkstra dijkstra;
     private JLabel jld;
-	private JToggleButton bsource;
-	private JToggleButton barrivee;
+    private JToggleButton bsource;
+    private JToggleButton barrivee;
+    private JButton rename;
+    private JPanel gen;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -219,8 +221,9 @@ public JPanel panelGraphe(){
         JPanel jp=new JPanel();
         JPanel east = new JPanel();
         east.setLayout(new GridLayout(2,1));
+        gen = panelInfoGeneral();
         jp.add(panelMatrice(),"North");
-        east.add(panelInfoGeneral(),"North");
+        east.add(gen,"North");
         east.add(panelConnexeArbre(),"South");
         jp.add(east,"East");
         
@@ -271,12 +274,15 @@ public JPanel panelGraphe(){
     public JPanel panelInfoGeneral()
     {
         JPanel jp = new JPanel();
+        rename = new JButton("Renommer graphe");
         jp.setBorder(BorderFactory.createTitledBorder("Informations générales"));
         info = new JLabel(this.graphe.toString(Graphe.GENERAL));        
         info.setPreferredSize(new Dimension(400,100));
         info.setVerticalAlignment(JLabel.CENTER);
         info.setHorizontalAlignment(JLabel.CENTER);        
         jp.add(info);
+        jp.add(rename);
+        rename.addActionListener(new ListenerActionGraphe(this));
         
         return jp;
     }
@@ -432,33 +438,49 @@ public JPanel panelGraphe(){
         return colors;
     }
 
-	public JTextField getJtfNode() {
-		return jtfNode;
-	}
+    public JButton getRename() {
+        return rename;
+    }
 
-	public void setJtfNode(JTextField jtfNode) {
-		this.jtfNode = jtfNode;
-	}
+    public void setRename(JButton rename) {
+        this.rename = rename;
+    }
 
-	public JLabel getJlColors() {
-		return jlColors;
-	}
+    public JPanel getGen() {
+        return gen;
+    }
 
-	public void setJlColors(JLabel jlColors) {
-		this.jlColors = jlColors;
-	}
+    public void setGen(JPanel gen) {
+        this.gen = gen;
+    }
+    
+    public JTextField getJtfNode() {
+	return jtfNode;
+    }
 
-	public JLabel getJl() {
-		return jl;
-	}
+    public void setJtfNode(JTextField jtfNode) {
+	this.jtfNode = jtfNode;
+    }
 
-	public void setJl(JLabel jl) {
-		this.jl = jl;
-	}
+    public JLabel getJlColors() {
+	return jlColors;
+    }
 
-	public JLabel getJlca() {
-		return jlca;
-	}
+    public void setJlColors(JLabel jlColors) {
+	this.jlColors = jlColors;
+    }
+
+    public JLabel getJl() {
+	return jl;
+    }
+
+    public void setJl(JLabel jl) {
+	this.jl = jl;
+    }
+
+    public JLabel getJlca() {
+	return jlca;
+    }
 
 	public void setJlca(JLabel jlca) {
 		this.jlca = jlca;
@@ -544,37 +566,35 @@ public JPanel panelGraphe(){
             this.create = create;
         }
 
-		public Dijkstra getDijkstra() {
-			return dijkstra;
-		}
+	public Dijkstra getDijkstra() {
+		return dijkstra;
+	}
 
-		public void setDijkstra(Dijkstra dijkstra) {
-			this.dijkstra = dijkstra;
-		}
+	public void setDijkstra(Dijkstra dijkstra) {
+		this.dijkstra = dijkstra;
+	}
 
-		public JLabel getJld() {
-			return jld;
-		}
+	public JLabel getJld() {
+		return jld;
+	}
 
-		public void setJld(JLabel jld) {
-			this.jld = jld;
-		}
+	public void setJld(JLabel jld) {
+		this.jld = jld;
+	}
 
-		public JToggleButton getBsource() {
-			return bsource;
-		}
+	public JToggleButton getBsource() {
+		return bsource;
+	}
 
-		public JToggleButton getBarrivee() {
-			return barrivee;
-		}
+	public JToggleButton getBarrivee() {
+		return barrivee;
+	}
 
-		public void setBsource(JToggleButton bsource) {
-			this.bsource = bsource;
-		}
+	public void setBsource(JToggleButton bsource) {
+		this.bsource = bsource;
+	}
 
-		public void setBarrivee(JToggleButton barrivee) {
-			this.barrivee = barrivee;
-		}
-        
-		
+	public void setBarrivee(JToggleButton barrivee) {
+		this.barrivee = barrivee;
+	}		
 }

@@ -1,7 +1,7 @@
 package controller;
+
 import dialogue.*;
 import graphe.*;
-
 import java.awt.event.*;
 
 
@@ -14,9 +14,10 @@ public class ListenerDijkstraGraphe  implements MouseListener  {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		if(gv.getBsource().isSelected())
+		gv.getDijkstra().setGraphe(gv.getGraphe());
+		if(gv.getBsource().isSelected()){
 			gv.setDijkstra(new Dijkstra(this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e),this.gv.getGraphe()));
+		}
 		else if(gv.getBarrivee().isSelected() && gv.getDijkstra().getSource()!=null)
 			gv.getDijkstra().setArrivee(this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e));
 		

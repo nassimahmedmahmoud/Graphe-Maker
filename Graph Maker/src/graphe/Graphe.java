@@ -19,9 +19,9 @@ public class Graphe {
 	private int dist;
 
 	/**
-	 * Constructeur champ a champ du graphe prend en paramÃ¨tres :
-	 *  - Une chaine de caractÃ¨re correspondant au nom du graphe
-	 *  - Un booleen indiquant si le graphe est orientÃ© ou non
+	 * Constructeur champ a champ du graphe prend en paramÃƒÂ¨tres :
+	 *  - Une chaine de caractÃƒÂ¨re correspondant au nom du graphe
+	 *  - Un booleen indiquant si le graphe est orientÃƒÂ© ou non
 	 *  - Une liste de sommets
 	 *  - Une liste d'arcs
 	 * @param nom
@@ -39,8 +39,8 @@ public class Graphe {
 	}
 
 	/**
-	 * Contructeur par dÃ©faut d'un graphe,
-	 * CrÃ©er un graphe sans nom, non orientÃ© sans, avec une liste de sommets vide
+	 * Contructeur par dÃƒÂ©faut d'un graphe,
+	 * CrÃƒÂ©er un graphe sans nom, non orientÃƒÂ© sans, avec une liste de sommets vide
 	 * et une liste d'arcs vide.
 	 */
 	public Graphe(){
@@ -77,7 +77,7 @@ public class Graphe {
 	}
 
 	/**
-	 * MÃ©thode qui permet d'orienter un graphe non orientÃ©, ou si celui-ci est orientÃ© de
+	 * MÃƒÂ©thode qui permet d'orienter un graphe non orientÃƒÂ©, ou si celui-ci est orientÃƒÂ© de
 	 * le de-orienter.
 	 */
 	public void switchTypeOfGraphe(){
@@ -94,12 +94,12 @@ public class Graphe {
 	}
 
 	/**
-	 * La mÃ©thode isSommet prend en paramÃ¨tre un entier correspondant au diamÃ¨tre
-	 * d'un sommet, et d'un objet de la classe MouseEvent permettant de connaÃ®tre
-	 * les coordonnÃ©es oÃ¹ l'utilisateur a cliquÃ© dans la fenÃªtre de graphe,
-	 * Cette mÃ©thode retourne un objet de type Sommet qui correspond au sommet
-	 * corresponant au sommet prÃ©sent a l'endroit ou l'utilisateur a cliquÃ©, ou null
-	 * si l'utilisateur n'a pas cliquÃ© sur un sommet.
+	 * La mÃƒÂ©thode isSommet prend en paramÃƒÂ¨tre un entier correspondant au diamÃƒÂ¨tre
+	 * d'un sommet, et d'un objet de la classe MouseEvent permettant de connaÃƒÂ®tre
+	 * les coordonnÃƒÂ©es oÃƒÂ¹ l'utilisateur a cliquÃƒÂ© dans la fenÃƒÂªtre de graphe,
+	 * Cette mÃƒÂ©thode retourne un objet de type Sommet qui correspond au sommet
+	 * corresponant au sommet prÃƒÂ©sent a l'endroit ou l'utilisateur a cliquÃƒÂ©, ou null
+	 * si l'utilisateur n'a pas cliquÃƒÂ© sur un sommet.
 	 * @param diametre
 	 * @param e
 	 * @return Sommet
@@ -115,11 +115,11 @@ public class Graphe {
 	}
 
 	/**
-	 * La mÃ©thode isArc prend en paramÃ¨tre un diamÃ¨tre dÃ©finit arbitrairement et un
-	 * objet de la classe MouseEvent permettant de connaÃ®tre les coordonnÃ©es oÃ¹
-	 * l'utilisateur a cliquÃ©,
-	 * Cette mÃ©thode retourne l'arc correspondant a l'arc auquel l'utilisateur a
-	 * cliquÃ© en son milieu, et null si l'utilisateur n'a pas cliquÃ© sur le milieu
+	 * La mÃƒÂ©thode isArc prend en paramÃƒÂ¨tre un diamÃƒÂ¨tre dÃƒÂ©finit arbitrairement et un
+	 * objet de la classe MouseEvent permettant de connaÃƒÂ®tre les coordonnÃƒÂ©es oÃƒÂ¹
+	 * l'utilisateur a cliquÃƒÂ©,
+	 * Cette mÃƒÂ©thode retourne l'arc correspondant a l'arc auquel l'utilisateur a
+	 * cliquÃƒÂ© en son milieu, et null si l'utilisateur n'a pas cliquÃƒÂ© sur le milieu
 	 * d'un arc.
 	 * @param diametre
 	 * @param e
@@ -137,7 +137,7 @@ public class Graphe {
 	}
 
 	/**
-	 * La mÃ©thode positionSommets prend en paramÃ¨tre un Sommet et retourne 
+	 * La mÃƒÂ©thode positionSommets prend en paramÃƒÂ¨tre un Sommet et retourne 
 	 * son indice dans la liste des sommets du graphe.
 	 * @param s
 	 * @return int
@@ -248,7 +248,7 @@ public class Graphe {
 	}
 
 	/**
-	 * La mÃ©thode metrique revoie un boolÃ©en indiquant si le graphe est mÃ©trique
+	 * La mÃƒÂ©thode metrique revoie un boolÃƒÂ©en indiquant si le graphe est mÃƒÂ©trique
 	 * ou non.
 	 * @return 
 	 */
@@ -288,8 +288,9 @@ public class Graphe {
 	public boolean connexeGraphe(){
 		int tab[]=new int[sommets.size()];
 		if(tab.length>0){
-			if(type==Graphe.NON_ORIENTE)
-				return arcs.size()>sommets.size()+1;
+			if(type==Graphe.NON_ORIENTE){
+				return (arcs.size())>=(sommets.size()-1);
+			}
 			else{
 				for(int i=0;i<tab.length;i++){
 					for(Arc a : sommets.get(i).getArcs()){
@@ -308,7 +309,7 @@ public class Graphe {
 	}
 
 	/**
-	 * La mÃ©thode voisins prend en paramÃ¨tre deux sommets s1 et s2 et renvoie true
+	 * La mÃ©thode voisins prend en paramÃƒÂ¨tre deux sommets s1 et s2 et renvoie true
 	 * si ceux-ci sont voisins (ont un arc en commun) et false sinon.
 	 * @param s1
 	 * @param s2
@@ -519,10 +520,10 @@ public class Graphe {
 	}
 
 	/**
-	 * La mÃ©thode voisinsColorie prend en paramÃ¨tre un sommet s1 et un tableau d'entiers
-	 * correspondant au nombre de degrÃ©s (arcs sortants/entrants) de chaque sommet du
-	 * graphe, Cette mÃ©thode retourne un entier correspondant au nombre de sommets
-	 * voisins du sommet s1 qui sont coloriÃ©s.
+	 * La mÃƒÂ©thode voisinsColorie prend en paramÃƒÂ¨tre un sommet s1 et un tableau d'entiers
+	 * correspondant au nombre de degrÃƒÂ©s (arcs sortants/entrants) de chaque sommet du
+	 * graphe, Cette mÃƒÂ©thode retourne un entier correspondant au nombre de sommets
+	 * voisins du sommet s1 qui sont coloriÃƒÂ©s.
 	 * @param s1
 	 * @param dsat
 	 * @return 
@@ -541,9 +542,9 @@ public class Graphe {
 	}
 
 	/**
-	 * La mÃ©thode initialisation crÃ©er un tableau d'entier d'une taille correspondant
-	 * au nombre de sommet prÃ©sents dans le graphe, et pour chaque sommet correspondant
-	 * effecte a la case correspondant a son indice le degrÃ© ou nombre d'arcs associÃ©
+	 * La mÃƒÂ©thode initialisation crÃƒÂ©er un tableau d'entier d'une taille correspondant
+	 * au nombre de sommet prÃƒÂ©sents dans le graphe, et pour chaque sommet correspondant
+	 * effecte a la case correspondant a son indice le degrÃƒÂ© ou nombre d'arcs associÃƒÂ©
 	 * a ce sommet, et retourne ce tableau.
 	 * @return 
 	 */
@@ -560,11 +561,11 @@ public class Graphe {
 	}
 
 	/**
-	 * La mÃ©thode isNotColored prend en paramÃ¨tre un tableau d'entiers correspondant au
-	 * degrÃ© de chaque sommet du graphe, Cette fonction parcours tout ce tableau et
-	 * si un sommet est coloriÃ© (la case correspondant a ce sommet est Ã  
+	 * La mÃƒÂ©thode isNotColored prend en paramÃƒÂ¨tre un tableau d'entiers correspondant au
+	 * degrÃƒÂ© de chaque sommet du graphe, Cette fonction parcours tout ce tableau et
+	 * si un sommet est coloriÃƒÂ© (la case correspondant a ce sommet est ÃƒÂ  
 	 * Integer.MAX_VALUE) renverra false, et true sinon (alors tous les sommets du
-	 * graphe seront coloriÃ©s).
+	 * graphe seront coloriÃƒÂ©s).
 	 * @param tab
 	 * @return 
 	 */
@@ -581,8 +582,8 @@ public class Graphe {
 
 
 	/**
-	 * La mÃ©thode trie prend en paramÃ¨tre un tableau d'entiers correspondant au degrÃ©
-	 * de chaque sommet et renvoie un tableau temporaire triÃ© dÃ©croissant du tableau
+	 * La mÃƒÂ©thode trie prend en paramÃƒÂ¨tre un tableau d'entiers correspondant au degrÃƒÂ©
+	 * de chaque sommet et renvoie un tableau temporaire triÃƒÂ© dÃƒÂ©croissant du tableau
 	 * DSAT.
 	 * @param DSAT
 	 * @return 
@@ -599,9 +600,9 @@ public class Graphe {
 		return tmp;
 	}
 	/**
-	 * La mÃ©thode DSATAJour prend en paramÃ¨tre un tableau d'entiers correspondant
-	 * au degrÃ© de chaque sommets du graphe, Cette mÃ©thode met Ã  jour ce tableau
-	 * lorsqu'un sommet a Ã©tÃ© coloriÃ©.
+	 * La mÃƒÂ©thode DSATAJour prend en paramÃƒÂ¨tre un tableau d'entiers correspondant
+	 * au degrÃƒÂ© de chaque sommets du graphe, Cette mÃƒÂ©thode met ÃƒÂ  jour ce tableau
+	 * lorsqu'un sommet a ÃƒÂ©tÃƒÂ© coloriÃƒÂ©.
 	 * @param DSAT 
 	 */
 	public void DSATAJour(int[] DSAT)
@@ -618,11 +619,11 @@ public class Graphe {
 	}
 
 	/**
-	 * La mÃ©thode plusGrandDegre prend en paramÃ¨tre un tableau d'entiers DSAT
-	 * correspondant au degrÃ© de chaque sommet du graphe et si ce graphe n'est pas
-	 * pas entiÃ¨rement coloriÃ© renvoie la plus grande valeur prÃ©sente dans ce tableau
-	 * (exceptÃ© Integer.MAX_VALUE car correspond a un sommet coloriÃ©), renvoie -1
-	 * si le graphe est entiÃ¨rement coloriÃ©.
+	 * La mÃƒÂ©thode plusGrandDegre prend en paramÃƒÂ¨tre un tableau d'entiers DSAT
+	 * correspondant au degrÃƒÂ© de chaque sommet du graphe et si ce graphe n'est pas
+	 * pas entiÃƒÂ¨rement coloriÃƒÂ© renvoie la plus grande valeur prÃƒÂ©sente dans ce tableau
+	 * (exceptÃƒÂ© Integer.MAX_VALUE car correspond a un sommet coloriÃƒÂ©), renvoie -1
+	 * si le graphe est entiÃƒÂ¨rement coloriÃƒÂ©.
 	 * @param DSAT
 	 * @return 
 	 */
@@ -646,7 +647,7 @@ public class Graphe {
 	}
 
 
-	public void defColor(int[] colors, int index,int[] DSAT) // definis la couleur du sommet Ã  partir de l'index
+	public void defColor(int[] colors, int index,int[] DSAT) // definis la couleur du sommet ÃƒÂ  partir de l'index
 	{
 		int []tabVoisins=tabVoisins(index);
 		if(tabVoisins.length>0)
@@ -697,17 +698,17 @@ public class Graphe {
 	}
 
 	/**
-	 * La methode tabVoisins prend en paramÃ¨tre un entier index et renvoie un tableau
-	 * d'entiers correspondant au degrÃ© de chaque sommet voisin du sommet prÃ©sent Ã 
+	 * La methode tabVoisins prend en paramÃƒÂ¨tre un entier index et renvoie un tableau
+	 * d'entiers correspondant au degrÃƒÂ© de chaque sommet voisin du sommet prÃƒÂ©sent ÃƒÂ 
 	 * l'index 
 	 * @param index
 	 * @return 
 	 */
 	public int[] tabVoisins(int index) // renvoie les positions des voisins du sommet courant
 	{
-		int[]tab=new int[this.sommets.get(index).getArcs().size()]; // crÃ©Ã© un tableau local a partir de la taille de son ArrayList d'arc qui correspond au nb de sommets voisin du sommet courant
+		int[]tab=new int[this.sommets.get(index).getArcs().size()]; // crÃƒÂ©ÃƒÂ© un tableau local a partir de la taille de son ArrayList d'arc qui correspond au nb de sommets voisin du sommet courant
 		for(int i = 0; i < this.sommets.get(index).getArcs().size(); i++){
-			int voisinArrivee=this.sommets.indexOf(this.sommets.get(index).getArcs().get(i).getArrivee()); // on rÃ©cupÃ¨re la position des sommets voisins et on les ajoute dans notre tableau local tab
+			int voisinArrivee=this.sommets.indexOf(this.sommets.get(index).getArcs().get(i).getArrivee()); // on rÃƒÂ©cupÃƒÂ¨re la position des sommets voisins et on les ajoute dans notre tableau local tab
 			if(voisinArrivee!=index) // si la position du voisin est different de la position du sommet courant et si sa couleur est differente de 0 alors on ajoute la position du voisin dans notre tableau
 				tab[i]=voisinArrivee;
 			else{
@@ -858,9 +859,9 @@ public class Graphe {
 		{
 			s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
 			if(this.isType() == Graphe.NON_ORIENTE)
-				s+="<p>Le graphe est <span style=\"color;red\">non orienté</span></p>";
+				s+="<p>Le graphe est <span style=\"color;red\">non orientÃ©</span></p>";
 			else
-				s+="<p>Le graphe est <span style=\"color;green\">orienté</span></p>";
+				s+="<p>Le graphe est <span style=\"color;green\">orientÃ©</span></p>";
 
 			if(sommets.isEmpty())
 				s+="<p>Le graphe ne contient aucun sommet</p>";
@@ -870,11 +871,11 @@ public class Graphe {
 			if(arcs.isEmpty() && this.isType() == ORIENTE)
 				s+="<p>Le graphe ne contient aucun arc</p>";
 			else if(arcs.isEmpty() && this.isType() == NON_ORIENTE)
-				s+="<p>Le graphe ne contient aucune arrête</p>";
+				s+="<p>Le graphe ne contient aucune arrÃªte</p>";
 			else if(arcs.size() > 0 && this.isType() == ORIENTE)
 				s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
 			else
-				s+="<p>Le graphe contient " + arcs.size() + " arrêtes</p>";
+				s+="<p>Le graphe contient " + arcs.size() + " arrÃªtes</p>";
 		}
 		else if(info == CONNEXE_ARBRE)
 		{

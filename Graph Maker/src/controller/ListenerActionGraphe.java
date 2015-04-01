@@ -22,6 +22,8 @@ public class ListenerActionGraphe implements ActionListener {
 		if(e.getActionCommand()=="reset"){
 			this.gv.getGraphe().getSommets().clear();
 			this.gv.getGraphe().getArcs().clear();
+			this.gv.getDijkstra().setArrivee(null);
+			this.gv.getDijkstra().setSource(null);
 		}
 		if(e.getSource()==gv.getJtfNode()){
 			this.gv.getGraphe().setTailleSommet(isInteger(gv.getJtfNode().getText()));
@@ -37,11 +39,12 @@ public class ListenerActionGraphe implements ActionListener {
                 if(e.getSource() == gv.getRename())
                 {
                     String val = (String) JOptionPane.showInputDialog(null,
-                    "Modifier le nom du graphe", "Nouvea nom", JOptionPane.QUESTION_MESSAGE, null, null, "");
+                    "Modifier le nom du graphe", "Nouveau nom", JOptionPane.QUESTION_MESSAGE, null, null, "");
                     String s = val.trim();
                     if (/*s != null) ||*/ s.length() > 0) 
                         gv.getGraphe().setNom(val);
-                     gv.getInfo().repaint();
+                    System.out.println("C REPAIN"+ gv.getGraphe().getNom());
+                    this.gv.getPangen().repaint();
                 }
                 
                 if(e.getSource() == gv.getCreate())

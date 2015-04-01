@@ -23,6 +23,7 @@ public class GrapheView extends JFrame{
     private JPanelGraphe jpg;
     private JPanelBrelaz jpb;
     private JPanelDijkstra jpd;
+    private JPanel pangen;
     private JTextField jtfNode;
     private JLabel jlColors;
     private JButton clik;
@@ -218,16 +219,16 @@ public JPanel panelGraphe(){
     }
      
     public JPanel panel4(){
-        JPanel jp=new JPanel();
+        pangen = new JPanel();
         JPanel east = new JPanel();
         east.setLayout(new GridLayout(2,1));
         gen = panelInfoGeneral();
-        jp.add(panelMatrice(),"North");
+        pangen.add(panelMatrice(),"North");
         east.add(gen,"North");
         east.add(panelConnexeArbre(),"South");
-        jp.add(east,"East");
+        pangen.add(east,"East");
         
-        return jp;
+        return pangen;
     }
     
     public JPanel panelDijkstra(){
@@ -596,5 +597,13 @@ public JPanel panelGraphe(){
 
 	public void setBarrivee(JToggleButton barrivee) {
 		this.barrivee = barrivee;
-	}		
+        }	
+
+        public JPanel getPangen() {
+            return pangen;
+        }
+
+        public void setPangen(JPanel pangen) {
+            this.pangen = pangen;
+        }
 }

@@ -8,19 +8,13 @@ public class Dijkstra {
 	private int[] sommetProche;
 	private Graphe graphe;
 	private boolean[] marquage;
-	private Sommet arrivee;
+	private Sommet puit;
 	public Dijkstra(Sommet source, Graphe graphe) {
 		this.source = source;
 		this.graphe = graphe;
 		this.sommetProche = new int[graphe.getSommets().size()];
 		this.marquage = new boolean[graphe.getSommets().size()];
 		this.dmin = new int[graphe.getSommets().size()];
-		boolean ui = initialisation();
-		if (ui && source!=null) {
-			int indexSource = graphe.getSommets().indexOf(source);
-			dijkstraAlgorithm(indexSource);
-
-		}
 	}
 
 	public Dijkstra(Graphe graphe){
@@ -41,9 +35,10 @@ public class Dijkstra {
 	public boolean initialisation() {
 		if (graphe.getSommets().contains(source)) {
 			for (int i = 0; i < graphe.getSommets().size(); i++) {
-				if (!graphe.getSommets().get(i).equals(source)) {
+				if (!graphe.getSommets().get(i).equals(source))
 					dmin[i] = Integer.MAX_VALUE;
-				}
+				else
+					dmin[i]=0;
 				sommetProche[i] = -1;
 				marquage[i] = false;
 			}
@@ -55,6 +50,7 @@ public class Dijkstra {
 	public void dijkstraAlgorithm(int index) {
 		while (!isMarqued()) {
 			int[] tabVoisins = graphe.tabVoisins(index);
+
 			index = smallestValue(tabVoisins);
 			if (index == -1) {
 				index = smallestValue();
@@ -62,8 +58,12 @@ public class Dijkstra {
 			if (index == -1) {
 				index = marquageFirstIndex();
 			}
+			System.out.print("dmin : ");
+			for(int i=0;i<dmin.length;i++){
+				System.out.print(dmin[i]+"|");
+			}
+			System.out.println();
 			dminAJour(index);
-			marquage[index] = true;
 		}
 	}
 
@@ -102,13 +102,14 @@ public class Dijkstra {
 		if (tabVoisins.length == 0) {
 			return;
 		}
-		for (int i = 0; i < tabVoisins.length; i++) {
+		for (int i = 0; i < tabVoisins.length; i++){
 			int sommeDmin = dmin[sommetMarque] + valArc(graphe.getSommets().get(sommetMarque), graphe.getSommets().get(tabVoisins[i]));
-			if (dmin[tabVoisins[i]] > sommeDmin) {
-				sommetProche[tabVoisins[i]] = sommetMarque;
+			if (dmin[tabVoisins[i]] > sommeDmin && sommeDmin>0) {
 				dmin[tabVoisins[i]] = sommeDmin;
+				sommetProche[tabVoisins[i]] = sommetMarque;
 			}
 		}
+		marquage[sommetMarque]=true;
 	}
 
 	public boolean isMarqued() {
@@ -168,7 +169,7 @@ public class Dijkstra {
 
 	public ArrayList<Arc> distanceSourceArc(){
 		ArrayList<Arc> tabFinal = new ArrayList<Arc>();
-		int indexLocal = graphe.getSommets().indexOf(arrivee);
+		int indexLocal = graphe.getSommets().indexOf(puit);
 		while(indexLocal!=-1){
 			Arc a=null;
 			if(sommetProche[indexLocal]!=-1)
@@ -177,7 +178,6 @@ public class Dijkstra {
 				System.out.println("Arc : "+a.getNom());
 				tabFinal.add(a);
 			}
-			tabFinal.trimToSize();
 			indexLocal=sommetProche[indexLocal];
 			System.out.println("indexLocal : "+indexLocal);
 		}
@@ -222,23 +222,23 @@ public class Dijkstra {
 	}
 
 	public Sommet getArrivee() {
-		return arrivee;
+		return puit;
 	}
 
 	public void setArrivee(Sommet arrivee) {
-		this.arrivee = arrivee;
+		this.puit = arrivee;
 	}
 
 	public String toString(){
-		String s="<html><table><tr><th>Nom des sommets</th>";
+		String s = "<html><table border=\"1\"><tr><td>Noms des sommets</td>";
 		for(int i=0;i<dmin.length;i++){
 			s+="<td>"+graphe.getSommets().get(i).getNom()+"</td>";
 		}
-		s+="</tr><tr><th>Dmin</th>";
+		s+="</tr><tr><td>Dmin</td>";
 		for(int i=0;i<dmin.length;i++){
 			s+="<td>"+dmin[i]+"</td>";
 		}
-		s+=s+="</tr><tr><th>Sommet proche</th>";
+		s+="</tr><tr><td>Sommets proches</td>";
 		for(int i=0;i<sommetProche.length;i++){
 			if(sommetProche[i]!=-1)
 				s+="<td>"+graphe.getSommets().get(sommetProche[i]).getNom()+"</td>";

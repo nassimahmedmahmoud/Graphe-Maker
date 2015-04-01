@@ -22,6 +22,7 @@ public class ListenerActionGraphe implements ActionListener {
 		if(e.getActionCommand()=="reset"){
 			this.gv.getGraphe().getSommets().clear();
 			this.gv.getGraphe().getArcs().clear();
+                        this.gv.getGraphe().getArcinit().clear();
 			this.gv.getDijkstra().setArrivee(null);
 			this.gv.getDijkstra().setSource(null);
 		}

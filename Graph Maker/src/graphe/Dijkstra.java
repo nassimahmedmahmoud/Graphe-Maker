@@ -13,31 +13,31 @@ public class Dijkstra {
 	public Dijkstra(Sommet source, Graphe graphe) {
 		this.source = source;
 		this.graphe = graphe;
-		this.sommetProche = new int[graphe.getSommets().size()];
-		this.marquage = new boolean[graphe.getSommets().size()];
-		this.dmin = new int[graphe.getSommets().size()];
+		this.sommetProche = new int[graphe.getArcinit().size()];
+		this.marquage = new boolean[graphe.getArcinit().size()];
+		this.dmin = new int[graphe.getArcinit().size()];
 	}
 
 	public Dijkstra(Graphe graphe){
 		this.graphe = graphe;
-		this.sommetProche = new int[graphe.getSommets().size()];
-		this.marquage = new boolean[graphe.getSommets().size()];
-		this.dmin = new int[graphe.getSommets().size()];
+		this.sommetProche = new int[graphe.getArcinit().size()];
+		this.marquage = new boolean[graphe.getArcinit().size()];
+		this.dmin = new int[graphe.getArcinit().size()];
 	}
 
 	public void algorithmDijkstra(){
 		boolean ui = initialisation();
 		if (ui && source!=null) {
-			int indexSource = graphe.getSommets().indexOf(source);
+			int indexSource = graphe.getArcinit().indexOf(source);
 			dijkstraAlgorithm(indexSource);
-			dmin[0]=dmin[1]+valArc(graphe.getSommets().get(0), graphe.getSommets().get(1));
+			dmin[0]=dmin[1]+valArc(graphe.getArcinit().get(0), graphe.getArcinit().get(1));
 		}
 	}
 
 	public boolean initialisation() {
-		if (graphe.getSommets().contains(source)) {
-			for (int i = 0; i < graphe.getSommets().size(); i++) {
-				if (!graphe.getSommets().get(i).equals(source))
+		if (graphe.getArcinit().contains(source)) {
+			for (int i = 0; i < graphe.getArcinit().size(); i++) {
+				if (!graphe.getArcinit().get(i).equals(source))
 					dmin[i] = Integer.MAX_VALUE;
 				else
 					dmin[i]=0;
@@ -114,7 +114,7 @@ public class Dijkstra {
 			return;
 		}
 		for (int i = 0; i < tabVoisins.length; i++){
-			int sommeDmin = dmin[sommetMarque] + valArc(graphe.getSommets().get(sommetMarque), graphe.getSommets().get(tabVoisins[i]));
+			int sommeDmin = dmin[sommetMarque] + valArc(graphe.getArcinit().get(sommetMarque), graphe.getArcinit().get(tabVoisins[i]));
 			if (dmin[tabVoisins[i]] > sommeDmin && sommeDmin>0) {
 				dmin[tabVoisins[i]] = sommeDmin;
 				sommetProche[tabVoisins[i]] = sommetMarque;
@@ -162,12 +162,12 @@ public class Dijkstra {
 	public ArrayList<Sommet> distanceSource(Sommet arrive){
 		ArrayList<Sommet> tabFinal = new ArrayList<Sommet>();
 
-		int indexLocal = graphe.getSommets().indexOf(arrive);
+		int indexLocal = graphe.getArcinit().indexOf(arrive);
 		int i=1;
-		tabFinal.add(graphe.getSommets().get(indexLocal));
+		tabFinal.add(graphe.getArcinit().get(indexLocal));
 		while(indexLocal!=-1){
 			if(indexLocal!=-1){
-				tabFinal.add(graphe.getSommets().get(indexLocal));
+				tabFinal.add(graphe.getArcinit().get(indexLocal));
 				indexLocal=sommetProche[indexLocal];
 			}
 		}
@@ -180,11 +180,11 @@ public class Dijkstra {
 
 	public ArrayList<Arc> distanceSourceArc(){
 		ArrayList<Arc> tabFinal = new ArrayList<Arc>();
-		int indexLocal = graphe.getSommets().indexOf(puit);
+		int indexLocal = graphe.getArcinit().indexOf(puit);
 		while(indexLocal!=-1){
 			Arc a=null;
 			if(sommetProche[indexLocal]!=-1)
-				a= graphe.arcaPartirSommets(graphe.getSommets().get(indexLocal),graphe.getSommets().get(sommetProche[indexLocal]));
+				a= graphe.arcaPartirSommets(graphe.getArcinit().get(indexLocal),graphe.getArcinit().get(sommetProche[indexLocal]));
 			if(a!=null){
 				System.out.println("Arc : "+a.getNom());
 				tabFinal.add(a);
@@ -243,7 +243,7 @@ public class Dijkstra {
 	public String toString(){
 		String s = "<html><table border=\"1\"><tr><td>Noms des sommets</td>";
 		for(int i=0;i<dmin.length;i++){
-			s+="<td>"+graphe.getSommets().get(i).getNom()+"</td>";
+			s+="<td>"+graphe.getArcinit().get(i).getNom()+"</td>";
 		}
 		s+="</tr><tr><td>Dmin</td>";
 		for(int i=0;i<dmin.length;i++){
@@ -252,7 +252,7 @@ public class Dijkstra {
 		s+="</tr><tr><td>Sommets proches</td>";
 		for(int i=0;i<sommetProche.length;i++){
 			if(sommetProche[i]!=-1)
-				s+="<td>"+graphe.getSommets().get(sommetProche[i]).getNom()+"</td>";
+				s+="<td>"+graphe.getArcinit().get(sommetProche[i]).getNom()+"</td>";
 			else
 				s+="<td>#</td>";
 		}

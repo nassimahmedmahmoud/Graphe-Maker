@@ -16,7 +16,7 @@ public class Graphe {
 	private ArrayList<Arc> arcs;
 	private int tailleSommet=50;
 	private ArrayList<Sommet> tabCick;          //Liste de sommets pour les graphes génériques et personalisés
-        private ArrayList<Sommet> arcinit;          //Pour debug Cycle et Chaine générique
+	private ArrayList<Sommet> arcinit;          //Pour debug Cycle et Chaine générique
 	private int dist;                           //Distance par défaut des graphes génériques
 
 	/**

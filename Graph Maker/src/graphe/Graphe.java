@@ -15,9 +15,9 @@ public class Graphe {
 	private ArrayList<Sommet> sommets;
 	private ArrayList<Arc> arcs;
 	private int tailleSommet=50;
-	private ArrayList<Sommet> tabCick;
-        private ArrayList<Sommet> arcinit;
-	private int dist;
+	private ArrayList<Sommet> tabCick;          //Liste de sommets pour les graphes génériques et personalisés
+        private ArrayList<Sommet> arcinit;          //Pour debug Cycle et Chaine générique
+	private int dist;                           //Distance par défaut des graphes génériques
 
 	/**
 	 * Constructeur champ a champ du graphe prend en paramÃƒÂ¨tres :
@@ -57,6 +57,12 @@ public class Graphe {
 		return null;
 	}
 
+        /**
+         * La méthode supprimerDoublons permettant de supprimer les arcs présent en double
+         * dans le graphe, utiliser pour supprimer les arcs ayant pour origine et arrivée
+         * un même sommet, mais également pour supprimer le double d'arc relié a 2 sommets
+         * dans un graphe non orienté.
+         */
 	public void supprimerDoublons()
 	{
             arcs = new ArrayList<Arc>();
@@ -146,6 +152,13 @@ public class Graphe {
 		return nb;
 	}*/
 
+        /**
+         * La méthode createChaine prend en paramètre une distance et une liste de sommets,
+         * et instancie des arcs reliés 2 à 2 aux sommets de la liste tab qui ont pour valeur
+         * dist, tel que sommet 1 relié a sommet 2, sommet 2 relié a sommet 3 etc.
+         * @param dist
+         * @param tab 
+         */
 	public void createChaine(int dist, ArrayList<Sommet> tab)
 	{
 		if(tab.size() > 1)
@@ -168,6 +181,15 @@ public class Graphe {
 		}
 	}
 
+        /**
+         * La méthode createCycle prend en paramètre une distance et une liste de sommets,
+         * fonction comme la méthode <b>createChaine(int, ArrayList)</b> a ceci pres que
+         * la méthode createCycle instancie en plus un arc entre le dernier sommet etle premier
+         * sommet de la liste de sommets passée en paramètre.
+         * @see createChaine(int, ArrayList)
+         * @param dist
+         * @param tab 
+         */
 	public void createCycle(int dist, ArrayList<Sommet> tab)
 	{
 		createChaine(dist, tab);
@@ -188,6 +210,12 @@ public class Graphe {
 		}
 	}
 
+        /**
+         * La méthode createClique prend en paramètre un entier i correspondanta la distance
+         * de l'arc, et créer des arcs qui ont pour nom i reliés a tous les sommets pour chaque
+         * sommet.
+         * @param i 
+         */
 	public void createClique(int i)
 	{
 		if(this.sommets.size() > 1)
@@ -213,6 +241,15 @@ public class Graphe {
 		}
 	}
 
+        /**
+         * La methode createClique prend en paramètre un entier i correspondant a une
+         * distance et une liste de sommets, cette methode fonctionne comme la methode
+         * createClique(int) à ceci-pres qu'on relie par des arcs les sommets de la liste
+         * en paramètre voir <b>createClique(int)</b>.
+         * @ see createClique(int)
+         * @param i
+         * @param tab 
+         */
 	public void createClique(int i, ArrayList<Sommet> tab)
 	{
 		if(tab.size() > 1)
@@ -241,7 +278,7 @@ public class Graphe {
 	/**
 	 * La mÃƒÂ©thode metrique revoie un boolÃƒÂ©en indiquant si le graphe est mÃƒÂ©trique
 	 * ou non.
-	 * @return 
+	 * @return boolean
 	 */
 	public boolean metrique(){
 		for(Sommet s : sommets){
@@ -254,6 +291,11 @@ public class Graphe {
 		return true;
 	}
 
+        /**
+         * 
+         * @param matrice
+         * @return 
+         */
 	public boolean isClique(int[][]matrice){
 		boolean ui = true;
 		for(int i=0;i<matrice.length;i++){
@@ -276,28 +318,33 @@ public class Graphe {
 		return matrice;
 	}
 
+        /**
+         * La methode connexeGraphe renvoie true si le graphe est connexe et false sinon.
+         * @return boolean
+         */
 	public boolean connexeGraphe(){
-		int tab[]=new int[sommets.size()];
-		if(tab.length>0){
-			if(type==Graphe.NON_ORIENTE){
-				return (arcs.size())>=(sommets.size()-1);
-			}
-			else{
-				for(int i=0;i<tab.length;i++){
-					for(Arc a : sommets.get(i).getArcs()){
-						tab[sommets.indexOf(a.getArrivee())]=1;
-						tab[sommets.indexOf(a.getOrigine())]=1;
-					}
-				}
-				for(int i=0;i<tab.length;i++){
-					if(tab[i]==0)
-						return false;
-				}
-				return true;
-			}
-		}
-		return false;
-	}
+            if(sommets.isEmpty() && !type)
+                return true;
+            if(sommets.isEmpty() && type)
+                return false;
+            int sommet = 0;
+            boolean marquage[]=new boolean[sommets.size()];
+            for(int i=0;i<marquage.length;i++)
+                marquage[i]=false;
+            marquage[0]=true;
+            for(int i=1;i<marquage.length;i++){
+                Arc a = this.arcaPartirSommets(sommets.get(sommet), sommets.get(i));
+                if(a!=null){
+                    sommet=i;
+                    marquage[i]=true;
+                }
+            }
+            for(int i=0;i<marquage.length;i++){
+                if(!marquage[i])
+                    return false;
+            }
+            return true;
+        }
 
 	/**
 	 * La mÃ©thode voisins prend en paramÃƒÂ¨tre deux sommets s1 et s2 et renvoie true
@@ -318,6 +365,13 @@ public class Graphe {
 		return ui;
 	}
 
+        /**
+         * La méthode isNumeric prend en paramètre un String et renvoie false si ce n'est
+         * pas un chiffre, true sinon, cette méthode est utilisée pour savoir si le nom
+         * d'un arc est un nombre ou pas.
+         * @param str
+         * @return boolean
+         */
 	public boolean isNumeric(String str)  
 	{  
 		try  
@@ -332,6 +386,13 @@ public class Graphe {
 		return true;  
 	}
 
+        /**
+         * La méthode matriceNonOriente renvoie une matrice avec pour valeur le nom des
+         * arcs casté en int si cette matrice est metrique ou 1 sinon, si le graphe est
+         * non oriente.
+         * @see matriceOriente()
+         * @return int[][]
+         */
 	public int [][] matriceNonOriente(){
 		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
 		int i=0;
@@ -355,6 +416,14 @@ public class Graphe {
 		return tab;
 	}
 
+        /**
+         * La méthode matriceOriente renvoie une matrice avec pour valeur le nom des
+         * arcs casté en int si cette matrice est metrique ou 1 sinon,comme la méthode
+         * <b>matriceNonOriente()</b> a ceci-pres que cette methode le fait pour un graphe
+         * orienté.
+         * @see matriceNonOriente()
+         * @return int[][]
+         */
 	public int[][] matriceOriente(){
 		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
 		int i=0;
@@ -378,6 +447,13 @@ public class Graphe {
 		return tab;
 	}
 
+        /**
+         * La méthode matrice renvoie le resultat <b>matriceNonOriente()</b> ou celui de
+         * <b>matriceOriente()</b> en fonction du graphe, si il est orienté ou non.
+         * @see matriceNonOriente()
+         * @see matriceOriente()
+         * @return int[][]
+         */
 	public int[][]matrice(){
 		if(this.type==Graphe.ORIENTE){
 			return matriceOriente();
@@ -387,6 +463,13 @@ public class Graphe {
 		}
 	}
 
+        /**
+         * La méthode sommetInGraphe prend en paramètre une liste de sommets et un sommet
+         * et renvoie true si ce sommet est dans la liste passé en paramètre, false sinon.
+         * @param tab
+         * @param somm_s
+         * @return boolean
+         */
 	public boolean sommetInGraphe(ArrayList<Sommet> tab, Sommet somm_s)
 	{
 		boolean ui = false;
@@ -426,6 +509,12 @@ public class Graphe {
 		return ui;
 	}*/
 
+        /**
+         * La méthode arcInGraohe prend en paramètre un arc et revoie true si cet arc est
+         * présent dans le graphe, false sinon.
+         * @param arc_g
+         * @return boolean
+         */
 	public boolean arcInGraphe(Arc arc_g)
 	{
 		boolean ui = false;
@@ -451,6 +540,11 @@ public class Graphe {
 		return ui;
 	}
 
+        /**
+         * La méthode ajouterSommet prend en paramètre un sommet s et l'ajoute dans la
+         * liste des sommets du graphe.
+         * @param s 
+         */
 	public void ajouterSommet(Sommet s){
 		if(!sommets.contains(s)){
 			s.setNom(""+(sommets.size()+1));
@@ -459,6 +553,14 @@ public class Graphe {
 		}
 	}
 
+        /**
+         * La méthode stringMatrice renvoie une chaine de caractère correspondant aux
+         * valeurs présentes dans la matrice crée par la methode <b>matrice()</b>, cette
+         * méthode est rendue obselète depuis la création de la méthode <b>toString(int)</b>.
+         * @see matrice()
+         * @see toString(int)
+         * @return String
+         */
 	public String stringMatrice(){
 		String s="<html>";
 		int[][]tab =matrice();
@@ -472,6 +574,16 @@ public class Graphe {
 		return s;
 	}
 
+        /**
+         * La méthode connexeArbre renvoie une chaine de caractère correspondant encapsulant
+         * le résultat des méthodes <b>connexeGraphe()</b> et <b>isTree()</b> sous forme
+         * de Chaine de caractère, cette méthode est rendue obselète depuis la création
+         * de la méthode <b>toString(int)</b>.
+         * @see connexeGraphe()
+         * @see isTree()
+         * @see toString(int)
+         * @return String
+         */
 	public String connexeArbre(){
 		String s ="<html>";
 		if(connexeGraphe())
@@ -486,22 +598,12 @@ public class Graphe {
 		return s;
 	}
 
-	public int chromatique(){
-		int [] colors = coloration();
-		int val;
-		if(colors!=null && colors.length>1){
-			val = colors[0];
-			for (int i = 1; i < colors.length; i++)
-				if (val<colors[i])
-					val = colors[i];
-		}
-		else if(this.sommets.size() == 1)
-			val = 1;
-		else
-			val = 0;
-		return val;
-	}
-
+        /**
+         * La méthode isTree renvoie un booleen qui vaut true si le graphe est un arbre
+         * et false sinon, un graphe est un arbre si sont nombre d'arcs vaut le nombre de
+         * sommets-1 présents dans le graphe.
+         * @return boolean
+         */
 	public boolean isTree(){
 		if(this.sommets.size()==1)
 			return false;
@@ -518,7 +620,7 @@ public class Graphe {
 	 * voisins du sommet s1 qui sont coloriÃƒÂ©s.
 	 * @param s1
 	 * @param dsat
-	 * @return 
+	 * @return int
 	 */
 	public int voisinsColorie(Sommet s1, int[] dsat)
 	{
@@ -532,13 +634,34 @@ public class Graphe {
 		}
 		return color;
 	}
+        
+        /**
+         * La méthode chromatique renvoie un entier correspondant au nombre de couleurs
+         * différentes présent dans la table des couleurs.
+         * @return int
+         */
+	public int chromatique(){
+		int [] colors = coloration();
+		int val;
+		if(colors!=null && colors.length>1){
+			val = colors[0];
+			for (int i = 1; i < colors.length; i++)
+				if (val<colors[i])
+					val = colors[i];
+		}
+		else if(this.sommets.size() == 1)
+			val = 1;
+		else
+			val = 0;
+		return val;
+	}
 
 	/**
 	 * La mÃƒÂ©thode initialisation crÃƒÂ©er un tableau d'entier d'une taille correspondant
 	 * au nombre de sommet prÃƒÂ©sents dans le graphe, et pour chaque sommet correspondant
 	 * effecte a la case correspondant a son indice le degrÃƒÂ© ou nombre d'arcs associÃƒÂ©
 	 * a ce sommet, et retourne ce tableau.
-	 * @return 
+	 * @return int[]
 	 */
 	public int[] initialisation()
 	{

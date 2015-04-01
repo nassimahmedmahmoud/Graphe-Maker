@@ -66,9 +66,9 @@ public class ListenerActionGraphe implements ActionListener {
                 if(e.getSource() == gv.getClik())
                     this.gv.getGraphe().createClique(gv.getGraphe().getDist());
                 if(e.getSource() == gv.getCycle())
-                    gv.getGraphe().createCycle(gv.getGraphe().getDist(),gv.getGraphe().getSommets());
+                    gv.getGraphe().createCycle(gv.getGraphe().getDist(),gv.getGraphe().getArcinit());
                 if(e.getSource() == gv.getChaine())
-                    gv.getGraphe().createChaine(gv.getGraphe().getDist(),gv.getGraphe().getSommets());
+                    gv.getGraphe().createChaine(gv.getGraphe().getDist(),gv.getGraphe().getArcinit());
 		
                 if(this.gv.getBrelaz() == e.getSource())
 			this.gv.setColors(this.gv.getGraphe().coloration());

@@ -9,6 +9,7 @@ public class Dijkstra {
 	private Graphe graphe;
 	private boolean[] marquage;
 	private Sommet puit;
+        
 	public Dijkstra(Sommet source, Graphe graphe) {
 		this.source = source;
 		this.graphe = graphe;

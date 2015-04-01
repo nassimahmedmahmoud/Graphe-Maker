@@ -16,6 +16,7 @@ public class Graphe {
 	private ArrayList<Arc> arcs;
 	private int tailleSommet=50;
 	private ArrayList<Sommet> tabCick;
+        private ArrayList<Sommet> arcinit;
 	private int dist;
 
 	/**
@@ -36,6 +37,7 @@ public class Graphe {
 		this.sommets = sommets;
 		this.arcs = arcs;
 		this.tabCick = new ArrayList<Sommet>();
+                this.arcinit = new ArrayList<Sommet>();
 	}
 
 	/**
@@ -57,23 +59,13 @@ public class Graphe {
 
 	public void supprimerDoublons()
 	{
-		ArrayList<Arc> tabl = new ArrayList<Arc>(arcs);
-		tabl.add(arcs.get(0));
-		/*for(int i = 0; i < arcs.size(); i++)
+            arcs = new ArrayList<Arc>();
+            for(Sommet s : sommets)
             {
-                for(int j = 0; j < arcs.size(); j++)
-                    if((arcs.get(i).getOrigine() == arcs.get(j).getArrivee()) &&
-                        (arcs.get(i).getArrivee() == arcs.get(j).getOrigine()) && (arcInTab(tabl,tabl.get(i))))
-                        tabl.remove(arcs.get(i));
-            }*/
-		this.setArcs(tabl);
-		for(Sommet s : sommets)
-		{
-			//s.resetArcs();
-			for(Arc a : arcs)
-				if(a.getArrivee() == s || a.getOrigine() == s)
-					s.ajouterArc(a);
-		}
+                for(Arc a : s.getArcs())
+                    if(!arcInGraphe(a) && !(a.getOrigine().equals(a.getArrivee())))
+                        arcs.add(a);
+            }
 	}
 
 	/**
@@ -83,11 +75,10 @@ public class Graphe {
 	public void switchTypeOfGraphe(){
 		if(this.type)
 		{
-			this.setType(Graphe.NON_ORIENTE);
-			/*System.out.println(arcs);
+                    this.setType(Graphe.NON_ORIENTE);
                     if(this.arcs.size() > 0)
                         this.supprimerDoublons();
-                    System.out.println(arcs);*/
+                    System.out.println(arcs);
 		}
 		else
 			this.setType(Graphe.ORIENTE);
@@ -464,6 +455,7 @@ public class Graphe {
 		if(!sommets.contains(s)){
 			s.setNom(""+(sommets.size()+1));
 			sommets.add(s);
+                        arcinit.add(s);
 		}
 	}
 
@@ -846,6 +838,14 @@ public class Graphe {
 	public void setDist(int dist) {
 		this.dist = dist;
 	}
+
+        public ArrayList<Sommet> getArcinit() {
+            return arcinit;
+        }
+
+        public void setArcinit(ArrayList<Sommet> arcinit) {
+            this.arcinit = arcinit;
+        }
 
 	public String toString() {
 		return "Graphe [nom=" + nom + ", type=" + type + ", sommets=" + sommets

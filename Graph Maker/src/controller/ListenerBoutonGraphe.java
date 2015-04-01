@@ -37,7 +37,7 @@ public class ListenerBoutonGraphe implements MouseListener {
                 this.gv.getGraphe().getArcs().remove(this.getsCourant().getArc(i));
             }
 
-            
+            this.gv.getGraphe().getArcinit().remove(this.getsCourant());
             this.gv.getGraphe().getSommets().remove(this.getsCourant());
         }
         

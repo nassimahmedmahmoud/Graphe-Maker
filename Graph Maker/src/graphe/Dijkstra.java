@@ -30,6 +30,7 @@ public class Dijkstra {
 		if (ui && source!=null) {
 			int indexSource = graphe.getSommets().indexOf(source);
 			dijkstraAlgorithm(indexSource);
+			dmin[0]=dmin[1]+valArc(graphe.getSommets().get(0), graphe.getSommets().get(1));
 		}
 	}
 
@@ -49,7 +50,7 @@ public class Dijkstra {
 	}
 
 	public void dijkstraAlgorithm(int index) {
-		while (!isMarqued()) {
+		do {
 			int[] tabVoisins = graphe.tabVoisins(index);
 
 			index = smallestValue(tabVoisins);
@@ -65,7 +66,7 @@ public class Dijkstra {
 			}
 			System.out.println();
 			dminAJour(index);
-		}
+		}while(!isMarqued());
 	}
 
 	public int smallestValue() {
@@ -96,6 +97,15 @@ public class Dijkstra {
 			}
 		}
 		return val;
+	}
+	
+	public boolean dminTest(){
+		boolean ui=true;
+		for(int i=0;i<dmin.length;i++){
+			if(dmin[i]>=Integer.MAX_VALUE)
+				return false;
+		}
+		return ui;
 	}
 
 	public void dminAJour(int sommetMarque) {

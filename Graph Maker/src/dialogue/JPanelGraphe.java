@@ -25,9 +25,11 @@ public class JPanelGraphe extends JPanel{
 		}
 		for( Sommet s : graphe.getSommets())
 			this.drawNode(s,g,graphe.getTailleSommet(),new Color(240,240,240));
-		if(graphe.getSommets().size()>2 && graphe.getArcs().size()>2){
-			
+		if(graphe.getSommets().size()>5){
+			//graphe.sortSommetsXY();
+			graphe.sortSommetsLatex();
 		}
+		
 		
 	}
 

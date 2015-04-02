@@ -1,5 +1,6 @@
 package graphe;
 
+
 import java.awt.event.*;
 import java.util.*;
 
@@ -9,6 +10,8 @@ public class Graphe {
 	public static final int GENERAL = 1;
 	public static final int CONNEXE_ARBRE = 2;
 	public static final int MATRIX = 3;
+	public static final int COLONNE_X = 0;
+	public static final int COLONNE_Y = 1;
 
 	private String nom;
 	private boolean type;
@@ -37,7 +40,7 @@ public class Graphe {
 		this.sommets = sommets;
 		this.arcs = arcs;
 		this.tabCick = new ArrayList<Sommet>();
-                this.arcinit = new ArrayList<Sommet>();
+		this.arcinit = new ArrayList<Sommet>();
 	}
 
 	/**
@@ -57,21 +60,85 @@ public class Graphe {
 		return null;
 	}
 
-        /**
-         * La méthode supprimerDoublons permettant de supprimer les arcs présent en double
-         * dans le graphe, utiliser pour supprimer les arcs ayant pour origine et arrivée
-         * un même sommet, mais également pour supprimer le double d'arc relié a 2 sommets
-         * dans un graphe non orienté.
-         */
+	/**
+	 * La méthode supprimerDoublons permettant de supprimer les arcs présent en double
+	 * dans le graphe, utiliser pour supprimer les arcs ayant pour origine et arrivée
+	 * un même sommet, mais également pour supprimer le double d'arc relié a 2 sommets
+	 * dans un graphe non orienté.
+	 */
 	public void supprimerDoublons()
 	{
-            arcs = new ArrayList<Arc>();
-            for(Sommet s : sommets)
-            {
-                for(Arc a : s.getArcs())
-                    if(!arcInGraphe(a) && !(a.getOrigine().equals(a.getArrivee())))
-                        arcs.add(a);
-            }
+		arcs = new ArrayList<Arc>();
+		for(Sommet s : sommets)
+		{
+			for(Arc a : s.getArcs())
+				if(!arcInGraphe(a) && !(a.getOrigine().equals(a.getArrivee())))
+					arcs.add(a);
+		}
+	}
+	public Sommet[][] sortSommetsXY(){
+		Sommet[][] tab = new Sommet[2][this.arcinit.size()];
+		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
+		ArrayList<Sommet> altmpY = new ArrayList<Sommet>(arcinit);
+		Collections.sort(altmpX,new Comparator<Sommet>() {
+			public int compare(Sommet s1, Sommet s2) {
+				return s1.getPosX()-s2.getPosX();
+			}
+		});
+		Collections.sort(altmpY,new Comparator<Sommet>() {
+			public int compare(Sommet s1, Sommet s2) {
+				return s1.getPosY()-s2.getPosY();
+			}
+		});
+		for(int i=0;i<tab[Graphe.COLONNE_X].length;i++)
+			tab[Graphe.COLONNE_X][i]=altmpX.get(i);
+		for(int i=0;i<tab[Graphe.COLONNE_Y].length;i++)
+			tab[Graphe.COLONNE_Y][i]=altmpY.get(i);
+		return tab;
+	}
+	
+	public ArrayList<Sommet> sortSommetsLatex(){
+		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
+		Collections.sort(altmpX,new Comparator<Sommet>() {
+			public int compare(Sommet s1, Sommet s2) {
+				return s1.getPosX()-s2.getPosX();
+			}
+		});
+		Collections.sort(altmpX,new Comparator<Sommet>() {
+			public int compare(Sommet s1, Sommet s2) {
+				return s1.getPosY()-s2.getPosY();
+			}
+		});
+		System.out.println(altmpX);
+		return altmpX;
+	}
+
+	public int nbLigneLaTex(int marge){
+		Sommet[][] tab = sortSommetsXY();
+		int val = tab[Graphe.COLONNE_X][0].getPosX();
+		int nbLigne=0;
+		for(int i=1;i<tab[Graphe.COLONNE_X].length;i++){
+			int tmp = tab[Graphe.COLONNE_X][i].getPosX();
+			if((val-tmp)<=-marge || (val-tmp)>=marge){
+				val=tmp;
+				nbLigne++;
+			}
+		}
+		return nbLigne;
+	}
+	
+	public int nbColonneLaTex(int marge){
+		Sommet[][] tab = sortSommetsXY();
+		int val = tab[Graphe.COLONNE_Y][0].getPosX();
+		int nbColonne=0;
+		for(int i=1;i<tab[Graphe.COLONNE_Y].length;i++){
+			int tmp = tab[Graphe.COLONNE_Y][i].getPosX();
+			if((val-tmp)>-marge && (val-tmp)<marge){
+				val=tmp;
+				nbColonne++;
+			}
+		}
+		return nbColonne;
 	}
 
 	/**
@@ -81,10 +148,10 @@ public class Graphe {
 	public void switchTypeOfGraphe(){
 		if(this.type)
 		{
-                    this.setType(Graphe.NON_ORIENTE);
-                    if(this.arcs.size() > 0)
-                        this.supprimerDoublons();
-                    System.out.println(arcs);
+			this.setType(Graphe.NON_ORIENTE);
+			if(this.arcs.size() > 0)
+				this.supprimerDoublons();
+			System.out.println(arcs);
 		}
 		else
 			this.setType(Graphe.ORIENTE);
@@ -152,13 +219,13 @@ public class Graphe {
 		return nb;
 	}*/
 
-        /**
-         * La méthode createChaine prend en paramètre une distance et une liste de sommets,
-         * et instancie des arcs reliés 2 à 2 aux sommets de la liste tab qui ont pour valeur
-         * dist, tel que sommet 1 relié a sommet 2, sommet 2 relié a sommet 3 etc.
-         * @param dist
-         * @param tab 
-         */
+	/**
+	 * La méthode createChaine prend en paramètre une distance et une liste de sommets,
+	 * et instancie des arcs reliés 2 à 2 aux sommets de la liste tab qui ont pour valeur
+	 * dist, tel que sommet 1 relié a sommet 2, sommet 2 relié a sommet 3 etc.
+	 * @param dist
+	 * @param tab 
+	 */
 	public void createChaine(int dist, ArrayList<Sommet> tab)
 	{
 		if(tab.size() > 1)
@@ -181,15 +248,15 @@ public class Graphe {
 		}
 	}
 
-        /**
-         * La méthode createCycle prend en paramètre une distance et une liste de sommets,
-         * fonction comme la méthode <b>createChaine(int, ArrayList)</b> a ceci pres que
-         * la méthode createCycle instancie en plus un arc entre le dernier sommet etle premier
-         * sommet de la liste de sommets passée en paramètre.
-         * @see createChaine(int, ArrayList)
-         * @param dist
-         * @param tab 
-         */
+	/**
+	 * La méthode createCycle prend en paramètre une distance et une liste de sommets,
+	 * fonction comme la méthode <b>createChaine(int, ArrayList)</b> a ceci pres que
+	 * la méthode createCycle instancie en plus un arc entre le dernier sommet etle premier
+	 * sommet de la liste de sommets passée en paramètre.
+	 * @see createChaine(int, ArrayList)
+	 * @param dist
+	 * @param tab 
+	 */
 	public void createCycle(int dist, ArrayList<Sommet> tab)
 	{
 		createChaine(dist, tab);
@@ -210,12 +277,12 @@ public class Graphe {
 		}
 	}
 
-        /**
-         * La méthode createClique prend en paramètre un entier i correspondanta la distance
-         * de l'arc, et créer des arcs qui ont pour nom i reliés a tous les sommets pour chaque
-         * sommet.
-         * @param i 
-         */
+	/**
+	 * La méthode createClique prend en paramètre un entier i correspondanta la distance
+	 * de l'arc, et créer des arcs qui ont pour nom i reliés a tous les sommets pour chaque
+	 * sommet.
+	 * @param i 
+	 */
 	public void createClique(int i)
 	{
 		if(this.sommets.size() > 1)
@@ -241,15 +308,15 @@ public class Graphe {
 		}
 	}
 
-        /**
-         * La methode createClique prend en paramètre un entier i correspondant a une
-         * distance et une liste de sommets, cette methode fonctionne comme la methode
-         * createClique(int) à ceci-pres qu'on relie par des arcs les sommets de la liste
-         * en paramètre voir <b>createClique(int)</b>.
-         * @ see createClique(int)
-         * @param i
-         * @param tab 
-         */
+	/**
+	 * La methode createClique prend en paramètre un entier i correspondant a une
+	 * distance et une liste de sommets, cette methode fonctionne comme la methode
+	 * createClique(int) à ceci-pres qu'on relie par des arcs les sommets de la liste
+	 * en paramètre voir <b>createClique(int)</b>.
+	 * @ see createClique(int)
+	 * @param i
+	 * @param tab 
+	 */
 	public void createClique(int i, ArrayList<Sommet> tab)
 	{
 		if(tab.size() > 1)
@@ -291,11 +358,11 @@ public class Graphe {
 		return true;
 	}
 
-        /**
-         * 
-         * @param matrice
-         * @return 
-         */
+	/**
+	 * 
+	 * @param matrice
+	 * @return 
+	 */
 	public boolean isClique(int[][]matrice){
 		boolean ui = true;
 		for(int i=0;i<matrice.length;i++){
@@ -318,33 +385,33 @@ public class Graphe {
 		return matrice;
 	}
 
-        /**
-         * La methode connexeGraphe renvoie true si le graphe est connexe et false sinon.
-         * @return boolean
-         */
+	/**
+	 * La methode connexeGraphe renvoie true si le graphe est connexe et false sinon.
+	 * @return boolean
+	 */
 	public boolean connexeGraphe(){
-            if(sommets.isEmpty() && !type)
-                return true;
-            if(sommets.isEmpty() && type)
-                return false;
-            int sommet = 0;
-            boolean marquage[]=new boolean[sommets.size()];
-            for(int i=0;i<marquage.length;i++)
-                marquage[i]=false;
-            marquage[0]=true;
-            for(int i=1;i<marquage.length;i++){
-                Arc a = this.arcaPartirSommets(sommets.get(sommet), sommets.get(i));
-                if(a!=null){
-                    sommet=i;
-                    marquage[i]=true;
-                }
-            }
-            for(int i=0;i<marquage.length;i++){
-                if(!marquage[i])
-                    return false;
-            }
-            return true;
-        }
+		if(sommets.isEmpty() && !type)
+			return true;
+		if(sommets.isEmpty() && type)
+			return false;
+		int sommet = 0;
+		boolean marquage[]=new boolean[sommets.size()];
+		for(int i=0;i<marquage.length;i++)
+			marquage[i]=false;
+		marquage[0]=true;
+		for(int i=1;i<marquage.length;i++){
+			Arc a = this.arcaPartirSommets(sommets.get(sommet), sommets.get(i));
+			if(a!=null){
+				sommet=i;
+				marquage[i]=true;
+			}
+		}
+		for(int i=0;i<marquage.length;i++){
+			if(!marquage[i])
+				return false;
+		}
+		return true;
+	}
 
 	/**
 	 * La mÃ©thode voisins prend en paramÃƒÂ¨tre deux sommets s1 et s2 et renvoie true
@@ -365,13 +432,13 @@ public class Graphe {
 		return ui;
 	}
 
-        /**
-         * La méthode isNumeric prend en paramètre un String et renvoie false si ce n'est
-         * pas un chiffre, true sinon, cette méthode est utilisée pour savoir si le nom
-         * d'un arc est un nombre ou pas.
-         * @param str
-         * @return boolean
-         */
+	/**
+	 * La méthode isNumeric prend en paramètre un String et renvoie false si ce n'est
+	 * pas un chiffre, true sinon, cette méthode est utilisée pour savoir si le nom
+	 * d'un arc est un nombre ou pas.
+	 * @param str
+	 * @return boolean
+	 */
 	public boolean isNumeric(String str)  
 	{  
 		try  
@@ -386,13 +453,13 @@ public class Graphe {
 		return true;  
 	}
 
-        /**
-         * La méthode matriceNonOriente renvoie une matrice avec pour valeur le nom des
-         * arcs casté en int si cette matrice est metrique ou 1 sinon, si le graphe est
-         * non oriente.
-         * @see matriceOriente()
-         * @return int[][]
-         */
+	/**
+	 * La méthode matriceNonOriente renvoie une matrice avec pour valeur le nom des
+	 * arcs casté en int si cette matrice est metrique ou 1 sinon, si le graphe est
+	 * non oriente.
+	 * @see matriceOriente()
+	 * @return int[][]
+	 */
 	public int [][] matriceNonOriente(){
 		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
 		int i=0;
@@ -400,7 +467,7 @@ public class Graphe {
 		for(Sommet s : this.sommets){
 			for(Arc a : s.getArcs()){
 				int pos=0;
-				if(a.getOrigine()==s)
+				if(a.getOrigine().equals(s))
 					pos = positionSommets(a.getArrivee());
 				else
 					pos = positionSommets(a.getOrigine());
@@ -416,14 +483,14 @@ public class Graphe {
 		return tab;
 	}
 
-        /**
-         * La méthode matriceOriente renvoie une matrice avec pour valeur le nom des
-         * arcs casté en int si cette matrice est metrique ou 1 sinon,comme la méthode
-         * <b>matriceNonOriente()</b> a ceci-pres que cette methode le fait pour un graphe
-         * orienté.
-         * @see matriceNonOriente()
-         * @return int[][]
-         */
+	/**
+	 * La méthode matriceOriente renvoie une matrice avec pour valeur le nom des
+	 * arcs casté en int si cette matrice est metrique ou 1 sinon,comme la méthode
+	 * <b>matriceNonOriente()</b> a ceci-pres que cette methode le fait pour un graphe
+	 * orienté.
+	 * @see matriceNonOriente()
+	 * @return int[][]
+	 */
 	public int[][] matriceOriente(){
 		int tab[][]=new int[this.sommets.size()][this.sommets.size()];
 		int i=0;
@@ -432,7 +499,7 @@ public class Graphe {
 			//System.out.println(s.getArcs());
 			for(Arc a : s.getArcs()){
 				int pos=0;
-				if(a.getOrigine()==s){
+				if(a.getOrigine().equals(s)){
 					pos = positionSommets(a.getArrivee());
 					if(pos!=-1){
 						if(metrique)
@@ -447,13 +514,13 @@ public class Graphe {
 		return tab;
 	}
 
-        /**
-         * La méthode matrice renvoie le resultat <b>matriceNonOriente()</b> ou celui de
-         * <b>matriceOriente()</b> en fonction du graphe, si il est orienté ou non.
-         * @see matriceNonOriente()
-         * @see matriceOriente()
-         * @return int[][]
-         */
+	/**
+	 * La méthode matrice renvoie le resultat <b>matriceNonOriente()</b> ou celui de
+	 * <b>matriceOriente()</b> en fonction du graphe, si il est orienté ou non.
+	 * @see matriceNonOriente()
+	 * @see matriceOriente()
+	 * @return int[][]
+	 */
 	public int[][]matrice(){
 		if(this.type==Graphe.ORIENTE){
 			return matriceOriente();
@@ -463,13 +530,13 @@ public class Graphe {
 		}
 	}
 
-        /**
-         * La méthode sommetInGraphe prend en paramètre une liste de sommets et un sommet
-         * et renvoie true si ce sommet est dans la liste passé en paramètre, false sinon.
-         * @param tab
-         * @param somm_s
-         * @return boolean
-         */
+	/**
+	 * La méthode sommetInGraphe prend en paramètre une liste de sommets et un sommet
+	 * et renvoie true si ce sommet est dans la liste passé en paramètre, false sinon.
+	 * @param tab
+	 * @param somm_s
+	 * @return boolean
+	 */
 	public boolean sommetInGraphe(ArrayList<Sommet> tab, Sommet somm_s)
 	{
 		boolean ui = false;
@@ -509,12 +576,12 @@ public class Graphe {
 		return ui;
 	}*/
 
-        /**
-         * La méthode arcInGraohe prend en paramètre un arc et revoie true si cet arc est
-         * présent dans le graphe, false sinon.
-         * @param arc_g
-         * @return boolean
-         */
+	/**
+	 * La méthode arcInGraohe prend en paramètre un arc et revoie true si cet arc est
+	 * présent dans le graphe, false sinon.
+	 * @param arc_g
+	 * @return boolean
+	 */
 	public boolean arcInGraphe(Arc arc_g)
 	{
 		boolean ui = false;
@@ -540,27 +607,27 @@ public class Graphe {
 		return ui;
 	}
 
-        /**
-         * La méthode ajouterSommet prend en paramètre un sommet s et l'ajoute dans la
-         * liste des sommets du graphe.
-         * @param s 
-         */
+	/**
+	 * La méthode ajouterSommet prend en paramètre un sommet s et l'ajoute dans la
+	 * liste des sommets du graphe.
+	 * @param s 
+	 */
 	public void ajouterSommet(Sommet s){
 		if(!sommets.contains(s)){
 			s.setNom(""+(sommets.size()+1));
 			sommets.add(s);
-                        arcinit.add(s);
+			arcinit.add(s);
 		}
 	}
 
-        /**
-         * La méthode stringMatrice renvoie une chaine de caractère correspondant aux
-         * valeurs présentes dans la matrice crée par la methode <b>matrice()</b>, cette
-         * méthode est rendue obselète depuis la création de la méthode <b>toString(int)</b>.
-         * @see matrice()
-         * @see toString(int)
-         * @return String
-         */
+	/**
+	 * La méthode stringMatrice renvoie une chaine de caractère correspondant aux
+	 * valeurs présentes dans la matrice crée par la methode <b>matrice()</b>, cette
+	 * méthode est rendue obselète depuis la création de la méthode <b>toString(int)</b>.
+	 * @see matrice()
+	 * @see toString(int)
+	 * @return String
+	 */
 	public String stringMatrice(){
 		String s="<html>";
 		int[][]tab =matrice();
@@ -574,16 +641,16 @@ public class Graphe {
 		return s;
 	}
 
-        /**
-         * La méthode connexeArbre renvoie une chaine de caractère correspondant encapsulant
-         * le résultat des méthodes <b>connexeGraphe()</b> et <b>isTree()</b> sous forme
-         * de Chaine de caractère, cette méthode est rendue obselète depuis la création
-         * de la méthode <b>toString(int)</b>.
-         * @see connexeGraphe()
-         * @see isTree()
-         * @see toString(int)
-         * @return String
-         */
+	/**
+	 * La méthode connexeArbre renvoie une chaine de caractère correspondant encapsulant
+	 * le résultat des méthodes <b>connexeGraphe()</b> et <b>isTree()</b> sous forme
+	 * de Chaine de caractère, cette méthode est rendue obselète depuis la création
+	 * de la méthode <b>toString(int)</b>.
+	 * @see connexeGraphe()
+	 * @see isTree()
+	 * @see toString(int)
+	 * @return String
+	 */
 	public String connexeArbre(){
 		String s ="<html>";
 		if(connexeGraphe())
@@ -598,12 +665,12 @@ public class Graphe {
 		return s;
 	}
 
-        /**
-         * La méthode isTree renvoie un booleen qui vaut true si le graphe est un arbre
-         * et false sinon, un graphe est un arbre si sont nombre d'arcs vaut le nombre de
-         * sommets-1 présents dans le graphe.
-         * @return boolean
-         */
+	/**
+	 * La méthode isTree renvoie un booleen qui vaut true si le graphe est un arbre
+	 * et false sinon, un graphe est un arbre si sont nombre d'arcs vaut le nombre de
+	 * sommets-1 présents dans le graphe.
+	 * @return boolean
+	 */
 	public boolean isTree(){
 		if(this.sommets.size()==1)
 			return false;
@@ -634,12 +701,12 @@ public class Graphe {
 		}
 		return color;
 	}
-        
-        /**
-         * La méthode chromatique renvoie un entier correspondant au nombre de couleurs
-         * différentes présent dans la table des couleurs.
-         * @return int
-         */
+
+	/**
+	 * La méthode chromatique renvoie un entier correspondant au nombre de couleurs
+	 * différentes présent dans la table des couleurs.
+	 * @return int
+	 */
 	public int chromatique(){
 		int [] colors = coloration();
 		int val;
@@ -962,13 +1029,13 @@ public class Graphe {
 		this.dist = dist;
 	}
 
-        public ArrayList<Sommet> getArcinit() {
-            return arcinit;
-        }
+	public ArrayList<Sommet> getArcinit() {
+		return arcinit;
+	}
 
-        public void setArcinit(ArrayList<Sommet> arcinit) {
-            this.arcinit = arcinit;
-        }
+	public void setArcinit(ArrayList<Sommet> arcinit) {
+		this.arcinit = arcinit;
+	}
 
 	public String toString() {
 		return "Graphe [nom=" + nom + ", type=" + type + ", sommets=" + sommets

@@ -31,7 +31,7 @@ public class ListenerMenuGraphe implements ActionListener {
                         "<br>Editeur : " + a.getEditeur() + "<br><br>" +
                         a.getText() +
                         "</p></body></html>");
-                JOptionPane.showMessageDialog(null,affichage);
+                JOptionPane.showMessageDialog(null,affichage,"A propos de nous",1);
             }
                 
             this.gv.getJpg().repaint();

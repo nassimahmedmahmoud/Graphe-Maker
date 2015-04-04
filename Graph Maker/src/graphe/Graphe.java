@@ -105,7 +105,7 @@ public class Graphe {
 		return tab;
 	}
 	
-	public ArrayList<Sommet> sortSommetsLatex(){
+	public ArrayList<Sommet> sortSommetsLatexX(){
 		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
 		Collections.sort(altmpX,new Comparator<Sommet>() {
 			public int compare(Sommet s1, Sommet s2) {
@@ -120,7 +120,21 @@ public class Graphe {
 		System.out.println(altmpX);
 		return altmpX;
 	}
-
+	public ArrayList<Sommet> sortSommetsLatexY(){
+		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
+		Collections.sort(altmpX,new Comparator<Sommet>() {
+			public int compare(Sommet s1, Sommet s2) {
+				return s1.getPosY()-s2.getPosY();
+			}
+		});
+		Collections.sort(altmpX,new Comparator<Sommet>() {
+			public int compare(Sommet s1, Sommet s2) {
+				return s1.getPosX()-s2.getPosX();
+			}
+		});
+		System.out.println(altmpX);
+		return altmpX;
+	}
 	public int nbLigneLaTex(int marge){
 		Sommet[][] tab = sortSommetsXY();
 		int val = tab[Graphe.COLONNE_X][0].getPosX();

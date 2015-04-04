@@ -3,11 +3,8 @@ package dialogue;
 import java.awt.*;
 
 import javax.swing.*;
-
 import controller.*;
 import graphe.*;
-import static javax.swing.JFrame.*;
- 
  
  
 public class GrapheView extends JFrame{
@@ -63,6 +60,7 @@ public class GrapheView extends JFrame{
         this.initialise();
         this.setSize(w,h);
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
     
     public void initialise(){

@@ -1,8 +1,11 @@
 package controller;
 
 import graphe.*;
+
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import dialogue.*;
 
 public class ListenerMenuGraphe implements ActionListener {
@@ -33,7 +36,12 @@ public class ListenerMenuGraphe implements ActionListener {
                         "</p></body></html>");
                 JOptionPane.showMessageDialog(null,affichage,"A propos de nous",1);
             }
-                
+            if(e.getSource()==this.gv.getMenusave()){
+                String val = (String) JOptionPane.showInputDialog(null,
+                        "Entrer le nom de votre fichier :", "Sommet", JOptionPane.QUESTION_MESSAGE, null, null, "");
+                if (val != null)
+                	this.gv.getGraphe().save(val,this.gv.getGraphe());
+            }
             this.gv.getJpg().repaint();
 	}
 

@@ -1084,8 +1084,20 @@ public class Graphe {
 	}
 
 	public String toString() {
-		return "Graphe [nom=" + nom + ", type=" + type + ", sommets=" + sommets
-				+ ", arcs=" + arcs + "]";
+		String s="";
+		int type=0;
+		if(this.isType())
+			type=0;
+		else
+			type=1;
+		s+=this.getNom()+","+type+","+0+","+0+","+this.getSommets().size()+","+this.getArcs().size()+"\n";
+		for(Sommet s0 : this.arcinit)
+			s+=s0.getNom()+","+s0.getPosX()+","+s0.getPosY()+","+0+"\n";
+		for(Arc a0 : this.getArcs()){
+			s+=a0.getOrigine().getPosX()+","+a0.getOrigine().getPosY()+","+0+","+0+",";
+			s+=a0.getArrivee().getPosX()+","+a0.getArrivee().getPosY()+","+0+","+0+","+0+","+0+"\n";
+		}
+		return s;
 	}
 
         /**
@@ -1213,67 +1225,19 @@ public class Graphe {
 	    return g;
 	}
 	
-	public Graphe write(File fileName){
-		BufferedReader br = null;
-		Graphe g =new Graphe();
-		int nbSommet=0;
-		int nbArcs=0;
-		
-		try {
-			br = new BufferedReader(new FileReader(fileName));
-		} catch (FileNotFoundException e) { }
-		
-	    try {
-	        String line = "";
-	        int line_i = 0;
-	        try {
-				while ((line = br.readLine()) != null) {
-					String[] texte = line.split(",");
-					if(line_i == 0){
-						g.setNom(texte[0]);
-						if(texte[1]=="1")
-							g.setType(ORIENTE);
-						else
-							g.setType(NON_ORIENTE);	
-						nbSommet=Integer.parseInt(texte[4]);
-						nbArcs=Integer.parseInt(texte[5]);
-					}
-					else if(line_i<=nbSommet){
-						int x;
-						int y;
-						Sommet s =new Sommet();
-						s.setNom(texte[0]);
-						x=(int) Double.parseDouble(texte[1]);
-						y=(int) Double.parseDouble(texte[2]);	
-						s.setPosX(x);
-						s.setPosY(y);
-						g.ajouterSommet(s);
-					}
-					else{
-						Arc a =new Arc();
-						int depart_X=(int) Double.parseDouble(texte[0]);
-						int depart_Y=(int) Double.parseDouble(texte[1]);
-						int arriver_X=(int) Double.parseDouble(texte[4]);
-						int arriver_Y=(int) Double.parseDouble(texte[5]);
-						a.setNom("");
-						a.setOrigine(g.getSommet(depart_X, depart_Y));
-						a.setArrivee(g.getSommet(arriver_X, arriver_Y));
-						a.milieu();
-						g.getArcs().add(a);
-						g.getSommet(depart_X, depart_Y).ajouterArc(a);
-						g.getSommet(depart_X, depart_Y).ajouterArc(a);
-						
-					}
-					line_i++;
-				}
-			} catch (IOException e) { }
-	    } finally {
-	        try {
-				br.close();
-			} catch (IOException e) { }
-	    }
-	    g.supprimerDoublons();
-	    return g;
+	public void save(String nom,Graphe g){
+        FileWriter fileWriter = null;
+        try {
+            File newTextFile = new File(nom+".ntm");
+            fileWriter = new FileWriter(newTextFile);
+            fileWriter.write(g.toString());
+            fileWriter.close();
+        } catch (IOException ex) {
+        } finally {
+            try {
+                fileWriter.close();
+            } catch (IOException ex) {}
+        }
 	}
 	
 }

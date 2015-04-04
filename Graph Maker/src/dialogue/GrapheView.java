@@ -91,6 +91,7 @@ public class GrapheView extends JFrame{
         menufichier.add(menugraphe);
         menufichier.add(menusave);
         menuload.addActionListener(new ListenerMenuGraphe(this));
+        menusave.addActionListener(new ListenerMenuGraphe(this));
         menufichier.add(menuload);
         return menufichier;
     }

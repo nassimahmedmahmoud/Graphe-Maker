@@ -2,16 +2,12 @@ package graphe;
 
 
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Graphe {
-	public static boolean ORIENTE = true;
-	public static boolean NON_ORIENTE = false;
+	public static final boolean ORIENTE = true;
+	public static final boolean NON_ORIENTE = false;
 	public static final int GENERAL = 1;
 	public static final int CONNEXE_ARBRE = 2;
 	public static final int MATRIX = 3;
@@ -57,6 +53,13 @@ public class Graphe {
 		this("Graphe_1",Graphe.NON_ORIENTE,new ArrayList<Sommet>(),new ArrayList<Arc>());
 	}
 
+        /**
+        * La méthode arcaPartirSommets prend en paramètre 2 sommet et renvoie l'arc qui
+        * relie ces 2 sommets si il existe, renvoie null sinon.
+        * @param s1
+        * @param s2
+        * @return Arc
+        */
 	public Arc arcaPartirSommets(Sommet s1,Sommet s2){
 		for(Arc a : arcs){
 			if((a.getOrigine().equals(s2) && a.getArrivee().equals(s1)) || (a.getOrigine().equals(s1) && a.getArrivee().equals(s2)))
@@ -1071,6 +1074,15 @@ public class Graphe {
 				+ ", arcs=" + arcs + "]";
 	}
 
+        /**
+        * La méthode toString avec parèmtre est une surcharge de la méthode toString,
+        * et prend en paramètre un entier qui correspond a l'information que l'on veut
+        * afficher dans l'onglet général (1 pour les informations générales, 2 pour 
+        * les informations sur la connexité, et 3 pour la matrice).
+        * @param info
+        * @see connexeGraphe()
+        * @return String informations
+        */
 	public String toString(int info)
 	{
 		String s = "";

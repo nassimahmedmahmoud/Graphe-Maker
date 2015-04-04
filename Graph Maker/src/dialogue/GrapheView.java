@@ -45,9 +45,11 @@ public class GrapheView extends JFrame{
     private JToggleButton barrivee;
     private JButton rename;
     private JPanel gen;        
-   	private JMenuItem menugraphe;
+    private JMenuItem menugraphe;
     private JMenuItem menusave;
     private JMenuItem menuload;
+    private JMenuItem assistance;
+    private JMenuItem apropos;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -106,10 +108,11 @@ public class GrapheView extends JFrame{
  
     public JMenu menuAide(){
         JMenu menuAide = new JMenu("Aide");
-        JMenuItem menuhelp = new JMenuItem("Assistance");
-        JMenuItem menupropos = new JMenuItem("A propos de nous");
-        menuAide.add(menuhelp);
-        menuAide.add(menupropos);
+        assistance = new JMenuItem("Assistance");
+        apropos = new JMenuItem("A propos de nous");
+        menuAide.add(assistance);
+        menuAide.add(apropos);
+        apropos.addActionListener(new ListenerMenuGraphe(this));
         return menuAide;
     }
     
@@ -633,4 +636,20 @@ public JPanel panelGraphe(){
 	public void setMenuload(JMenuItem menuload) {
 		this.menuload = menuload;
 	}
+
+        public JMenuItem getAssistance() {
+            return assistance;
+        }
+
+        public JMenuItem getApropos() {
+            return apropos;
+        }
+
+        public void setAssistance(JMenuItem assistance) {
+            this.assistance = assistance;
+        }
+
+        public void setApropos(JMenuItem apropos) {
+            this.apropos = apropos;
+        }
 }

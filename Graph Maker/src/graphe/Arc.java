@@ -147,6 +147,7 @@ public class Arc {
 		else 
 			return false;
 	}
+
 	
 	public Arc arcAPartirDeSommet(Sommet s1,Sommet s2){
 		if(this.origine.equals(s1)&&this.arrivee.equals((s2))){

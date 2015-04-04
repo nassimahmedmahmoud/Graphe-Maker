@@ -2,16 +2,20 @@ package dialogue;
 
 import java.awt.*;
 import java.awt.geom.*;
+
 import javax.swing.*;
+
 import graphe.*;
 
 public class JPanelGraphe extends JPanel{
 
-	private Graphe graphe;
+	private GrapheView graphe;
 	private Arc arc;
-	public final int ARR_SIZE=6;
+	public static final int ARR_SIZE=6;
+	
+	
 
-	public JPanelGraphe(LayoutManager layout,Graphe graphe){
+	public JPanelGraphe(LayoutManager layout,GrapheView graphe){
 		super(layout);
 		this.graphe=graphe;
 	}
@@ -20,16 +24,15 @@ public class JPanelGraphe extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		for(Arc a : graphe.getArcs()){
+		for(Arc a : graphe.getGraphe().getArcs()){
 			this.drawLines(g, a);
 		}
-		for( Sommet s : graphe.getSommets())
-			this.drawNode(s,g,graphe.getTailleSommet(),new Color(240,240,240));
-		if(graphe.getSommets().size()>5){
+		for( Sommet s : graphe.getGraphe().getSommets())
+			this.drawNode(s,g,graphe.getGraphe().getTailleSommet(),new Color(240,240,240));
+		if(graphe.getGraphe().getSommets().size()>5){
 			//graphe.sortSommetsXY();
-			graphe.sortSommetsLatex();
+			graphe.getGraphe().sortSommetsLatex();
 		}
-		
 		
 	}
 
@@ -73,7 +76,7 @@ public class JPanelGraphe extends JPanel{
 		Path2D p = new Path2D.Double();
 		CubicCurve2D.Double cc = new CubicCurve2D.Double();
 		QuadCurve2D.Double cq = new QuadCurve2D.Double();
-		if(this.graphe.isType()){
+		if(graphe.getGraphe().isType()){
 			drawArrow(g,x1,y1,x2,y2);
 			g.drawLine(x1, y1, x2, y2);
 			if(a.boucleMemeSommet()){

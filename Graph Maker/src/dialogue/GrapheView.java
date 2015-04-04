@@ -44,7 +44,10 @@ public class GrapheView extends JFrame{
     private JToggleButton bsource;
     private JToggleButton barrivee;
     private JButton rename;
-    private JPanel gen;
+    private JPanel gen;        
+   	private JMenuItem menugraphe;
+    private JMenuItem menusave;
+    private JMenuItem menuload;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -82,11 +85,12 @@ public class GrapheView extends JFrame{
     }
     public JMenu menuFile(){
         JMenu menufichier=new JMenu("Fichier");
-        JMenuItem menugraphe=new JMenuItem("Réinitialiser un graphe");
-        JMenuItem menusave = new JMenuItem("sauvegarder graphe");
-        JMenuItem menuload = new JMenuItem("charger graphe");
+        menugraphe=new JMenuItem("Réinitialiser un graphe");
+        menusave = new JMenuItem("sauvegarder graphe");
+        menuload = new JMenuItem("charger graphe");
         menufichier.add(menugraphe);
         menufichier.add(menusave);
+        menuload.addActionListener(new ListenerMenuGraphe(this));
         menufichier.add(menuload);
         return menufichier;
     }
@@ -315,7 +319,7 @@ public JPanel panelGraphe(){
         return jpd;
     }
     public JPanelGraphe panelListenerTest(){
-        jpg = new JPanelGraphe(new BorderLayout(),this.graphe);
+        jpg = new JPanelGraphe(new BorderLayout(),this);
         jpg.setBorder(BorderFactory.createTitledBorder("Editer le graphe"));
         jpg.setBackground(new Color(250,245,220));
         ListenerBoutonGraphe lbg = new ListenerBoutonGraphe(this);
@@ -597,13 +601,36 @@ public JPanel panelGraphe(){
 
 	public void setBarrivee(JToggleButton barrivee) {
 		this.barrivee = barrivee;
-        }	
+	}	
 
-        public JPanel getPangen() {
-            return pangen;
-        }
+	public JPanel getPangen() {
+		return pangen;
+	}
 
-        public void setPangen(JPanel pangen) {
-            this.pangen = pangen;
-        }
+	public void setPangen(JPanel pangen) {
+		this.pangen = pangen;
+	}
+	public JMenuItem getMenugraphe() {
+		return menugraphe;
+	}
+
+	public void setMenugraphe(JMenuItem menugraphe) {
+		this.menugraphe = menugraphe;
+	}
+
+	public JMenuItem getMenusave() {
+		return menusave;
+	}
+
+	public void setMenusave(JMenuItem menusave) {
+		this.menusave = menusave;
+	}
+
+	public JMenuItem getMenuload() {
+		return menuload;
+	}
+
+	public void setMenuload(JMenuItem menuload) {
+		this.menuload = menuload;
+	}
 }

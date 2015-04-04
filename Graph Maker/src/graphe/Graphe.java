@@ -2,6 +2,11 @@ package graphe;
 
 
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class Graphe {
@@ -396,23 +401,27 @@ public class Graphe {
 			return false;
 		int sommet = 0;
 		boolean marquage[]=new boolean[sommets.size()];
-		for(int i=0;i<marquage.length;i++)
-			marquage[i]=false;
-		marquage[0]=true;
-		for(int i=1;i<marquage.length;i++){
-			Arc a = this.arcaPartirSommets(sommets.get(sommet), sommets.get(i));
-			if(a!=null){
-				sommet=i;
-				marquage[i]=true;
-			}
-		}
+		dfs(marquage,sommet);
+		return isMarqued(marquage);
+	}
+	
+	public boolean isMarqued(boolean[]marquage){
 		for(int i=0;i<marquage.length;i++){
 			if(!marquage[i])
 				return false;
 		}
 		return true;
 	}
-
+	
+	public void dfs(boolean[]marquage,int index){
+		marquage[index]=true;
+		int[] tabVoisins = this.tabVoisins(index);
+		for(int i=0;i<tabVoisins.length;i++){
+			if(!marquage[tabVoisins[i]]){
+				dfs(marquage,tabVoisins[i]);
+			}
+		}
+	}
 	/**
 	 * La mÃ©thode voisins prend en paramÃƒÂ¨tre deux sommets s1 et s2 et renvoie true
 	 * si ceux-ci sont voisins (ont un arc en commun) et false sinon.
@@ -441,16 +450,32 @@ public class Graphe {
 	 */
 	public boolean isNumeric(String str)  
 	{  
+		double d;
 		try  
 		{  
-			@SuppressWarnings("unused")
-			double d = Double.parseDouble(str);  
+			d = Double.parseDouble(str);  
 		}  
 		catch(NumberFormatException nfe)  
 		{  
 			return false;  
 		}  
-		return true;  
+		
+		return d!=Double.NaN;  
+	}
+	
+	public int isNumeric2(String str)  
+	{  
+		int d;
+		try  
+		{  
+			
+			d = Integer.parseInt(str);  
+		}  
+		catch(NumberFormatException nfe)  
+		{  
+			return 0;  
+		}  
+		return d;  
 	}
 
 	/**
@@ -472,7 +497,7 @@ public class Graphe {
 				else
 					pos = positionSommets(a.getOrigine());
 				if(pos!=-1){
-					if(metrique)
+					if(metrique  )
 						tab[i][pos]=Integer.parseInt(a.getNom());
 					else
 						tab[i][pos]=1;
@@ -980,6 +1005,10 @@ public class Graphe {
 	}
 
 	public Sommet getSommet(int posX, int posY){
+		for(Sommet s : this.arcinit){
+			if(s.getPosX()==posX && s.getPosY()==posY)
+				return s;
+		}
 		return null;
 	}
 
@@ -1094,4 +1123,131 @@ public class Graphe {
 		}
 		return s;
 	}
+	
+	public Graphe read(File fileName){
+		BufferedReader br = null;
+		Graphe g =new Graphe();
+		int nbSommet=0;
+		int nbArcs=0;
+		
+		try {
+			br = new BufferedReader(new FileReader(fileName));
+		} catch (FileNotFoundException e) { }
+		
+	    try {
+	        String line = "";
+	        int line_i = 0;
+	        try {
+				while ((line = br.readLine()) != null) {
+					String[] texte = line.split(",");
+					if(line_i == 0){
+						g.setNom(texte[0]);
+						if(texte[1]=="1")
+							g.setType(ORIENTE);
+						else
+							g.setType(NON_ORIENTE);	
+						nbSommet=Integer.parseInt(texte[4]);
+						nbArcs=Integer.parseInt(texte[5]);
+					}
+					else if(line_i<=nbSommet){
+						int x;
+						int y;
+						Sommet s =new Sommet();
+						s.setNom(texte[0]);
+						x=(int) Double.parseDouble(texte[1]);
+						y=(int) Double.parseDouble(texte[2]);	
+						s.setPosX(x);
+						s.setPosY(y);
+						g.ajouterSommet(s);
+					}
+					else{
+						Arc a =new Arc();
+						int depart_X=(int) Double.parseDouble(texte[0]);
+						int depart_Y=(int) Double.parseDouble(texte[1]);
+						int arriver_X=(int) Double.parseDouble(texte[4]);
+						int arriver_Y=(int) Double.parseDouble(texte[5]);
+						a.setNom("");
+						a.setOrigine(g.getSommet(depart_X, depart_Y));
+						a.setArrivee(g.getSommet(arriver_X, arriver_Y));
+						a.milieu();
+						g.getArcs().add(a);
+						g.getSommet(depart_X, depart_Y).ajouterArc(a);
+						g.getSommet(depart_X, depart_Y).ajouterArc(a);
+						
+					}
+					line_i++;
+				}
+			} catch (IOException e) { }
+	    } finally {
+	        try {
+				br.close();
+			} catch (IOException e) { }
+	    }
+	    g.supprimerDoublons();
+	    return g;
+	}
+	
+	public Graphe write(File fileName){
+		BufferedReader br = null;
+		Graphe g =new Graphe();
+		int nbSommet=0;
+		int nbArcs=0;
+		
+		try {
+			br = new BufferedReader(new FileReader(fileName));
+		} catch (FileNotFoundException e) { }
+		
+	    try {
+	        String line = "";
+	        int line_i = 0;
+	        try {
+				while ((line = br.readLine()) != null) {
+					String[] texte = line.split(",");
+					if(line_i == 0){
+						g.setNom(texte[0]);
+						if(texte[1]=="1")
+							g.setType(ORIENTE);
+						else
+							g.setType(NON_ORIENTE);	
+						nbSommet=Integer.parseInt(texte[4]);
+						nbArcs=Integer.parseInt(texte[5]);
+					}
+					else if(line_i<=nbSommet){
+						int x;
+						int y;
+						Sommet s =new Sommet();
+						s.setNom(texte[0]);
+						x=(int) Double.parseDouble(texte[1]);
+						y=(int) Double.parseDouble(texte[2]);	
+						s.setPosX(x);
+						s.setPosY(y);
+						g.ajouterSommet(s);
+					}
+					else{
+						Arc a =new Arc();
+						int depart_X=(int) Double.parseDouble(texte[0]);
+						int depart_Y=(int) Double.parseDouble(texte[1]);
+						int arriver_X=(int) Double.parseDouble(texte[4]);
+						int arriver_Y=(int) Double.parseDouble(texte[5]);
+						a.setNom("");
+						a.setOrigine(g.getSommet(depart_X, depart_Y));
+						a.setArrivee(g.getSommet(arriver_X, arriver_Y));
+						a.milieu();
+						g.getArcs().add(a);
+						g.getSommet(depart_X, depart_Y).ajouterArc(a);
+						g.getSommet(depart_X, depart_Y).ajouterArc(a);
+						
+					}
+					line_i++;
+				}
+			} catch (IOException e) { }
+	    } finally {
+	        try {
+				br.close();
+			} catch (IOException e) { }
+	    }
+	    g.supprimerDoublons();
+	    return g;
+	}
+	
 }

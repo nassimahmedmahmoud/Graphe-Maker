@@ -29,7 +29,15 @@ public class JPanelGraphe extends JPanel{
 		}
 		for( Sommet s : graphe.getGraphe().getSommets())
 			this.drawNode(s,g,graphe.getGraphe().getTailleSommet(),new Color(240,240,240));
-		if(graphe.getGraphe().getSommets().size()>5){
+		if(graphe.getGraphe().getSommets().size()>9){
+			int marge = graphe.getGraphe().getTailleSommet();
+			System.out.print("etiquette : ");
+			int [] etX = graphe.getGraphe().etiquetteX(marge);
+			for(int i=0;i<etX.length;i++){
+				System.out.print(etX[i]+"-");
+			}
+			System.out.println();
+		System.out.println("nbOccur : "+graphe.getGraphe().occurenceEtiquette(graphe.getGraphe().getTailleSommet(),graphe.getGraphe().etiquetteX(graphe.getGraphe().getTailleSommet())));
 		}
 		
 	}

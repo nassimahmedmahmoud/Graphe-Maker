@@ -53,13 +53,13 @@ public class Graphe {
 		this("Graphe_1",Graphe.NON_ORIENTE,new ArrayList<Sommet>(),new ArrayList<Arc>());
 	}
 
-        /**
-        * La méthode arcaPartirSommets prend en paramètre 2 sommet et renvoie l'arc qui
-        * relie ces 2 sommets si il existe, renvoie null sinon.
-        * @param s1
-        * @param s2
-        * @return Arc
-        */
+	/**
+	 * La méthode arcaPartirSommets prend en paramètre 2 sommet et renvoie l'arc qui
+	 * relie ces 2 sommets si il existe, renvoie null sinon.
+	 * @param s1
+	 * @param s2
+	 * @return Arc
+	 */
 	public Arc arcaPartirSommets(Sommet s1,Sommet s2){
 		for(Arc a : arcs){
 			if((a.getOrigine().equals(s2) && a.getArrivee().equals(s1)) || (a.getOrigine().equals(s1) && a.getArrivee().equals(s2)))
@@ -104,7 +104,7 @@ public class Graphe {
 			tab[Graphe.COLONNE_Y][i]=altmpY.get(i);
 		return tab;
 	}
-	
+
 	public ArrayList<Sommet> sortSommetsLatexX(){
 		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
 		Collections.sort(altmpX,new Comparator<Sommet>() {
@@ -148,7 +148,7 @@ public class Graphe {
 		}
 		return nbLigne;
 	}
-	
+
 	public int nbColonneLaTex(int marge){
 		Sommet[][] tab = sortSommetsXY();
 		int val = tab[Graphe.COLONNE_Y][0].getPosX();
@@ -161,6 +161,63 @@ public class Graphe {
 			}
 		}
 		return nbColonne;
+	}
+	public int[] etiquetteX(int marge){
+		int[] etiquette = new int[this.arcinit.size()];
+		int num=1;
+		for(int i=0;i<this.arcinit.size();i++,num++){
+			if(etiquette[i]==0){
+				etiquette[i]=num;
+				for(int j=i+1;j<this.arcinit.size();j++){
+					if(etiquette[j]==0){
+						if(Math.abs(this.arcinit.get(i).getPosX()-this.arcinit.get(j).getPosX())<marge){
+							etiquette[j]=num;
+						}
+					}
+				}
+			}
+		}
+		return etiquette;
+	}
+
+	public int[] etiquetteY(int marge){
+		int[] etiquette = new int[this.arcinit.size()];
+		int num=1;
+		for(int i=0;i<this.arcinit.size();i++,num++){
+			if(etiquette[i]==0){
+				etiquette[i]=num;
+				for(int j=i+1;j<this.arcinit.size();j++){
+					if(etiquette[j]==0){
+						if(Math.abs(this.arcinit.get(i).getPosY()-this.arcinit.get(j).getPosY())<marge){
+							etiquette[j]=num;
+						}
+					}
+				}
+			}
+		}
+		return etiquette;
+	}
+
+	public int occurenceEtiquette(int marge,int[] etiquette){
+		int[] counts = new int[etiquette.length];
+		int maxCounts = 0;
+		for (int i=0; i < etiquette.length; i++) {
+			(counts[etiquette[i]])++;
+			if (maxCounts < counts[etiquette[i]]) {
+				maxCounts = counts[etiquette[i]];
+			}
+		}
+		return maxCounts;
+	}
+	public Sommet[][] initTabColonne(int marge){
+		Sommet[][] sLigne = new Sommet[this.nbLigneLaTex(marge)][this.occurenceEtiquette(marge,this.etiquetteX(marge))];
+		//ArrayList<Sommet> altx = this.sortSommetsLatexX();
+		for(int i=0;i<sLigne.length;i++){
+			for(int j=0;j<sLigne[i].length;j++){
+				//sLigne[i][j]= 
+			}
+		}
+		return sLigne;
 	}
 
 	/**
@@ -421,7 +478,7 @@ public class Graphe {
 		dfs(marquage,sommet);
 		return isMarqued(marquage);
 	}
-	
+
 	public boolean isMarqued(boolean[]marquage){
 		for(int i=0;i<marquage.length;i++){
 			if(!marquage[i])
@@ -429,7 +486,7 @@ public class Graphe {
 		}
 		return true;
 	}
-	
+
 	public void dfs(boolean[]marquage,int index){
 		marquage[index]=true;
 		int[] tabVoisins = this.tabVoisins(index);
@@ -476,16 +533,16 @@ public class Graphe {
 		{  
 			return false;  
 		}  
-		
+
 		return d!=Double.NaN;  
 	}
-	
+
 	public int isNumeric2(String str)  
 	{  
 		int d;
 		try  
 		{  
-			
+
 			d = Integer.parseInt(str);  
 		}  
 		catch(NumberFormatException nfe)  
@@ -1100,15 +1157,15 @@ public class Graphe {
 		return s;
 	}
 
-        /**
-        * La méthode toString avec parèmtre est une surcharge de la méthode toString,
-        * et prend en paramètre un entier qui correspond a l'information que l'on veut
-        * afficher dans l'onglet général (1 pour les informations générales, 2 pour 
-        * les informations sur la connexité, et 3 pour la matrice).
-        * @param info
-        * @see connexeGraphe()
-        * @return String informations
-        */
+	/**
+	 * La méthode toString avec parèmtre est une surcharge de la méthode toString,
+	 * et prend en paramètre un entier qui correspond a l'information que l'on veut
+	 * afficher dans l'onglet général (1 pour les informations générales, 2 pour 
+	 * les informations sur la connexité, et 3 pour la matrice).
+	 * @param info
+	 * @see connexeGraphe()
+	 * @return String informations
+	 */
 	public String toString(int info)
 	{
 		String s = "";
@@ -1161,21 +1218,21 @@ public class Graphe {
 		}
 		return s;
 	}
-	
+
 	public Graphe read(File fileName){
 		BufferedReader br = null;
 		Graphe g =new Graphe();
 		int nbSommet=0;
-		int nbArcs=0;
-		
+		@SuppressWarnings("unused")
+		int nbArcs;
 		try {
 			br = new BufferedReader(new FileReader(fileName));
 		} catch (FileNotFoundException e) { }
-		
-	    try {
-	        String line = "";
-	        int line_i = 0;
-	        try {
+
+		try {
+			String line = "";
+			int line_i = 0;
+			try {
 				while ((line = br.readLine()) != null) {
 					String[] texte = line.split(",");
 					if(line_i == 0){
@@ -1211,33 +1268,33 @@ public class Graphe {
 						g.getArcs().add(a);
 						g.getSommet(depart_X, depart_Y).ajouterArc(a);
 						g.getSommet(depart_X, depart_Y).ajouterArc(a);
-						
+
 					}
 					line_i++;
 				}
 			} catch (IOException e) { }
-	    } finally {
-	        try {
+		} finally {
+			try {
 				br.close();
 			} catch (IOException e) { }
-	    }
-	    g.supprimerDoublons();
-	    return g;
+		}
+		g.supprimerDoublons();
+		return g;
 	}
-	
+
 	public void save(String nom,Graphe g){
-        FileWriter fileWriter = null;
-        try {
-            File newTextFile = new File(nom+".ntm");
-            fileWriter = new FileWriter(newTextFile);
-            fileWriter.write(g.toString());
-            fileWriter.close();
-        } catch (IOException ex) {
-        } finally {
-            try {
-                fileWriter.close();
-            } catch (IOException ex) {}
-        }
+		FileWriter fileWriter = null;
+		try {
+			File newTextFile = new File(nom+".ntm");
+			fileWriter = new FileWriter(newTextFile);
+			fileWriter.write(g.toString());
+			fileWriter.close();
+		} catch (IOException ex) {
+		} finally {
+			try {
+				fileWriter.close();
+			} catch (IOException ex) {}
+		}
 	}
-	
+
 }

@@ -1094,8 +1094,8 @@ public class Graphe {
 		for(Sommet s0 : this.arcinit)
 			s+=s0.getNom()+","+s0.getPosX()+","+s0.getPosY()+","+0+"\n";
 		for(Arc a0 : this.getArcs()){
-			s+=a0.getOrigine().getPosX()+","+a0.getOrigine().getPosY()+","+0+","+0+",";
-			s+=a0.getArrivee().getPosX()+","+a0.getArrivee().getPosY()+","+0+","+0+","+0+","+0+"\n";
+			s+=a0.getOrigine().getPosX()+","+a0.getOrigine().getPosY()+","+a0.getCentre_posX()+","+a0.getCentre_posY()+",";
+			s+=a0.getArrivee().getPosX()+","+a0.getArrivee().getPosY()+","+a0.getCentre_posX()+","+a0.getCentre_posY()+","+a0.getNom()+","+0+"\n";
 		}
 		return s;
 	}

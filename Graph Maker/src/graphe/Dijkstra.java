@@ -258,7 +258,7 @@ public class Dijkstra {
 		}
 		s+="</tr><tr><td>Dmin</td>";
 		for(int i=0;i<dmin.length;i++){
-			if(dmin[i]!=Integer.MAX_VALUE)
+			if(dmin[i]!=Integer.MAX_VALUE && dmin[i]!=Integer.MIN_VALUE)
 				s+="<td>"+dmin[i]+"</td>";
 			else
 				s+="<td>Impossible</td>";

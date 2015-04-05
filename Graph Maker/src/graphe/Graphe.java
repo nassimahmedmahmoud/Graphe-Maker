@@ -229,19 +229,16 @@ public class Graphe {
         
         public void sortColonne(Sommet[][] tab, int marge)
         {
-            Sommet[] li = new Sommet[this.nbLigneEtiquette(marge)];
+            Sommet[] co = new Sommet[this.nbLigneEtiquette(marge)];
             for(int i = 0; i < tab.length; i++)
             {
                 for(int j = 0; j < tab.length; j++)
                 {
                     if(tab[i][0].getPosX() > tab[j][0].getPosX())
                     {
-                        for(int k = 0; k < tab[i].length; k++)
-                        {
-                            li[k] = tab[i][k];
-                            tab[i][k] = tab[j][k];
-                            tab[j][k] = li[k];
-                        }
+                        co = tab[i];
+                        tab[i] = tab[j];
+                        tab[j] = co;
                     }
                 }       
             }

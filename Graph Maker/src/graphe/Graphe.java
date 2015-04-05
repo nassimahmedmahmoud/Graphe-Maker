@@ -288,34 +288,31 @@ public class Graphe {
 		else
 			chaine+=Graphe.ARETE;
 		for(int i=0;i<tabVoisins.length;i++){
+			chaine+="[";
 			Sommet_matrix smtmp = this.sommetInSommetMatrix(sommets.get(tabVoisins[i]), tab);
 			int sml= sm.getLigne();
 			int smtmpl = smtmp.getLigne();
 			int smc = sm.getColonne();
 			int smtmpc = smtmp.getColonne();
 			if(sml>smtmpl){
-				chaine+="[";
 				while(sml>0){
 					chaine+="u";
 					sml--;
 				}
 			}
 			else if(sml<smtmpl){
-				chaine+="[";
 				while(smtmpl>0){
 					chaine+="d";
 					smtmpl--;
 				}
 			}
 			if(smc>smtmpc){
-				chaine+="[";
 				while(smc>0){
 					chaine+="l";
 					smc--;
 				}
 			}
 			else if(smc<smtmpc){
-				chaine+="[";
 				while(smtmpc>0){
 					chaine+="r";
 					smtmpc--;

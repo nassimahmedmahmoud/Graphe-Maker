@@ -219,12 +219,9 @@ public class Graphe {
                 {
                     if(tab[i][0].getPosY() < tab[j][0].getPosY())
                     {
-                        for(int k = 0; k < tab[i].length; k++)
-                        {
-                            li[k] = tab[i][k];
-                            tab[i][k] = tab[j][k];
-                            tab[j][k] = li[k];
-                        }
+                        li = tab[i];
+                        tab[i] = tab[j];
+                        tab[j] = li;
                     }
                 }       
             }

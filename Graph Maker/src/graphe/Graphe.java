@@ -85,86 +85,6 @@ public class Graphe {
 		}
 	}
 
-	public Sommet[][] sortSommetsXY(){
-		Sommet[][] tab = new Sommet[2][this.arcinit.size()];
-		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
-		ArrayList<Sommet> altmpY = new ArrayList<Sommet>(arcinit);
-		Collections.sort(altmpX,new Comparator<Sommet>() {
-			public int compare(Sommet s1, Sommet s2) {
-				return s1.getPosX()-s2.getPosX();
-			}
-		});
-		Collections.sort(altmpY,new Comparator<Sommet>() {
-			public int compare(Sommet s1, Sommet s2) {
-				return s1.getPosY()-s2.getPosY();
-			}
-		});
-		for(int i=0;i<tab[Graphe.COLONNE_X].length;i++)
-			tab[Graphe.COLONNE_X][i]=altmpX.get(i);
-		for(int i=0;i<tab[Graphe.COLONNE_Y].length;i++)
-			tab[Graphe.COLONNE_Y][i]=altmpY.get(i);
-		return tab;
-	}
-
-	public ArrayList<Sommet> sortSommetsLatexX(){
-		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
-		Collections.sort(altmpX,new Comparator<Sommet>() {
-			public int compare(Sommet s1, Sommet s2) {
-				return s1.getPosX()-s2.getPosX();
-			}
-		});
-		Collections.sort(altmpX,new Comparator<Sommet>() {
-			public int compare(Sommet s1, Sommet s2) {
-				return s1.getPosY()-s2.getPosY();
-			}
-		});
-		System.out.println(altmpX);
-		return altmpX;
-	}
-
-	public ArrayList<Sommet> sortSommetsLatexY(){
-		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
-		Collections.sort(altmpX,new Comparator<Sommet>() {
-			public int compare(Sommet s1, Sommet s2) {
-				return s1.getPosY()-s2.getPosY();
-			}
-		});
-		Collections.sort(altmpX,new Comparator<Sommet>() {
-			public int compare(Sommet s1, Sommet s2) {
-				return s1.getPosX()-s2.getPosX();
-			}
-		});
-		System.out.println(altmpX);
-		return altmpX;
-	}
-
-	public int nbLigneLaTex(int marge){
-            Sommet[][] tab = sortSommetsXY();
-            int val = tab[Graphe.COLONNE_X][0].getPosX();
-            int nbLigne=0;
-            for(int i=1;i<tab[Graphe.COLONNE_X].length;i++){
-                int tmp = tab[Graphe.COLONNE_X][i].getPosX();
-                if(Math.abs(tmp-val)<marge){
-                    val=tmp;
-                    nbLigne++;
-                }
-            }
-            return nbLigne;
-        }
-
-	public int nbColonneLaTex(int marge){
-            Sommet[][] tab = sortSommetsXY();
-            int val = tab[Graphe.COLONNE_Y][0].getPosX();
-            int nbColonne=0;
-            for(int i=1;i<tab[Graphe.COLONNE_Y].length;i++){
-                int tmp = tab[Graphe.COLONNE_Y][i].getPosX();
-                if(Math.abs(tmp-val)<marge){
-                    val=tmp;
-                    nbColonne++;
-                }
-            }
-            return nbColonne;
-        }
         
 	public int[] etiquetteX(int marge){
 		int[] etiquette = new int[this.arcinit.size()];
@@ -275,7 +195,7 @@ public class Graphe {
 
 	public Sommet[][] colonne(int marge)
 	{
-            Sommet[][] tabmat = new Sommet[this.nbLigneLaTex(marge)][this.nbColonneLaTex(marge)];
+            Sommet[][] tabmat = new Sommet[this.nbLigneEtiquette(marge)][this.nbColonneEtiquette(marge)];
             ArrayList<Sommet> tab = new ArrayList<>(arcinit);
             int len = tab.size();
             int i=0;
@@ -292,12 +212,12 @@ public class Graphe {
         
         public void sortLigne(Sommet[][] tab, int marge)
         {
-            Sommet[] li = new Sommet[this.nbColonneLaTex(marge)+1];
+            Sommet[] li = new Sommet[this.nbColonneEtiquette(marge)];
             for(int i = 0; i < tab.length; i++)
             {
                 for(int j = 0; j < tab.length; j++)
                 {
-                    if(tab[i][0].getPosY() > tab[j][0].getPosY())
+                    if(tab[i][0].getPosY() < tab[j][0].getPosY())
                     {
                         for(int k = 0; k < tab[i].length; k++)
                         {
@@ -312,7 +232,7 @@ public class Graphe {
         
         public void sortColonne(Sommet[][] tab, int marge)
         {
-            Sommet[] li = new Sommet[this.nbLigneLaTex(marge)+1];
+            Sommet[] li = new Sommet[this.nbLigneEtiquette(marge)];
             for(int i = 0; i < tab.length; i++)
             {
                 for(int j = 0; j < tab.length; j++)

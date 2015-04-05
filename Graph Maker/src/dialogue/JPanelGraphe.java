@@ -7,7 +7,7 @@ import graphe.*;
 
 public class JPanelGraphe extends JPanel{
 
-	private GrapheView graphe;
+	private GrapheView gv;
 	private Arc arc;
 	public static final int ARR_SIZE=6;
 	
@@ -15,27 +15,28 @@ public class JPanelGraphe extends JPanel{
 
 	public JPanelGraphe(LayoutManager layout,GrapheView graphe){
 		super(layout);
-		this.graphe=graphe;
+		this.gv=graphe;
 	}
 
         @Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		for(Arc a : graphe.getGraphe().getArcs()){
+		for(Arc a : gv.getGraphe().getArcs()){
 			this.drawLines(g, a);
 		}
-		for( Sommet s : graphe.getGraphe().getSommets())
-			this.drawNode(s,g,graphe.getGraphe().getTailleSommet(),new Color(240,240,240));
-		if(graphe.getGraphe().getSommets().size()>3){
-			int marge = graphe.getGraphe().getTailleSommet();
+		for( Sommet s : gv.getGraphe().getSommets())
+			this.drawNode(s,g,gv.getGraphe().getTailleSommet(),new Color(240,240,240));
+		if(gv.getGraphe().getSommets().size()>3){
+			int marge = gv.getGraphe().getTailleSommet();
 			System.out.print("etiquette : ");
-			int [] etX = graphe.getGraphe().etiquetteX(marge);
+			int [] etX = gv.getGraphe().etiquetteX(marge);
 			for(int i=0;i<etX.length;i++){
 				System.out.print(etX[i]+"-");
 			}
 			System.out.println();
-			Sommet[][]tab =graphe.getGraphe().ligne(marge);
+			Sommet[][]tab =gv.getGraphe().ligne(marge);
+			gv.getGraphe().sortLigne(tab, marge);
 			for(int i=0;i<tab.length;i++){
 				for(int j=0;j<tab[i].length;j++){
 					if(tab[i][j]!=null)
@@ -87,7 +88,7 @@ public class JPanelGraphe extends JPanel{
 		Path2D p = new Path2D.Double();
 		CubicCurve2D.Double cc = new CubicCurve2D.Double();
 		QuadCurve2D.Double cq = new QuadCurve2D.Double();
-		if(graphe.getGraphe().isType()){
+		if(gv.getGraphe().isType()){
 			drawArrow(g,x1,y1,x2,y2);
 			g.drawLine(x1, y1, x2, y2);
 			if(a.boucleMemeSommet()){

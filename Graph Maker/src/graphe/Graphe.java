@@ -195,7 +195,7 @@ public class Graphe {
 
 	public Sommet[][] colonne(int marge)
 	{
-            Sommet[][] tabmat = new Sommet[this.nbLigneEtiquette(marge)][this.nbColonneEtiquette(marge)];
+            Sommet[][] tabmat = new Sommet[this.nbColonneEtiquette(marge)][this.nbLigneEtiquette(marge)];
             ArrayList<Sommet> tab = new ArrayList<>(arcinit);
             int len = tab.size();
             int i=0;
@@ -234,7 +234,7 @@ public class Graphe {
             {
                 for(int j = 0; j < tab.length; j++)
                 {
-                    if(tab[i][0].getPosX() > tab[j][0].getPosX())
+                    if(tab[i][0].getPosX() < tab[j][0].getPosX())
                     {
                         co = tab[i];
                         tab[i] = tab[j];
@@ -246,7 +246,7 @@ public class Graphe {
 
 	public Sommet_matrix[] initTab(int marge)
 	{
-		Sommet_matrix[] tab = new Sommet_matrix[this.getSommets().size()];
+		Sommet_matrix[] tab = new Sommet_matrix[arcinit.size()];
                 Sommet[][] lignes = ligne(marge);
                 Sommet[][] colonnes = colonne(marge);
                 sortLigne(lignes, marge);
@@ -256,42 +256,41 @@ public class Graphe {
                 {
                     tab[i] = new Sommet_matrix();
                     tab[i].setSommet(arcinit.get(i));
-                    
                     for(int j = 0; j < lignes.length; j++)
                     {
-                        for(int k = 0; k < lignes[i].length; k++)
-                            if(tab[i].getSommet() == lignes[j][k])
+                        for(int k = 0; k < lignes[j].length; k++){
+                            if(tab[i].getSommet().equals(lignes[j][k]))
                                 tab[i].setLigne(j);
+                        }
                     }
                     for(int j = 0; j < colonnes.length; j++)
                     {
-                        for(int k = 0; k < colonnes[i].length; k++)
-                            if(tab[i].getSommet() == colonnes[j][k])
+                        for(int k = 0; k < colonnes[j].length; k++)
+                            if(tab[i].getSommet().equals(colonnes[j][k]))
                                 tab[i].setColonne(j);
                     }
-                }                
-                
+                }                                
                 return tab;
 	}
         
         public String[][] matrixLatex(Sommet_matrix[] tab, int marge)
         {
             String[][] matrice = new String[this.nbLigneEtiquette(marge)+2][this.nbColonneEtiquette(marge)];
-            matrice[0][0] = "\\xymatrix@R=" + marge + "cm@C=" + marge + "cm\n"
+            matrice[0][0] = "\\xymatrix@R=" + (marge/50) + "cm@C=" + (marge/50) + "cm\n"
                     + "{\n";
             for(int i = 1; i < matrice.length -1; i++)
             {
                 for(int j = 0; j < matrice[i].length; j++)
                 {
-                    if(j != matrice[i].length)
+                    if(j != matrice[i].length-1)
                         matrice[i][j] = " &";
                     else
-                        matrice[i][j] = " \\\\";
+                    	matrice[i][j] =" \\"+"\\";
                 }
             }
             
             for(Sommet_matrix sm : tab)
-                matrice[sm.getLigne()][sm.getColonne()] = sm.getSommet().getNom() + matrice[sm.getLigne()][sm.getColonne()];
+            	matrice[sm.getLigne()+1][sm.getColonne()] = sm.getSommet().getNom() + matrice[sm.getLigne()+1][sm.getColonne()];
             
             matrice[this.nbLigneEtiquette(marge)+1][0] = "\n}";
             return matrice;

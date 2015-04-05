@@ -2,7 +2,10 @@ package dialogue;
 
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.Arrays;
+
 import javax.swing.*;
+
 import graphe.*;
 
 public class JPanelGraphe extends JPanel{
@@ -27,20 +30,28 @@ public class JPanelGraphe extends JPanel{
 		}
 		for( Sommet s : gv.getGraphe().getSommets())
 			this.drawNode(s,g,gv.getGraphe().getTailleSommet(),new Color(240,240,240));
-		if(gv.getGraphe().getSommets().size()>3){
+		if(gv.getGraphe().getSommets().size()>5){
 			int marge = gv.getGraphe().getTailleSommet();
-			System.out.print("etiquette : ");
-			int [] etX = gv.getGraphe().etiquetteX(marge);
-			for(int i=0;i<etX.length;i++){
-				System.out.print(etX[i]+"-");
+			Sommet[][]initTab =gv.getGraphe().ligne(marge);
+			System.out.println("Lignes : ");
+			for(int i=0;i<initTab.length;i++){
+				for(int j=0;j<initTab[i].length;j++)
+					System.out.print(initTab[i][j].getNom()+"\t");
+				System.out.println();
 			}
-			System.out.println();
-			Sommet[][]tab =gv.getGraphe().ligne(marge);
-			gv.getGraphe().sortLigne(tab, marge);
+			System.out.println("Colonnes : ");
+			initTab = gv.getGraphe().colonne(marge);
+			for(int i=0;i<initTab.length;i++){
+				for(int j=0;j<initTab[i].length;j++)
+					System.out.print(initTab[i][j].getNom()+"\t");
+				System.out.println();
+			}
+			Sommet_matrix[]init = gv.getGraphe().initTab(marge);
+			String[][] tab = gv.getGraphe().matrixLatex(init, marge);
 			for(int i=0;i<tab.length;i++){
 				for(int j=0;j<tab[i].length;j++){
 					if(tab[i][j]!=null)
-						System.out.print(tab[i][j].getNom()+"\t");
+						System.out.print(tab[i][j]);
 				}
 				System.out.println();
 			}

@@ -17,12 +17,17 @@ public class ListenerActionGraphe implements ActionListener {
 
         @Override
 	public void actionPerformed(ActionEvent e) {
-		if(this.gv.getBarcarrete()==e.getSource())
+		if(this.gv.getBarcarrete()==e.getSource()){
+			if(this.gv.getGraphe().isType())
+				this.gv.getOnglets().setEnabledAt(2,true);
+			else
+				this.gv.getOnglets().setEnabledAt(2,false);
 			this.gv.getGraphe().switchTypeOfGraphe();
+		}
 		if(e.getActionCommand()=="reset"){
 			this.gv.getGraphe().getSommets().clear();
 			this.gv.getGraphe().getArcs().clear();
-                        this.gv.getGraphe().getArcinit().clear();
+            this.gv.getGraphe().getArcinit().clear();
 			this.gv.getDijkstra().setArrivee(null);
 			this.gv.getDijkstra().setSource(null);
 		}
@@ -72,10 +77,10 @@ public class ListenerActionGraphe implements ActionListener {
                     gv.getGraphe().createChaine(gv.getGraphe().getDist(),gv.getGraphe().getArcinit());
 		
                 if(this.gv.getBrelaz() == e.getSource())
-			this.gv.setColors(this.gv.getGraphe().coloration());
-                
+			this.gv.setColors(this.gv.getGraphe().coloration());      
 		this.gv.getJpb().repaint();
 		this.gv.getJpg().repaint();
+		this.gv.grapheMetrique();
 	}
 	
 	public int isInteger(String s) {

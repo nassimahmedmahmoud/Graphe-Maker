@@ -72,6 +72,7 @@ public class GrapheView extends JFrame{
         onglets.addTab("Dijkstra", null, this.panel2());
         onglets.addTab("Coloration", null, panel3());
         onglets.addTab("Général", null, this.panel4());
+        onglets.setEnabledAt(1, false); 
         onglets.addChangeListener(new ListenerChangeGraphe(this));
         c.add(onglets);
     }
@@ -331,7 +332,13 @@ public JPanel panelGraphe(){
         jpg.addMouseMotionListener(lmmg);
         return jpg;
     }
- 
+    
+    public void grapheMetrique() {
+    	if(this.getGraphe().metrique())
+    		this.getOnglets().setEnabledAt(1, true);
+    	else
+    		this.getOnglets().setEnabledAt(1, false);
+    }
     public JToggleButton getBarc()
     {
         return barc;

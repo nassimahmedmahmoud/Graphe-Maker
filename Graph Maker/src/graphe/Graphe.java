@@ -440,7 +440,7 @@ public class Graphe {
 	 * @return boolean
 	 */
 	public boolean metrique(){
-		for(Sommet s : sommets){
+		for(Sommet s : this.arcinit){
 			for(Arc a : s.getArcs()){
 				boolean ui =isNumeric(a.getNom());
 				if(!ui)
@@ -1251,9 +1251,9 @@ public class Graphe {
 					if(line_i == 0){
 						g.setNom(texte[0]);
 						if(texte[1]=="1")
-							g.setType(ORIENTE);
+							g.setType(NON_ORIENTE);
 						else
-							g.setType(NON_ORIENTE);	
+							g.setType(ORIENTE);
 						nbSommet=Integer.parseInt(texte[4]);
 						nbArcs=Integer.parseInt(texte[5]);
 					}

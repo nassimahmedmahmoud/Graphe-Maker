@@ -109,8 +109,8 @@ public class ListenerBoutonGraphe implements MouseListener {
                 gv.getGraphe().getTabCick().add(sCourant);
             System.out.println(gv.getGraphe().getTabCick());
         }
-        
         this.gv.getJpg().repaint();
+		this.gv.grapheMetrique();
     }
 
     @Override
@@ -185,7 +185,7 @@ public class ListenerBoutonGraphe implements MouseListener {
     public void setArcCourant(Arc a) {
         arcCourant = a;
     }
-
+   
     public void setsCourant(MouseEvent e) {
         if (this.gv.getBclic().isSelected() || this.gv.getBsommet().isSelected() || this.gv.getBgomme().isSelected()) {
             this.sCourant = this.gv.getGraphe().isSommet(this.gv.getGraphe().getTailleSommet(), e);

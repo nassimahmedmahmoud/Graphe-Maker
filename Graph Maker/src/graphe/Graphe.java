@@ -818,17 +818,17 @@ public class Graphe {
 	  * @return String
 	  */
 	 public String connexeArbre(){
-		 String s ="<html>";
-		 if(connexeGraphe())
-			 s+="Le graphe est connexe<br/>";
-		 else
-			 s+="Le graphe n'est pas connexe<br/>";
-		 if(isTree())
-			 s+="Le graphe est un arbre<br/>";
-		 else
-			 s+="Le graphe n'est pas un arbre<br/>";
-		 s+="</html>";
-		 return s;
+		String s ="<html>";
+		if(connexeGraphe())
+                    s+="Le graphe est connexe<br/>";
+		else
+                    s+="Le graphe n'est pas connexe<br/>";
+		if(isTree())
+                    s+="Le graphe est un arbre<br/>";
+		else
+                    s+="Le graphe n'est pas un arbre<br/>";
+                    s+="</html>";
+		return s;
 	 }
 
 	 /**
@@ -874,21 +874,20 @@ public class Graphe {
 	  * @return int
 	  */
 	 public int chromatique(){
-		 int [] colors = coloration();
-		 int val;
-		 if(colors!=null && colors.length>1){
-			 val = colors[0];
-			 for (int i = 1; i < colors.length; i++)
-				 if (val<colors[i])
-					 val = colors[i];
-		 }
-
-		 else if(!(sommets.isEmpty()) && (arcs.isEmpty()))
-			 val = 1;
-		 else
-			 val = 0;
-		 return val;
-	 }
+		int [] colors = coloration();
+		int val;
+		if(colors!=null && colors.length>1){
+			val = colors[0]+1;
+			for (int i = 1; i < colors.length; i++)
+				if (val<colors[i])
+					val = colors[i];
+		}
+                else if(colors.length == 1)
+                    val = colors.length;
+                else
+			val = 0;
+		return val;
+	}
 
 	 /**
 	  * La mÃƒÂ©thode initialisation crÃƒÂ©er un tableau d'entier d'une taille correspondant

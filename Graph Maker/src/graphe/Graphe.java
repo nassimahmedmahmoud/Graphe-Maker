@@ -227,13 +227,16 @@ public class Graphe {
         public Sommet[] ligneY(int marge, Sommet s, ArrayList<Sommet> tab)
         {
             Sommet[] stab = new Sommet[this.nbColonneLaTex(marge)];
-            //ArrayList<Sommet> stab = new ArrayList<Sommet>(arcinit);
+            ArrayList<Sommet> tmp = new ArrayList<Sommet>();
             for(int i = 0; i < tab.size(); i++)
                 if(Math.abs(s.getPosY() - tab.get(i).getPosY()) <= marge)
-                    stab[i] = tab.get(i);
+                    tmp.add(tab.get(i));
             
-            for (Sommet stab1 : stab)
-                tab.remove(stab1);            
+            for (int i = 0; i < tmp.size(); i++)
+            {
+                tab.remove(tmp.get(i));
+                stab[i] = tmp.get(i);
+            }
             
             return stab;
         }
@@ -241,7 +244,7 @@ public class Graphe {
         public Sommet[][] ligne(int marge)
         {
             Sommet[][] tabmat = new Sommet[this.nbLigneLaTex(marge)][this.nbColonneLaTex(marge)];
-            ArrayList<Sommet> tab = new ArrayList(arcinit);
+            ArrayList<Sommet> tab = new ArrayList<>(arcinit);
             
             for(int i = 0; i < tabmat.length ; i++)
                 tabmat[i] = ligneY(marge, tab.get(0), tab);
@@ -852,7 +855,8 @@ public class Graphe {
 				if (val<colors[i])
 					val = colors[i];
 		}
-		else if(this.sommets.size() == 1)
+                
+		else if(!(sommets.isEmpty()) && (arcs.isEmpty()))
 			val = 1;
 		else
 			val = 0;

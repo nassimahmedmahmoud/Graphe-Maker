@@ -2,7 +2,6 @@ package dialogue;
 
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.Arrays;
 
 import javax.swing.*;
 

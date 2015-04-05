@@ -12,6 +12,11 @@ public class Sommet_matrix
         ligne = l;
         colonne = c;
     }
+    
+    public Sommet_matrix()
+    {
+        this(new Sommet(), 0, 0);
+    }
 
     public int getLigne()
     {
@@ -23,7 +28,7 @@ public class Sommet_matrix
         return colonne;
     }
 
-    public Sommet  getSomm()
+    public Sommet  getSommet()
     {
         return somm;
     }
@@ -38,7 +43,7 @@ public class Sommet_matrix
         this.colonne = colonne;
     }
 
-    public void setNom(Sommet som)
+    public void setSommet(Sommet som)
     {
         this.somm = som;
     }

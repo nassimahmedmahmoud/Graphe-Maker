@@ -249,13 +249,53 @@ public class Graphe {
 		Sommet_matrix[] tab = new Sommet_matrix[this.getSommets().size()];
                 Sommet[][] lignes = ligne(marge);
                 Sommet[][] colonnes = colonne(marge);
-                /*for(int i = 0; i < tab.length; i++)
+                sortLigne(lignes, marge);
+                sortColonne(colonnes, marge);
+                
+                for(int i = 0; i < tab.length; i++)
                 {
-                    for(int j = )
-                    tab[i] = new Sommet_matrix(arcinit.get(i), );
-                }*/
+                    tab[i] = new Sommet_matrix();
+                    tab[i].setSommet(arcinit.get(i));
+                    
+                    for(int j = 0; j < lignes.length; j++)
+                    {
+                        for(int k = 0; k < lignes[i].length; k++)
+                            if(tab[i].getSommet() == lignes[j][k])
+                                tab[i].setLigne(j);
+                    }
+                    for(int j = 0; j < colonnes.length; j++)
+                    {
+                        for(int k = 0; k < colonnes[i].length; k++)
+                            if(tab[i].getSommet() == colonnes[j][k])
+                                tab[i].setColonne(j);
+                    }
+                }                
+                
                 return tab;
 	}
+        
+        public String[][] matrixLatex(Sommet_matrix[] tab, int marge)
+        {
+            String[][] matrice = new String[this.nbLigneEtiquette(marge)+2][this.nbColonneEtiquette(marge)];
+            matrice[0][0] = "\\xymatrix@R=" + marge + "cm@C=" + marge + "cm\n"
+                    + "{\n";
+            for(int i = 1; i < matrice.length -1; i++)
+            {
+                for(int j = 0; j < matrice[i].length; j++)
+                {
+                    if(j != matrice[i].length)
+                        matrice[i][j] = " &";
+                    else
+                        matrice[i][j] = " \\\\";
+                }
+            }
+            
+            for(Sommet_matrix sm : tab)
+                matrice[sm.getLigne()][sm.getColonne()] = sm.getSommet().getNom() + matrice[sm.getLigne()][sm.getColonne()];
+            
+            matrice[this.nbLigneEtiquette(marge)+1][0] = "\n}";
+            return matrice;
+        }
 
 	/**
 	 * MÃƒÂ©thode qui permet d'orienter un graphe non orientÃƒÂ©, ou si celui-ci est orientÃƒÂ© de

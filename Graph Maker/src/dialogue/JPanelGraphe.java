@@ -2,9 +2,7 @@ package dialogue;
 
 import java.awt.*;
 import java.awt.geom.*;
-
 import javax.swing.*;
-
 import graphe.*;
 
 public class JPanelGraphe extends JPanel{

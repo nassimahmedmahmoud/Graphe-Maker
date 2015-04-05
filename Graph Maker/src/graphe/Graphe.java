@@ -84,6 +84,7 @@ public class Graphe {
 					arcs.add(a);
 		}
 	}
+        
 	public Sommet[][] sortSommetsXY(){
 		Sommet[][] tab = new Sommet[2][this.arcinit.size()];
 		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
@@ -120,6 +121,7 @@ public class Graphe {
 		System.out.println(altmpX);
 		return altmpX;
 	}
+        
 	public ArrayList<Sommet> sortSommetsLatexY(){
 		ArrayList<Sommet> altmpX = new ArrayList<Sommet>(arcinit);
 		Collections.sort(altmpX,new Comparator<Sommet>() {
@@ -135,6 +137,7 @@ public class Graphe {
 		System.out.println(altmpX);
 		return altmpX;
 	}
+        
 	public int nbLigneLaTex(int marge){
 		Sommet[][] tab = sortSommetsXY();
 		int val = tab[Graphe.COLONNE_X][0].getPosX();
@@ -209,6 +212,7 @@ public class Graphe {
 		}
 		return maxCounts;
 	}
+        
 	public Sommet[][] initTabColonne(int marge){
 		Sommet[][] sLigne = new Sommet[this.nbLigneLaTex(marge)][this.occurenceEtiquette(marge,this.etiquetteX(marge))];
 		//ArrayList<Sommet> altx = this.sortSommetsLatexX();
@@ -219,7 +223,16 @@ public class Graphe {
 		}
 		return sLigne;
 	}
-
+        
+        //public 
+        public Sommet_matrix[] initTab(int marge)
+        {
+            Sommet_matrix[] tab = new Sommet_matrix[this.getSommets().size()];
+            
+            
+            return tab;
+        }
+        
 	/**
 	 * MÃƒÂ©thode qui permet d'orienter un graphe non orientÃƒÂ©, ou si celui-ci est orientÃƒÂ© de
 	 * le de-orienter.

@@ -112,6 +112,7 @@ public class GrapheView extends JFrame{
         menuAide.add(assistance);
         menuAide.add(apropos);
         apropos.addActionListener(new ListenerMenuGraphe(this));
+        assistance.addActionListener(new ListenerMenuGraphe(this));
         return menuAide;
     }
     

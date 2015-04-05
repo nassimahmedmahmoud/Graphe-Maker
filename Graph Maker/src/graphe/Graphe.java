@@ -139,32 +139,33 @@ public class Graphe {
 	}
 
 	public int nbLigneLaTex(int marge){
-		Sommet[][] tab = sortSommetsXY();
-		int val = tab[Graphe.COLONNE_X][0].getPosX();
-		int nbLigne=0;
-		for(int i=1;i<tab[Graphe.COLONNE_X].length;i++){
-			int tmp = tab[Graphe.COLONNE_X][i].getPosX();
-			if((val-tmp)<=-marge || (val-tmp)>=marge){
-				val=tmp;
-				nbLigne++;
-			}
-		}
-		return nbLigne;
-	}
+            Sommet[][] tab = sortSommetsXY();
+            int val = tab[Graphe.COLONNE_X][0].getPosX();
+            int nbLigne=0;
+            for(int i=1;i<tab[Graphe.COLONNE_X].length;i++){
+                int tmp = tab[Graphe.COLONNE_X][i].getPosX();
+                if(Math.abs(tmp-val)<marge){
+                    val=tmp;
+                    nbLigne++;
+                }
+            }
+            return nbLigne;
+        }
 
 	public int nbColonneLaTex(int marge){
-		Sommet[][] tab = sortSommetsXY();
-		int val = tab[Graphe.COLONNE_Y][0].getPosX();
-		int nbColonne=0;
-		for(int i=1;i<tab[Graphe.COLONNE_Y].length;i++){
-			int tmp = tab[Graphe.COLONNE_Y][i].getPosX();
-			if((val-tmp)>-marge && (val-tmp)<marge){
-				val=tmp;
-				nbColonne++;
-			}
-		}
-		return nbColonne;
-	}
+            Sommet[][] tab = sortSommetsXY();
+            int val = tab[Graphe.COLONNE_Y][0].getPosX();
+            int nbColonne=0;
+            for(int i=1;i<tab[Graphe.COLONNE_Y].length;i++){
+                int tmp = tab[Graphe.COLONNE_Y][i].getPosX();
+                if(Math.abs(tmp-val)<marge){
+                    val=tmp;
+                    nbColonne++;
+                }
+            }
+            return nbColonne;
+        }
+        
 	public int[] etiquetteX(int marge){
 		int[] etiquette = new int[this.arcinit.size()];
 		int num=1;
@@ -225,66 +226,120 @@ public class Graphe {
 	}
 
 	public Sommet[] ligneY(int marge, Sommet s, ArrayList<Sommet> tab)
-	{
-		ArrayList<Sommet> stab = new ArrayList<Sommet>();
-		ArrayList<Sommet> tmp = new ArrayList<Sommet>();
-		for(int i = 0; i < tab.size(); i++)
-			if(Math.abs(s.getPosY() - tab.get(i).getPosY()) <= marge)
-				tmp.add(tab.get(i));
-		for (int i = 0; i < tmp.size(); i++)
-		{
-			tab.remove(tmp.get(i));
-			stab.add(tmp.get(i));
-		}
-		return stab.toArray(new Sommet[stab.size()]);
-	}
+        {
+            ArrayList<Sommet> stab = new ArrayList<>();
+            ArrayList<Sommet> tmp = new ArrayList<>();
+            for(int i = 0; i < tab.size(); i++)
+                if(Math.abs(s.getPosY() - tab.get(i).getPosY()) <= marge)
+                    tmp.add(tab.get(i));
+         
+            for (int i = 0; i < tmp.size(); i++)
+            {
+                tab.remove(tmp.get(i));
+                stab.add(tmp.get(i));
+            }
+            return stab.toArray(new Sommet[stab.size()]);
+        }
 	
 	public Sommet[][] ligne(int marge)
-	{
-		Sommet[][] tabmat = new Sommet[this.nbLigneLaTex(marge)][this.nbColonneLaTex(marge)];
-		ArrayList<Sommet> tab = new ArrayList<>(arcinit);
-
-		for(int i = 0; i < tabmat.length ; i++){
-			System.out.println("tab : "+tab);
-			tabmat[i] = ligneY(marge, tab.get(0), tab);
-		}
-		return tabmat;
-	}
+        {
+            Sommet[][] tabmat = new Sommet[this.nbColonneLaTex(marge)+1][this.nbLigneLaTex(marge)+1];
+            ArrayList<Sommet> tab = new ArrayList<>(arcinit);
+            int len = tab.size();
+            int i=0;
+            while(len>0 && i<tabmat.length)
+            {
+                tabmat[i] = ligneY(marge, tab.get(0), tab);
+                len--;
+                i++;
+            }
+            return tabmat;
+        }
 
 	public Sommet[] colonneX(int marge, Sommet s, ArrayList<Sommet> tab)
-	{
-		Sommet[] stab = new Sommet[this.nbLigneLaTex(marge)];
-		ArrayList<Sommet> tmp = new ArrayList<>();
-		for(int i = 0; i < tab.size(); i++)
-			if(Math.abs(s.getPosX() - tab.get(i).getPosX()) < marge)
-				tmp.add(tab.get(i));
-
-		for (int i = 0; i < tmp.size(); i++)
-		{
-			tab.remove(tmp.get(i));
-			stab[i] = tmp.get(i);
-		}
-
-		return stab;
-	}
+        {
+            ArrayList<Sommet> stab = new ArrayList<>();
+            ArrayList<Sommet> tmp = new ArrayList<>();
+            for(int i = 0; i < tab.size(); i++)
+                if(Math.abs(s.getPosX() - tab.get(i).getPosX()) <= marge)
+                    tmp.add(tab.get(i));
+         
+            for (int i = 0; i < tmp.size(); i++)
+            {
+                tab.remove(tmp.get(i));
+                stab.add(tmp.get(i));
+            }
+            return stab.toArray(new Sommet[stab.size()]);
+        }
 
 	public Sommet[][] colonne(int marge)
 	{
-		Sommet[][] tabmat = new Sommet[this.nbLigneLaTex(marge)][this.nbColonneLaTex(marge)];
-		ArrayList<Sommet> tab = new ArrayList<>(arcinit);
+            Sommet[][] tabmat = new Sommet[this.nbLigneLaTex(marge)][this.nbColonneLaTex(marge)];
+            ArrayList<Sommet> tab = new ArrayList<>(arcinit);
+            int len = tab.size();
+            int i=0;
+                
+            while(len>0 && i<tabmat.length)
+            {
+                tabmat[i] = colonneX(marge, tab.get(0), tab);
+                len--;
+                i++;
+            }
 
-		for(int i = 0; i < tabmat.length ; i++)
-			tabmat[i] = colonneX(marge, tab.get(0), tab);
-
-		return tabmat;
+            return tabmat;
 	}
+        
+        public void sortLigne(Sommet[][] tab, int marge)
+        {
+            Sommet[] li = new Sommet[this.nbColonneLaTex(marge)+1];
+            for(int i = 0; i < tab.length; i++)
+            {
+                for(int j = 0; j < tab.length; j++)
+                {
+                    if(tab[i][0].getPosY() > tab[j][0].getPosY())
+                    {
+                        for(int k = 0; k < tab[i].length; k++)
+                        {
+                            li[k] = tab[i][k];
+                            tab[i][k] = tab[j][k];
+                            tab[j][k] = li[k];
+                        }
+                    }
+                }       
+            }
+        }
+        
+        public void sortColonne(Sommet[][] tab, int marge)
+        {
+            Sommet[] li = new Sommet[this.nbLigneLaTex(marge)+1];
+            for(int i = 0; i < tab.length; i++)
+            {
+                for(int j = 0; j < tab.length; j++)
+                {
+                    if(tab[i][0].getPosX() > tab[j][0].getPosX())
+                    {
+                        for(int k = 0; k < tab[i].length; k++)
+                        {
+                            li[k] = tab[i][k];
+                            tab[i][k] = tab[j][k];
+                            tab[j][k] = li[k];
+                        }
+                    }
+                }       
+            }
+        }
 
 	public Sommet_matrix[] initTab(int marge)
 	{
 		Sommet_matrix[] tab = new Sommet_matrix[this.getSommets().size()];
-
-
-		return tab;
+                Sommet[][] lignes = ligne(marge);
+                Sommet[][] colonnes = colonne(marge);
+                /*for(int i = 0; i < tab.length; i++)
+                {
+                    for(int j = )
+                    tab[i] = new Sommet_matrix(arcinit.get(i), );
+                }*/
+                return tab;
 	}
 
 	/**

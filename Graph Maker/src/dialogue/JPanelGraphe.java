@@ -54,6 +54,7 @@ public class JPanelGraphe extends JPanel{
 				}
 				System.out.println();
 			}
+			System.out.println("salut : "+this.gv.getGraphe().sommetVoisinsLaTeX(this.gv.getGraphe().getArcinit().get(0),init));
 		}
 		
 	}

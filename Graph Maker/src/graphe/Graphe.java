@@ -224,7 +224,31 @@ public class Graphe {
 		return sLigne;
 	}
         
-        //public 
+        public Sommet[] ligneY(int marge, Sommet s, ArrayList<Sommet> tab)
+        {
+            Sommet[] stab = new Sommet[this.nbColonneLaTex(marge)];
+            //ArrayList<Sommet> stab = new ArrayList<Sommet>(arcinit);
+            for(int i = 0; i < tab.size(); i++)
+                if(Math.abs(s.getPosY() - tab.get(i).getPosY()) <= marge)
+                    stab[i] = tab.get(i);
+            
+            for (Sommet stab1 : stab)
+                tab.remove(stab1);            
+            
+            return stab;
+        }
+        
+        public Sommet[][] ligne(int marge)
+        {
+            Sommet[][] tabmat = new Sommet[this.nbLigneLaTex(marge)][this.nbColonneLaTex(marge)];
+            ArrayList<Sommet> tab = new ArrayList(arcinit);
+            
+            for(int i = 0; i < tabmat.length ; i++)
+                tabmat[i] = ligneY(marge, tab.get(0), tab);
+            
+            return tabmat;
+        }
+        
         public Sommet_matrix[] initTab(int marge)
         {
             Sommet_matrix[] tab = new Sommet_matrix[this.getSommets().size()];

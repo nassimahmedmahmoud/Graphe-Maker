@@ -1,7 +1,6 @@
 package dialogue;
  
 import java.awt.*;
-
 import javax.swing.*;
 import controller.*;
 import graphe.*;

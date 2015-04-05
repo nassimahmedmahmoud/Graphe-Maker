@@ -201,35 +201,34 @@ public class Graphe {
 		}
 		return etiquette;
 	}
-	
-	public int nbColonneEtiquette(int marge){
-		int val =0;
-		int[]etX = this.etiquetteX(marge);
-		Arrays.sort(etX);
-		for(int i=1;i<etX.length;i++){
-			if(etX[i-1]!=etX[i])
-				val++;
+
+	public int occurenceEtiquette(int marge,int[] etiquette){
+		int[] counts = new int[etiquette.length];
+		int maxCounts = 0;
+		for (int i=0; i < etiquette.length; i++) {
+			(counts[etiquette[i]])++;
+			if (maxCounts < counts[etiquette[i]]) {
+				maxCounts = counts[etiquette[i]];
+			}
 		}
-		return val+1;
+		return maxCounts;
 	}
-	
-	public int nbLigneEtiquette(int marge){
-		int val =0;
-		int[]etY = this.etiquetteY(marge);
-		Arrays.sort(etY);
-		for(int i=1;i<etY.length;i++){
-			if(etY[i-1]!=etY[i])
-				val++;
+
+	public Sommet[][] initTabColonne(int marge){
+		Sommet[][] sLigne = new Sommet[this.nbLigneLaTex(marge)][this.occurenceEtiquette(marge,this.etiquetteX(marge))];
+		//ArrayList<Sommet> altx = this.sortSommetsLatexX();
+		for(int i=0;i<sLigne.length;i++){
+			for(int j=0;j<sLigne[i].length;j++){
+				//sLigne[i][j]= 
+			}
 		}
-		return val+1;
+		return sLigne;
 	}
 
 	public Sommet[] ligneY(int marge, Sommet s, ArrayList<Sommet> tab)
         {
             ArrayList<Sommet> stab = new ArrayList<>();
             ArrayList<Sommet> tmp = new ArrayList<>();
-            System.out.println("nbLigne : "+(this.nbLigneEtiquette(marge)));
-            System.out.println("nbColonne : "+(this.nbColonneEtiquette(marge)));
             for(int i = 0; i < tab.size(); i++)
                 if(Math.abs(s.getPosY() - tab.get(i).getPosY()) <= marge)
                     tmp.add(tab.get(i));
@@ -244,7 +243,7 @@ public class Graphe {
 	
 	public Sommet[][] ligne(int marge)
         {
-            Sommet[][] tabmat = new Sommet[this.nbLigneEtiquette(marge)][this.nbColonneEtiquette(marge)];
+            Sommet[][] tabmat = new Sommet[this.nbColonneLaTex(marge)+1][this.nbLigneLaTex(marge)+1];
             ArrayList<Sommet> tab = new ArrayList<>(arcinit);
             int len = tab.size();
             int i=0;

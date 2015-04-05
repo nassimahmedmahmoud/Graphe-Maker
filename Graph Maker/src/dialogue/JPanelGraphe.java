@@ -35,11 +35,14 @@ public class JPanelGraphe extends JPanel{
 				System.out.print(etX[i]+"-");
 			}
 			System.out.println();
+			System.out.println("nbOccur : "+graphe.getGraphe().occurenceEtiquette(graphe.getGraphe().getTailleSommet(),graphe.getGraphe().etiquetteX(graphe.getGraphe().getTailleSommet())));
 			Sommet[][]tab =graphe.getGraphe().ligne(marge);
 			for(int i=0;i<tab.length;i++){
 				for(int j=0;j<tab[i].length;j++){
 					if(tab[i][j]!=null)
 						System.out.print(tab[i][j].getNom()+"\t");
+					else
+						System.out.print("Rien\t");
 				}
 				System.out.println();
 			}

@@ -23,8 +23,8 @@ public class Graphe {
 	private ArrayList<Sommet> tabCick;          //Liste de sommets pour les graphes génériques et personalisés
 	private ArrayList<Sommet> arcinit;          //Pour debug Cycle et Chaine générique
 	private int dist;                           //Distance par défaut des graphes génériques
-        private int margelinecolumn;
-        private int lengthlinecolumn;
+        private int margelinecolumn = 50;
+        private int lengthlinecolumn = 1;
         
 	/**
 	 * Constructeur champ a champ du graphe prend en paramÃƒÂ¨tres :
@@ -344,7 +344,7 @@ public class Graphe {
 	{
 		String[][] matrice = new String[this.nbLigneEtiquette(marge)+2][this.nbColonneEtiquette(marge)];
 		matrice[0][0] = "\\xymatrix@R=" + taille + "cm@C=" + taille + "cm\n"
-				+ "{\n";
+				+ "{";
 		for(int i = 1; i < matrice.length -1; i++)
 		{
 			for(int j = 0; j < matrice[i].length; j++)
@@ -359,7 +359,7 @@ public class Graphe {
 		for(Sommet_matrix sm : tab)
 			matrice[sm.getLigne()+1][sm.getColonne()] = sm.getSommet().getNom() +this.sommetVoisinsLaTeX(sm.getSommet(), tab)+matrice[sm.getLigne()+1][sm.getColonne()];
 
-		matrice[this.nbLigneEtiquette(marge)+1][0] = "\n}";
+		matrice[this.nbLigneEtiquette(marge)+1][0] = "}";
 		return matrice;
 	}
         
@@ -370,8 +370,11 @@ public class Graphe {
             {
                 for(int j = 0; j < mat[i].length; j++)
                 {
-                    s+=mat[i][j];
+                    if(mat[i][j] != null)
+                        s+=mat[i][j];
+                    s+="";
                 }
+                s+="\n";
             }
             
             return s;

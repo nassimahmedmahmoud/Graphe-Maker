@@ -36,8 +36,6 @@ public class ListenerAideGraphe implements ActionListener
                gv.getTexte().setText("<html><body><p>" + gv.getA().assistance(gv.getA().getCurentpage())
    				+ "</p></body></html>");
            }
-              
-           System.out.println(gv.getA().getCurentpage());
        }
        
        if(e.getSource() == gv.getSuiv())
@@ -45,18 +43,16 @@ public class ListenerAideGraphe implements ActionListener
            gv.getA().setCurentpage(gv.getA().getCurentpage()+1);
            gv.getTexte().setText("<html><body><p>" + gv.getA().assistance(gv.getA().getCurentpage())
    				+ "</p></body></html>");
-           if(gv.getA().getCurentpage() == 6)
+           if(gv.getA().getCurentpage() == 6){
                gv.getPanbtn().remove(gv.getSuiv());
+           }
            else if(gv.getA().getCurentpage() != Aide.SOMMAIRE)
            {
                gv.getPanbtn().remove(gv.getSuiv());
                gv.getPanbtn().add(gv.getPrec());
                gv.getPanbtn().add(gv.getSuiv());
            }
-           System.out.println(gv.getA().getCurentpage());
        }
-       gv.getTexte().repaint();
-       gv.getPanassist().repaint();
+       gv.getPanbtn().repaint();
     }
-    
 }

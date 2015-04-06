@@ -44,6 +44,8 @@ public class ListenerMenuGraphe implements ActionListener {
 
 		if(e.getSource() == gv.getAssistance())
 		{
+			gv.setTexte(new JLabel());
+			this.gv.setPanassist(new JPanel());
 			JPanel affichage = gv.assistance(Aide.SOMMAIRE);
 			JOptionPane.showMessageDialog(null,affichage,"Aide",1);
                         //gv.getA().setText("");

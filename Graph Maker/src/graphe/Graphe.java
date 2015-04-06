@@ -1265,7 +1265,10 @@ public class Graphe {
 						int depart_Y=(int) Double.parseDouble(texte[1]);
 						int arriver_X=(int) Double.parseDouble(texte[4]);
 						int arriver_Y=(int) Double.parseDouble(texte[5]);
-						a.setNom("");
+						if(texte[8]!=null && !(texte[8].isEmpty()) && Double.isNaN(Double.parseDouble(texte[8])))
+							a.setNom("");
+						else
+							a.setNom(texte[8]);
 						a.setOrigine(g.getSommet(depart_X, depart_Y));
 						a.setArrivee(g.getSommet(arriver_X, arriver_Y));
 						a.milieu();

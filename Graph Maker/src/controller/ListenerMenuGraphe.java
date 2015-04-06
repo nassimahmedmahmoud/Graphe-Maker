@@ -20,7 +20,11 @@ public class ListenerMenuGraphe implements ActionListener {
 		dialogue.showOpenDialog(null);
 		System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
 		this.gv.setGraphe(this.gv.getGraphe().read(dialogue.getSelectedFile()));
-			
+		this.gv.grapheMetrique();
+		if(this.gv.getGraphe().isType())
+			this.gv.getOnglets().setEnabledAt(2, false);
+		else
+			this.gv.getOnglets().setEnabledAt(2, true);
             }
                 
             if(e.getSource() == gv.getApropos())

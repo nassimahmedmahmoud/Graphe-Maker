@@ -173,6 +173,7 @@ public class GrapheView extends JFrame{
 		onglets = new JTabbedPane();
 		this.graphe=new Graphe();
 		this.dijkstra=new Dijkstra(graphe);
+        panassist = new JPanel();
 		onglets.addTab("Graphe", null,this.panel1());
 		onglets.addTab("Dijkstra", null, this.panel2());
 		onglets.addTab("Coloration", null, panel3());
@@ -203,7 +204,6 @@ public class GrapheView extends JFrame{
         
         public JPanel assistance(int page)
         {
-            panassist = new JPanel();
             a = new Aide();
             a.setCurentpage(page);
             JLabel texte = new JLabel("<html><body><p>" + a.assistance(a.getCurentpage())

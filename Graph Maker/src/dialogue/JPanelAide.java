@@ -1,7 +1,5 @@
 package dialogue;
 
-import controller.*;
-
 import javax.swing.*;
 
 public class JPanelAide extends JPanel

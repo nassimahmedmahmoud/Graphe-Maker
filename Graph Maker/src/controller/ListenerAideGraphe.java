@@ -20,15 +20,13 @@ public class ListenerAideGraphe implements ActionListener
            gv.getA().setCurentpage(gv.getA().getCurentpage()-1);
            gv.setPanassist(gv.assistance(gv.getA().getCurentpage()));
            
-           System.out.println("précédent");
+           System.out.println(gv.getA().getCurentpage());
        }
        
        if(e.getSource() == gv.getSuiv())
        {
            gv.getA().setCurentpage(gv.getA().getCurentpage()+1);
            gv.setPanassist(gv.assistance(gv.getA().getCurentpage()));
-           
-           System.out.println("suivant");
        }
        gv.getPanassist().repaint();
     }

@@ -278,10 +278,22 @@ public class Graphe {
 	public Sommet_matrix sommetInSommetMatrix(Sommet s,Sommet_matrix[]tab){
 		return tab[arcinit.indexOf(s)];
 	}
+	public int[] tabVoisinsCustom(int index) // renvoie les positions des voisins du sommet courant
+	{
+		int[]tab=new int[this.sommets.get(index).getArcs().size()]; // crÃƒÂ©ÃƒÂ© un tableau local a partir de la taille de son ArrayList d'arc qui correspond au nb de sommets voisin du sommet courant
+		for(int i = 0; i < this.sommets.get(index).getArcs().size(); i++){
+			int voisinArrivee=this.sommets.indexOf(this.sommets.get(index).getArcs().get(i).getArrivee()); // on rÃƒÂ©cupÃƒÂ¨re la position des sommets voisins et on les ajoute dans notre tableau local tab
+			if(voisinArrivee!=index) // si la position du voisin est different de la position du sommet courant et si sa couleur est differente de 0 alors on ajoute la position du voisin dans notre tableau
+				tab[i]=voisinArrivee;
+			else
+				tab[i]=-1;
+		}
+		return tab;
+	}
 
 	public String sommetVoisinsLaTeX(Sommet s,Sommet_matrix[]tab){
 		Sommet_matrix sm = sommetInSommetMatrix(s,tab);
-		int[] tabVoisins = this.tabVoisins(arcinit.indexOf(s));
+		int[] tabVoisins = this.tabVoisinsCustom(arcinit.indexOf(s));
 		String chaine = "";
 		if(tabVoisins.length>0){
 			if(type)
@@ -290,37 +302,39 @@ public class Graphe {
 				chaine+=Graphe.ARETE;
 		}
 		for(int i=0;i<tabVoisins.length;i++){
-			chaine+="[";
-			Sommet_matrix smtmp = this.sommetInSommetMatrix(sommets.get(tabVoisins[i]), tab);
-			int sml= sm.getLigne();
-			int smtmpl = smtmp.getLigne();
-			int smc = sm.getColonne();
-			int smtmpc = smtmp.getColonne();
-			if(sml>smtmpl){
-				while(sml-smtmpl>0){
-					chaine+="u";
-					sml--;
+			if(tabVoisins[i]!=-1){
+				chaine+="[";
+				Sommet_matrix smtmp = this.sommetInSommetMatrix(sommets.get(tabVoisins[i]), tab);
+				int sml= sm.getLigne();
+				int smtmpl = smtmp.getLigne();
+				int smc = sm.getColonne();
+				int smtmpc = smtmp.getColonne();
+				if(sml>smtmpl){
+					while(sml-smtmpl>0){
+						chaine+="u";
+						sml--;
+					}
 				}
-			}
-			else if(sml<smtmpl){
-				while(smtmpl-sml>0){
-					chaine+="d";
-					smtmpl--;
+				else if(sml<smtmpl){
+					while(smtmpl-sml>0){
+						chaine+="d";
+						smtmpl--;
+					}
 				}
-			}
-			if(smc>smtmpc){
-				while(smc-smtmpc>0){
-					chaine+="l";
-					smc--;
+				if(smc>smtmpc){
+					while(smc-smtmpc>0){
+						chaine+="l";
+						smc--;
+					}
 				}
-			}
-			else if(smc<smtmpc){
-				while(smtmpc-smc>0){
-					chaine+="r";
-					smtmpc--;
+				else if(smc<smtmpc){
+					while(smtmpc-smc>0){
+						chaine+="r";
+						smtmpc--;
+					}
 				}
+				chaine+="]";
 			}
-			chaine+="]";
 		}
 		return chaine;
 	}

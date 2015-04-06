@@ -1,6 +1,7 @@
 package dialogue;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import controller.*;
@@ -64,6 +65,8 @@ public class GrapheView extends JFrame{
         private JButton prec;
         private Aide a;
         private JPanel panassist;
+
+		private JLabel texte;
 
 	public GrapheView(String titre,int w,int h){
 		super(titre);
@@ -206,28 +209,25 @@ public class GrapheView extends JFrame{
         {
             a = new Aide();
             a.setCurentpage(page);
-            JLabel texte = new JLabel("<html><body><p>" + a.assistance(a.getCurentpage())
+            texte = new JLabel("<html><body><p>" + a.assistance(a.getCurentpage())
 				+ "</p></body></html>");
             prec = new JButton("préc.");
             suiv = new JButton("suiv.");
 
-            panassist.add(texte);
             if(a.getCurentpage() == 0)
-            {
-                    panassist.add(texte);
+            {              
                     panassist.add(suiv);
             }
             else if(a.getCurentpage() < 6)
             {
-                    panassist.add(texte);
                     panassist.add(prec);
                     panassist.add(suiv);
             }
             else
             {
-                    panassist.add(texte);
                     panassist.add(prec);
             }
+            panassist.add(texte);
             suiv.addActionListener(new ListenerAideGraphe(this));
             prec.addActionListener(new ListenerAideGraphe(this));
             return panassist;
@@ -814,4 +814,13 @@ public class GrapheView extends JFrame{
         public void setPanassist(JPanel panassist) {
             this.panassist = panassist;
         }
+
+		public JLabel getTexte() {
+			return texte;
+		}
+
+		public void setTexte(JLabel texte) {
+			this.texte = texte;
+		}
+        
 }

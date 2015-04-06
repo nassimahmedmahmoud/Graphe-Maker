@@ -18,16 +18,19 @@ public class ListenerAideGraphe implements ActionListener
        if(e.getSource() == gv.getPrec())
        {
            gv.getA().setCurentpage(gv.getA().getCurentpage()-1);
-           gv.setPanassist(gv.assistance(gv.getA().getCurentpage()));
-           
+           gv.getTexte().setText("<html><body><p>" + gv.getA().assistance(gv.getA().getCurentpage())
+   				+ "</p></body></html>");
+              
            System.out.println(gv.getA().getCurentpage());
        }
        
        if(e.getSource() == gv.getSuiv())
        {
            gv.getA().setCurentpage(gv.getA().getCurentpage()+1);
-           gv.setPanassist(gv.assistance(gv.getA().getCurentpage()));
+           gv.getTexte().setText("<html><body><p>" + gv.getA().assistance(gv.getA().getCurentpage())
+   				+ "</p></body></html>");
        }
+       gv.getTexte().repaint();
        gv.getPanassist().repaint();
     }
     

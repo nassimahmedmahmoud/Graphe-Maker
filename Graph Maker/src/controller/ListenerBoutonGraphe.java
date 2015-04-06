@@ -86,11 +86,13 @@ public class ListenerBoutonGraphe implements MouseListener {
                     if ((!(gv.getGraphe().isType()) && arcCourant.getArrivee()
                             != arcCourant.getOrigine()) || gv.getGraphe().isType())
                     {
-                        arcCourant.getArrivee().ajouterArc(arcCourant);
-                        arcCourant.getOrigine().ajouterArc(arcCourant);
                         arcCourant.milieu();
                         if(!(this.gv.getGraphe().arcInGraphe(arcCourant)))
+                        {
+                            arcCourant.getArrivee().ajouterArc(arcCourant);
+                            arcCourant.getOrigine().ajouterArc(arcCourant);
                             this.gv.getGraphe().getArcs().add(arcCourant);
+                        }
                         sCourant = null;
                         arcCourant = null;
                     }

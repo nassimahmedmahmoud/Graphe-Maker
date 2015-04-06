@@ -79,15 +79,36 @@ public class Graphe {
 	 */
 	public void supprimerDoublons()
 	{
-		arcs = new ArrayList<Arc>();
+		arcs = new ArrayList<>();
 		for(Sommet s : sommets)
 		{
 			for(Arc a : s.getArcs())
 				if(!arcInGraphe(a) && !(a.getOrigine().equals(a.getArrivee())))
 					arcs.add(a);
+                        s.setArcs(new ArrayList<Arc>());
 		}
+                for(Sommet s :sommets)
+                {
+                    for(Arc a : arcs)
+                        if(a.getOrigine().equals(s) || a.getArrivee().equals(s))
+                            s.ajouterArc(a);
+                }
 	}
-
+        
+        /**
+	 * MÃƒÂ©thode qui permet d'orienter un graphe non orientÃƒÂ©, ou si celui-ci est orientÃƒÂ© de
+	 * le de-orienter.
+	 */
+	public void switchTypeOfGraphe(){
+		if(this.type)
+		{
+			this.setType(Graphe.NON_ORIENTE);
+			if(this.arcs.size() > 0)
+				this.supprimerDoublons();
+		}
+		else
+			this.setType(Graphe.ORIENTE);
+	}
 
 	public int[] etiquetteX(int marge){
 		int[] etiquette = new int[this.arcinit.size()];
@@ -395,22 +416,7 @@ public class Graphe {
 
 		return s;
 	}
-
-	/**
-	 * MÃƒÂ©thode qui permet d'orienter un graphe non orientÃƒÂ©, ou si celui-ci est orientÃƒÂ© de
-	 * le de-orienter.
-	 */
-	public void switchTypeOfGraphe(){
-		if(this.type)
-		{
-			this.setType(Graphe.NON_ORIENTE);
-			if(this.arcs.size() > 0)
-				this.supprimerDoublons();
-		}
-		else
-			this.setType(Graphe.ORIENTE);
-	}
-
+        
 	/**
 	 * La mÃƒÂ©thode isSommet prend en paramÃƒÂ¨tre un entier correspondant au diamÃƒÂ¨tre
 	 * d'un sommet, et d'un objet de la classe MouseEvent permettant de connaÃƒÂ®tre

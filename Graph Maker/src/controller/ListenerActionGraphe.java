@@ -39,7 +39,7 @@ public class ListenerActionGraphe implements ActionListener {
 		}
 		if(e.getSource()==gv.getJtfNode()){
 			this.gv.getGraphe().setTailleSommet(isInteger(gv.getJtfNode().getText()));
-			this.gv.getJtfNode().setText("");
+			this.gv.getJtfNode().setText(gv.getJtfNode().getText());
 		}
 
 		if(e.getSource() == gv.getDist())

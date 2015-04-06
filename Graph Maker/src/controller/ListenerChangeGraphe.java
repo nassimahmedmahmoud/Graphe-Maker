@@ -18,6 +18,8 @@ public class ListenerChangeGraphe implements ChangeListener {
 		if(gv.getOnglets().getSelectedIndex()==GrapheView.ONGLET_GENERAL){
 			gv.getJl().setText(gv.getGraphe().toString(Graphe.MATRIX));
 			gv.getJlca().setText(gv.getGraphe().toString(Graphe.CONNEXE_ARBRE));
+                        if("".equals(gv.getAff().getText()))
+                            gv.getAff().setText("LaTeX...");
 			gv.getJl().repaint();
 			gv.getJlca().repaint();
 		}

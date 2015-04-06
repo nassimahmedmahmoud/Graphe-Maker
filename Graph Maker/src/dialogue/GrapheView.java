@@ -1,7 +1,9 @@
 package dialogue;
  
 import java.awt.*;
+
 import javax.swing.*;
+
 import controller.*;
 import graphe.*;
  
@@ -179,15 +181,15 @@ public class GrapheView extends JFrame{
 public JPanel panelGraphe(){
         JPanel pgraphe = new JPanel();
         btngrp = new ButtonGroup();
-        bclic = new JToggleButton("clic");
-        bsommet = new JToggleButton("sommet");
+        bclic = new JToggleButton(new ImageIcon("img/click.png"));
+        bsommet = new JToggleButton(new ImageIcon("img/sommet.png"));
         barc = new JToggleButton("arc");
         barrete = new JToggleButton("arÃªte");
-        barcarrete = new JButton("arc <-> arÃªte");
-        bgomme= new JToggleButton("gomme");
+        barcarrete = new JButton(new ImageIcon("img/orienter.png"));
+        bgomme= new JToggleButton(new ImageIcon("img/gomme.png"));
         JLabel ltSizeNode = new JLabel("Taille du sommet : ");
         jtfNode= new JTextField("50");
-        JButton breset = new JButton("reset");
+        JButton breset = new JButton(new ImageIcon("img/reset.png"));
         btngrp.add(bclic);
         btngrp.add(bsommet);
         btngrp.add(barc);

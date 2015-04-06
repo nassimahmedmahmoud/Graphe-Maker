@@ -5,26 +5,32 @@ import java.awt.event.*;
 
 public class ListenerAideGraphe implements ActionListener
 {
-    private JPanelAide jpa;
+    private GrapheView gv;
     
-    public ListenerAideGraphe(JPanelAide jp)
+    public ListenerAideGraphe(GrapheView gv)
     {
         super();
-        jpa = jp;
+        this.gv = gv;
     }
     @Override
     public void actionPerformed(ActionEvent e)
     {
-       if(e.getSource() == jpa.getPrec())
+       if(e.getSource() == gv.getPrec())
        {
-           jpa.setCurrentPage(jpa.getCurrentPage()-1);
+           gv.getA().setCurentpage(gv.getA().getCurentpage()-1);
+           gv.setPanassist(gv.assistance(gv.getA().getCurentpage()));
+           
+           System.out.println("précédent");
        }
        
-       if(e.getSource() == jpa.getSuiv())
+       if(e.getSource() == gv.getSuiv())
        {
-           jpa.setCurrentPage(jpa.getCurrentPage()+1);
+           gv.getA().setCurentpage(gv.getA().getCurentpage()+1);
+           gv.setPanassist(gv.assistance(gv.getA().getCurentpage()));
+           
+           System.out.println("suivant");
        }
-       jpa.repaint();
+       gv.getPanassist().repaint();
     }
     
 }

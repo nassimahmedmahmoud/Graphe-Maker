@@ -25,7 +25,7 @@ public class ListenerActionGraphe implements ActionListener {
 				this.gv.getOnglets().setEnabledAt(2,false);
 			this.gv.getGraphe().switchTypeOfGraphe();
 		}
-		if(e.getActionCommand()=="reset"){
+		if(e.getSource() == gv.getBreset()){
 			this.gv.getGraphe().getSommets().clear();
 			this.gv.getGraphe().getArcs().clear();
 			this.gv.getGraphe().getArcinit().clear();
@@ -54,6 +54,11 @@ public class ListenerActionGraphe implements ActionListener {
 								, gv.getGraphe().getLengthlinecolumn()), gv.getGraphe().getMargelinecolumn() , gv.getGraphe().getLengthlinecolumn(),
 								gv.getGraphe().initTab(gv.getGraphe().getMargelinecolumn())));
 			}
+                        catch(TailleColumnLineException ec)
+                        {
+                            JLabel affichage = new JLabel("<html><p>Le code que vous essayez de générer n'est pas bon.<br>La taille que vous avez indiqué est mauvaise.<br><br><span color=red>Attention : Vous devez entrer une valeur de taille<br>strictement supérieur à 0 pour que la génération s'effectue.</span></p></html>");
+				JOptionPane.showMessageDialog(null,affichage,"Erreur : " + ec + ":Taille_colonne_ligne_erroné",0);
+                        }
 			catch(NullPointerException ec)
 			{
 				JLabel affichage = new JLabel("<html><p>Le code que vous essayez de générer n'est pas bon.<br>Votre graphe ne contient sûrement aucun sommet.<br><br><span color=red>Attention : Vous devez créer au moins un sommet<br>pour que la génération s'effectue.</span></p></html>");

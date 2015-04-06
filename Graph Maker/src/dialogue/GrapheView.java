@@ -55,11 +55,15 @@ public class GrapheView extends JFrame{
 	private JMenuItem menugraphe;
 	private JMenuItem menuload;
 	private JMenuItem menusave;
-
+        private JButton breset;
 	private JTabbedPane onglets;
 	private JPanel pangen;
 	private JButton rename;
 	private JTextField taillec;
+        private JButton suiv;
+        private JButton prec;
+        private Aide a;
+        private JPanel panassist;
 
 	public GrapheView(String titre,int w,int h){
 		super(titre);
@@ -196,6 +200,38 @@ public class GrapheView extends JFrame{
 		assistance.addActionListener(new ListenerMenuGraphe(this));
 		return menuAide;
 	}
+        
+        public JPanel assistance(int page)
+        {
+            panassist = new JPanel();
+            a = new Aide();
+            a.setCurentpage(page);
+            JLabel texte = new JLabel("<html><body><p>" + a.assistance(a.getCurentpage())
+				+ "</p></body></html>");
+            prec = new JButton("préc.");
+            suiv = new JButton("suiv.");
+
+            panassist.add(texte);
+            if(a.getCurentpage() == 0)
+            {
+                    panassist.add(texte);
+                    panassist.add(suiv);
+            }
+            else if(a.getCurentpage() < 6)
+            {
+                    panassist.add(texte);
+                    panassist.add(prec);
+                    panassist.add(suiv);
+            }
+            else
+            {
+                    panassist.add(texte);
+                    panassist.add(prec);
+            }
+            suiv.addActionListener(new ListenerAideGraphe(this));
+            prec.addActionListener(new ListenerAideGraphe(this));
+            return panassist;
+        }
 
 	public JMenu menuEdition(){
 		JMenu menuEdition = new JMenu("Editer");
@@ -307,7 +343,7 @@ public class GrapheView extends JFrame{
 		bgomme= new JToggleButton(new ImageIcon("img/gomme.png"));
 		JLabel ltSizeNode = new JLabel("Taille du sommet : ");
 		jtfNode= new JTextField("50");
-		JButton breset = new JButton(new ImageIcon("img/reset.png"));
+		breset = new JButton(new ImageIcon("img/reset.png"));
 		btngrp.add(bclic);
 		btngrp.add(bsommet);
 		btngrp.add(barc);
@@ -738,4 +774,44 @@ public class GrapheView extends JFrame{
 	public void setTaillec(JTextField taillec) {
 		this.taillec = taillec;
 	}
+
+        public JButton getBreset() {
+            return breset;
+        }
+
+        public void setBreset(JButton breset) {
+            this.breset = breset;
+        }
+
+        public JButton getSuiv() {
+            return suiv;
+        }
+
+        public JButton getPrec() {
+            return prec;
+        }
+
+        public void setSuiv(JButton suiv) {
+            this.suiv = suiv;
+        }
+
+        public void setPrec(JButton prec) {
+            this.prec = prec;
+        }
+
+        public Aide getA() {
+            return a;
+        }
+
+        public JPanel getPanassist() {
+            return panassist;
+        }
+
+        public void setA(Aide a) {
+            this.a = a;
+        }
+
+        public void setPanassist(JPanel panassist) {
+            this.panassist = panassist;
+        }
 }

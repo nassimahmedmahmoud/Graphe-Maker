@@ -7,12 +7,22 @@ public class Aide
     private String auteur;
     private String editeur;
     private String text;
+    private int curentpage;
     
     public Aide(String auth, String ed, String txt)
     {
         auteur = auth;
         editeur = ed;
         text = txt;
+        curentpage = SOMMAIRE;
+    }
+    
+    public Aide(int curent)
+    {
+        auteur = "";
+        editeur = "";
+        text = "";
+        curentpage = curent;
     }
     
     public Aide()
@@ -196,6 +206,10 @@ public class Aide
         return text;
     }
 
+    public int getCurentpage() {
+        return curentpage;
+    }
+
     public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
@@ -206,5 +220,9 @@ public class Aide
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setCurentpage(int currentpage) {
+        this.curentpage = currentpage;
     }
 }

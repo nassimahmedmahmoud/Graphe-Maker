@@ -351,8 +351,10 @@ public class Graphe {
 		return chaine;
 	}
 
-	public String[][] matrixLatex(Sommet_matrix[] tab, int marge, int taille)
+	public String[][] matrixLatex(Sommet_matrix[] tab, int marge, int taille) throws TailleColumnLineException
 	{
+                if(taille < 1)
+                    throw new TailleColumnLineException(taille);
 		String[][] matrice = new String[this.nbLigneEtiquette(marge)+2][this.nbColonneEtiquette(marge)];
 		matrice[0][0] = "\\xymatrix@R=" + taille + "cm@C=" + taille + "cm\n"
 				+ "{";

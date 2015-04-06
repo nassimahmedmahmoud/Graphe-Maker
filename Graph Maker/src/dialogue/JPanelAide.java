@@ -44,8 +44,8 @@ public class JPanelAide extends JPanel
 			this.add(texte);
 			this.add(prec);
 		}
-		suiv.addActionListener(new ListenerAideGraphe(this));
-		prec.addActionListener(new ListenerAideGraphe(this));
+		//suiv.addActionListener(new ListenerAideGraphe(this));
+		//prec.addActionListener(new ListenerAideGraphe(this));
 	}
 
 	public Aide getAide()

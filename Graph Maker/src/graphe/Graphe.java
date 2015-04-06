@@ -14,18 +14,18 @@ public class Graphe {
 	public static final int COLONNE_Y = 1;
 	public static final String ARC = "\\ar";
 	public static final String ARETE = "\\ar@{-}";
-
-	private String nom;
-	private boolean type;
+	
 	private ArrayList<Sommet> sommets;
 	private ArrayList<Arc> arcs;
-	private int tailleSommet=50;
 	private ArrayList<Sommet> tabCick;          //Liste de sommets pour les graphes génériques et personalisés
-	private ArrayList<Sommet> arcinit;          //Pour debug Cycle et Chaine générique
+	private ArrayList<Sommet> arcinit;       //Pour debug Cycle et Chaine générique
+	private String nom;
+	private boolean type;
+	private int tailleSommet=50;
 	private int dist;                           //Distance par défaut des graphes génériques
-        private int margelinecolumn = 50;
-        private int lengthlinecolumn = 1;
-        
+	private int margelinecolumn = 50;
+	private int lengthlinecolumn = 1;
+
 	/**
 	 * Constructeur champ a champ du graphe prend en paramÃƒÂ¨tres :
 	 *  - Une chaine de caractÃƒÂ¨re correspondant au nom du graphe
@@ -151,8 +151,6 @@ public class Graphe {
 	{
 		ArrayList<Sommet> stab = new ArrayList<>();
 		ArrayList<Sommet> tmp = new ArrayList<>();
-		System.out.println("nbLigne : "+(this.nbLigneEtiquette(marge)));
-		System.out.println("nbColonne : "+(this.nbColonneEtiquette(marge)));
 		for(int i = 0; i < tab.size(); i++)
 			if(Math.abs(s.getPosY() - tab.get(i).getPosY()) <= marge)
 				tmp.add(tab.get(i));
@@ -336,14 +334,14 @@ public class Graphe {
 						}
 					}
 					if(a.getNom()!=""){
-                                            if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1){
-                                                chaineVal+="\\";
-                                            }
-                                            if(chaine.indexOf('r')!=-1 || chaine.indexOf('l')!=-1){
-                                                chaineVal+="^";
-                                            }
-                                            chaineVal+=a.getNom();
-                                        }
+						if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1){
+							chaineVal+="\\";
+						}
+						if(chaine.indexOf('r')!=-1 || chaine.indexOf('l')!=-1){
+							chaineVal+="^";
+						}
+						chaineVal+=a.getNom();
+					}
 					chaineVal+=a.getNom();
 					chaine+=chaineVal;
 					chaine+="]";
@@ -363,10 +361,10 @@ public class Graphe {
 			for(int j = 0; j < matrice[i].length; j++)
 			{
 				if(j != matrice[i].length-1)
-                                    if(matrice[i][j] != null)
-					matrice[i][j] = "   & ";
-                                    else
-                                        matrice[i][j] = "    & ";
+					if(matrice[i][j] != null)
+						matrice[i][j] = "   & ";
+					else
+						matrice[i][j] = "    & ";
 				else
 					matrice[i][j] ="   \\"+"\\";
 			}
@@ -378,23 +376,23 @@ public class Graphe {
 		matrice[this.nbLigneEtiquette(marge)+1][0] = "}";
 		return matrice;
 	}
-        
-        public String matrixLatexToString(String[][] mat, int marge, int taille, Sommet_matrix[] tab)
-        {
-            String s = "";
-            for(int i = 0; i < mat.length; i++)
-            {
-                for(int j = 0; j < mat[i].length; j++)
-                {
-                    if(mat[i][j] != null)
-                        s+=mat[i][j];
-                    s+="";
-                }
-                s+="\n";
-            }
-            
-            return s;
-        }
+
+	public String matrixLatexToString(String[][] mat, int marge, int taille, Sommet_matrix[] tab)
+	{
+		String s = "";
+		for(int i = 0; i < mat.length; i++)
+		{
+			for(int j = 0; j < mat[i].length; j++)
+			{
+				if(mat[i][j] != null)
+					s+=mat[i][j];
+				s+="";
+			}
+			s+="\n";
+		}
+
+		return s;
+	}
 
 	/**
 	 * MÃƒÂ©thode qui permet d'orienter un graphe non orientÃƒÂ©, ou si celui-ci est orientÃƒÂ© de
@@ -406,7 +404,6 @@ public class Graphe {
 			this.setType(Graphe.NON_ORIENTE);
 			if(this.arcs.size() > 0)
 				this.supprimerDoublons();
-			System.out.println(arcs);
 		}
 		else
 			this.setType(Graphe.ORIENTE);
@@ -771,7 +768,6 @@ public class Graphe {
 		int i=0;
 		boolean metrique = metrique();
 		for(Sommet s : this.sommets){
-			//System.out.println(s.getArcs());
 			for(Arc a : s.getArcs()){
 				int pos=0;
 				if(a.getOrigine().equals(s)){
@@ -822,34 +818,6 @@ public class Graphe {
 
 		return ui;
 	}
-
-	/*public boolean arcInTab(ArrayList<Arc> tab, Arc arc_g)
-	{
-		boolean ui = false;
-
-                if(tab.size() > 0)
-                {
-                    if(this.isType() == ORIENTE)
-                    {
-                            for(Arc a : tab)
-                            {
-                                    if(arc_g.equals(a))
-                                            ui = true;
-                            }
-                    }
-                    else
-                    {
-                            for(Arc a : tab)
-                            {
-                                    if(arc_g.equals(a) || 
-                                                    (arc_g.getArrivee()== a.getOrigine()
-                                                    && arc_g.getOrigine() == a.getArrivee()))
-                                            ui = true;
-                            }
-                    }
-                }
-		return ui;
-	}*/
 
 	/**
 	 * La méthode arcInGraohe prend en paramètre un arc et revoie true si cet arc est
@@ -1116,7 +1084,7 @@ public class Graphe {
 				if(tabVoisins[i]!=-1)
 					color[i]=colors[tabVoisins[i]];
 			}
-			System.out.println();
+
 			Arrays.sort(color);
 			int valMax = color[color.length-1];
 			colors[index]=valMax+1;
@@ -1124,11 +1092,6 @@ public class Graphe {
 
 			if(color.length <= 1)
 			{
-				System.out.print("indice : "+sommets.get(index).getNom()+"Color : ");
-				for(int i=0;i<color.length;i++){
-					System.out.print(color[i]+"-");
-				}
-				System.out.println();
 				if(color[0]==0)
 					colors[index] = 1;
 				else if(color[0] > 1)
@@ -1200,10 +1163,6 @@ public class Graphe {
 		}
 
 		this.sommets=sTab;
-		System.out.print("DSATTemp : ");
-		for(int i = 0; i < DSATTemp.length; i++)
-			System.out.print(+ DSATTemp[i] + " ");
-		System.out.println();
 		return DSATTemp;
 	}
 
@@ -1211,38 +1170,23 @@ public class Graphe {
 	{
 		int color[] = new int[this.getSommets().size()];
 		int DSAT[] = initialisation();
-		System.out.print("DSAT : ");
-		for(int i = 0; i < DSAT.length; i++)
-			System.out.print(+ DSAT[i] + " ");
-		System.out.println();
 		int degree = -1;
 		DSAT = sortSommets(DSAT);
-
-		System.out.print("sommets  : ");
-		for(Sommet s : sommets){
-			System.out.print(s.getNom()+"-");
-		}
-
 
 		while(isNotColored(DSAT))
 		{
 			degree = this.plusGrandDegre(DSAT);
 			if(degree!=-1)
 			{
-
 				defColor(color,degree, DSAT);
 				DSAT[degree]=Integer.MAX_VALUE;
 				DSATAJour(DSAT);
-				System.out.print("DSAT new : ");
-				for(int i = 0; i < DSAT.length; i++)
-					System.out.print(+ DSAT[i] + " ");
-				System.out.println();
 			}
 		}
 		return color;
 	}
-        
-        public Graphe read(File fileName){
+
+	public Graphe read(File fileName){
 		BufferedReader br = null;
 		Graphe g =new Graphe();
 		int nbSommet=0;
@@ -1397,22 +1341,22 @@ public class Graphe {
 		this.arcinit = arcinit;
 	}
 
-        public int getMargelinecolumn() {
-            return margelinecolumn;
-        }
+	public int getMargelinecolumn() {
+		return margelinecolumn;
+	}
 
-        public int getLengthlinecolumn() {
-            return lengthlinecolumn;
-        }
+	public int getLengthlinecolumn() {
+		return lengthlinecolumn;
+	}
 
-        public void setMargelinecolumn(int margelinecolumn) {
-            this.margelinecolumn = margelinecolumn;
-        }
+	public void setMargelinecolumn(int margelinecolumn) {
+		this.margelinecolumn = margelinecolumn;
+	}
 
-        public void setLengthlinecolumn(int lengthlinecolumn) {
-            this.lengthlinecolumn = lengthlinecolumn;
-        }
-        
+	public void setLengthlinecolumn(int lengthlinecolumn) {
+		this.lengthlinecolumn = lengthlinecolumn;
+	}
+
 	public String toString() {
 		String s="";
 		int type=0;

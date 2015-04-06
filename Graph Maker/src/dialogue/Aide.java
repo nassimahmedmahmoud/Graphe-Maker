@@ -1,6 +1,5 @@
 package dialogue;
 
-
 public class Aide
 {
     public static final int SOMMAIRE = 0;

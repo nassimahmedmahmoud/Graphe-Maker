@@ -1,8 +1,8 @@
 package controller;
 
-import graphe.*;
-import java.awt.event.*;
 import dialogue.*;
+
+import java.awt.event.*;
 
 public class ListenerMouseMotionGraphe implements MouseMotionListener  {
 
@@ -32,9 +32,5 @@ public class ListenerMouseMotionGraphe implements MouseMotionListener  {
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void mouseMoved(MouseEvent e) {}
 }

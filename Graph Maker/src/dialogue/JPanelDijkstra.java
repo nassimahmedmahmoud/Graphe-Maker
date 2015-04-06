@@ -12,10 +12,11 @@ import javax.swing.Timer;
 public class JPanelDijkstra extends JPanel{
 
 	private static final long serialVersionUID = 1L;
+
 	private static final int ANIM_DELAY = 0; // 50ms == 20fps
 	private static final float ARC_DASH_LENGTH = 9;
 	private static final float DASH_OFFSET_SUM = 0.5f;
-	
+
 	private GrapheView gv;
 	private float dashOffset = 0;
 	private Timer animTimer;
@@ -33,12 +34,12 @@ public class JPanelDijkstra extends JPanel{
 		this.animTimer.setRepeats(true);
 		this.animationStart();
 	}
-	
+
 	public void animationStart()
 	{
 		this.animTimer.start();
 	}
-	
+
 	public void animationStop()
 	{
 		this.animTimer.stop();
@@ -82,7 +83,7 @@ public class JPanelDijkstra extends JPanel{
 	public void drawLines(Graphics g, Arc a,Color color, boolean dashed)
 	{
 		Graphics gctx = dashed ? (Graphics2D)g.create() : g;
-		
+
 		gctx.setColor(color);
 		int x1=a.getOrigine().getPosX();
 		int x2=a.getArrivee().getPosX();
@@ -105,12 +106,12 @@ public class JPanelDijkstra extends JPanel{
 			}
 		}
 		gctx.drawLine(x1, y1, x2, y2);
-		
+
 		if (dashed) {
 			gctx.dispose(); // on tej' la copy du contexte
 			gctx = g;
 		}
-		
+
 		g.drawString(a.getNom(),ctrlx,ctrly);
 		g.setColor(Color.BLACK);
 	}  

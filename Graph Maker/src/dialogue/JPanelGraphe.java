@@ -1,24 +1,26 @@
 package dialogue;
 
+import graphe.*;
+
 import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.*;
-import graphe.*;
+
 
 public class JPanelGraphe extends JPanel{
 
-	private GrapheView gv;
-	private Arc arc;
+	private static final long serialVersionUID = 1L;
+
 	public static final int ARR_SIZE=6;
-	
-	
+
+	private GrapheView gv;
 
 	public JPanelGraphe(LayoutManager layout,GrapheView graphe){
 		super(layout);
 		this.gv=graphe;
 	}
 
-        @Override
+	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -26,35 +28,7 @@ public class JPanelGraphe extends JPanel{
 			this.drawLines(g, a);
 		}
 		for( Sommet s : gv.getGraphe().getSommets())
-			this.drawNode(s,g,gv.getGraphe().getTailleSommet(),new Color(240,240,240));
-		if(gv.getGraphe().getSommets().size()>5){
-			int marge = gv.getGraphe().getTailleSommet();
-			Sommet[][]initTab =gv.getGraphe().ligne(marge);
-			System.out.println("Lignes : ");
-			for(int i=0;i<initTab.length;i++){
-				for(int j=0;j<initTab[i].length;j++)
-					System.out.print(initTab[i][j].getNom()+"\t");
-				System.out.println();
-			}
-			System.out.println("Colonnes : ");
-			initTab = gv.getGraphe().colonne(marge);
-			for(int i=0;i<initTab.length;i++){
-				for(int j=0;j<initTab[i].length;j++)
-					System.out.print(initTab[i][j].getNom()+"\t");
-				System.out.println();
-			}
-			Sommet_matrix[]init = gv.getGraphe().initTab(marge);
-			String[][] tab = gv.getGraphe().matrixLatex(init, marge, 1);
-			for(int i=0;i<tab.length;i++){
-				for(int j=0;j<tab[i].length;j++){
-					if(tab[i][j]!=null)
-						System.out.print(tab[i][j]);
-				}
-				System.out.println();
-			}
-			System.out.println(this.gv.getGraphe().sommetVoisinsLaTeX(this.gv.getGraphe().getArcinit().get(0),init));
-		}
-		
+			this.drawNode(s,g,gv.getGraphe().getTailleSommet(),new Color(240,240,240));	
 	}
 
 	void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
@@ -96,25 +70,18 @@ public class JPanelGraphe extends JPanel{
 		Graphics2D g2D =(Graphics2D)g.create();
 		Path2D p = new Path2D.Double();
 		CubicCurve2D.Double cc = new CubicCurve2D.Double();
-		QuadCurve2D.Double cq = new QuadCurve2D.Double();
 		if(gv.getGraphe().isType()){
 			drawArrow(g,x1,y1,x2,y2);
 			g.drawLine(x1, y1, x2, y2);
 			if(a.boucleMemeSommet()){
-				//cc.setCurve(x1, y1, 0,0,0,0, x2, y2);
 				p.moveTo(x1, y1);
 				p.curveTo(x1, y1,x1/2, y2/2, x2, y2);
 				g2D.draw(p);
 			}
 		}
-		else{
+		else
 			cc.setCurve(x1, y1, ctrlx,(ctrly+y1)/2,(ctrlx+x2)/2,(ctrly+y2)/2, x2, y2);
-			/*cq.setCurve(x1, y1, (ctrlx+x1)/2, (ctrly+y1)/2, ctrlx, ctrly);
-			cq.setCurve(ctrlx, ctrly, (ctrlx+x2)/2, (ctrly+y2)/2, x2,y2);
-			g2D1.setTransform(affineTransforme((ctrlx+x1)/2,(ctrly+y1)/2,(ctrlx+x2)/2,(ctrly+y2)/2));*/
-		}
 		g.drawString(a.getNom(),ctrlx,ctrly);
 		g2D.draw(cc);
-		
 	}
 }

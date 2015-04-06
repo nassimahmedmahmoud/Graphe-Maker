@@ -4,12 +4,10 @@ import dialogue.*;
 import graphe.*;
 import java.awt.event.*;
 
-
 public class ListenerDijkstraGraphe  implements MouseListener  {
 
     private GrapheView gv;
     
-	
 	public ListenerDijkstraGraphe(GrapheView gv) { this.gv = gv; }
 
 	@Override
@@ -30,22 +28,14 @@ public class ListenerDijkstraGraphe  implements MouseListener  {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 }

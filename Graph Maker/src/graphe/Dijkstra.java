@@ -51,9 +51,7 @@ public class Dijkstra {
 	public void dijkstraAlgorithm(int index) {
 		do {
 			int[] tabVoisins = graphe.tabVoisins(index);
-			String s = "indexDep :"+index;
 			index = smallestValue(tabVoisins);
-			System.out.println(s+" index 1  : "+index+"\t");
 			if (index == -1) {
 				index = smallestValue();
 			}
@@ -63,7 +61,6 @@ public class Dijkstra {
 			if(index!=-1)
 				dminAJour(index);
 			marquage[index]=true;
-			System.out.println();
 		}while(!isMarqued());
 	}
 
@@ -107,13 +104,7 @@ public class Dijkstra {
 	}
 
 	public void dminAJour(int sommetMarque) {
-		int[] tabVoisins = graphe.tabVoisins(sommetMarque);
-		System.out.println("sommet Marque: "+sommetMarque+" tabvoisins : ");
-		for(int i=0;i<tabVoisins.length;i++){
-			System.out.print(tabVoisins[i]+"\t");
-		}
-		System.out.println("");
-		
+		int[] tabVoisins = graphe.tabVoisins(sommetMarque);		
 		if (tabVoisins.length == 0) {
 			return;
 		}

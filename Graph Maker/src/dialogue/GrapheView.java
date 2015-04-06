@@ -250,17 +250,28 @@ public JPanel panelGraphe(){
     public JPanel generationcode()
     {
         JPanel jp = new JPanel();
+        JPanel jp1 = new JPanel();
+        JPanel jp2 = new JPanel();
         generate = new JButton("Générer code");
         JLabel marge = new JLabel("Choisir marge en pixel");
         JLabel taille = new JLabel("Choisir taille de colonne et de ligne en cm");
         taillec = new JTextField("1");
         margep = new JTextField("50");
+        aff = new JTextArea("LaTeX...");
         jp.setBorder(BorderFactory.createTitledBorder("Génération de code"));
-        jp.add(marge);
-        jp.add(margep);
-        jp.add(taille);
-        jp.add(taillec);
-        jp.add(generate);
+        jp1.setBorder(BorderFactory.createEtchedBorder(1));
+        jp2.setBorder(BorderFactory.createTitledBorder("Code LaTeX"));
+        jp.setLayout(new BorderLayout());
+        jp2.setLayout(new BorderLayout());
+        jp1.setLayout(new GridLayout(5,1));
+        jp1.add(marge);
+        jp1.add(margep);
+        jp1.add(taille);
+        jp1.add(taillec);
+        jp1.add(generate);
+        jp2.add(aff);
+        jp.add(jp1, "North");
+        jp.add(jp2, "South");
         margep.addActionListener(new ListenerActionGraphe(this));
         taillec.addActionListener(new ListenerActionGraphe(this));
         generate.addActionListener(new ListenerActionGraphe(this));

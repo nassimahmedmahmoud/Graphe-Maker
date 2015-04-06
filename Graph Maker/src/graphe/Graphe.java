@@ -335,12 +335,15 @@ public class Graphe {
 							smtmpc--;
 						}
 					}
-					if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1){
-						chaineVal+="\\";
-					}
-					if(chaine.indexOf('r')!=-1 || chaine.indexOf('l')!=-1){
-						chaineVal+="^";
-					}
+					if(a.getNom()!=""){
+                                            if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1){
+                                                chaineVal+="\\";
+                                            }
+                                            if(chaine.indexOf('r')!=-1 || chaine.indexOf('l')!=-1){
+                                                chaineVal+="^";
+                                            }
+                                            chaineVal+=a.getNom();
+                                        }
 					chaineVal+=a.getNom();
 					chaine+=chaineVal;
 					chaine+="]";
@@ -360,9 +363,12 @@ public class Graphe {
 			for(int j = 0; j < matrice[i].length; j++)
 			{
 				if(j != matrice[i].length-1)
-					matrice[i][j] = "\t&\t";
+                                    if(matrice[i][j] != null)
+					matrice[i][j] = "   & ";
+                                    else
+                                        matrice[i][j] = "    & ";
 				else
-					matrice[i][j] ="\t\\"+"\\";
+					matrice[i][j] ="   \\"+"\\";
 			}
 		}
 

@@ -54,12 +54,23 @@ public class ListenerActionGraphe implements ActionListener {
                 
                 if(e.getSource() == gv.getGenerate())
                 {
-                    
-                    gv.setAff(new JTextArea(gv.getGraphe().matrixLatexToString(gv.getGraphe()
+                    try{
+                        gv.getAff().setText(gv.getGraphe().matrixLatexToString(gv.getGraphe()
                             .matrixLatex(gv.getGraphe().initTab(gv.getGraphe().getMargelinecolumn()), gv.getGraphe().getMargelinecolumn()
                                     , gv.getGraphe().getLengthlinecolumn()), gv.getGraphe().getMargelinecolumn() , gv.getGraphe().getLengthlinecolumn(),
-                                    gv.getGraphe().initTab(gv.getGraphe().getMargelinecolumn()))));
-                    gv.getLatex().add(gv.getAff());
+                                    gv.getGraphe().initTab(gv.getGraphe().getMargelinecolumn())));
+                    }
+                    catch(NullPointerException ec)
+                    {
+                        JLabel affichage = new JLabel("<html><p>Le code que vous essayez de générer n'est pas bon.<br>Votre graphe ne contient sûrement aucun sommet.<br><br><span color=red>Attention : Vous devez créer au moins un sommet<br>pour que la génération s'effectue.</span></p></html>");
+                        JOptionPane.showMessageDialog(null,affichage,"Erreur : " + ec + ":Graphe_inexistant",0);
+                    }
+                    catch(ArrayIndexOutOfBoundsException ec)
+                    {
+                        JLabel affichage = new JLabel("<html><p>Le code que vous essayez de générer n'est pas bon.<br>Cela provient du fait que la marge que vous avez entré<br>n'est pas correcte.<br><br><span color=red>Attention : La marge de comparaison doit être strictement<br>positive pour que la génération s'effectue</span></p></html>");
+                        JOptionPane.showMessageDialog(null,affichage,"Erreur : " + ec + ":Marge_incorrecte",0);
+                    }
+                    //gv.getLatex().add(gv.getAff());
                 }
                 
                 if(e.getSource() == gv.getRename())
@@ -67,8 +78,10 @@ public class ListenerActionGraphe implements ActionListener {
                     String val = (String) JOptionPane.showInputDialog(null,
                     "Modifier le nom du graphe", "Nouveau nom", JOptionPane.QUESTION_MESSAGE, null, null, "");
                     String s = val.trim();
-                    if (/*s != null) ||*/ s.length() > 0) 
+                    if (s.length() > 0) 
                         gv.getGraphe().setNom(val);
+                    gv.getInfo().setText((gv.getGraphe().toString(Graphe.GENERAL)));
+                    gv.getInfo().repaint();
                     System.out.println("C REPAIN"+ gv.getGraphe().getNom());
                     this.gv.getPangen().repaint();
                 }
@@ -98,7 +111,9 @@ public class ListenerActionGraphe implements ActionListener {
 		
                 if(this.gv.getBrelaz() == e.getSource())
 			this.gv.setColors(this.gv.getGraphe().coloration());      
-		this.gv.getJpb().repaint();
+		
+                this.gv.getPangen().repaint();
+                this.gv.getJpb().repaint();
 		this.gv.getJpg().repaint();
 		this.gv.grapheMetrique();
 	}

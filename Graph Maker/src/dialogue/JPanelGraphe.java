@@ -2,9 +2,7 @@ package dialogue;
 
 import java.awt.*;
 import java.awt.geom.*;
-
 import javax.swing.*;
-
 import graphe.*;
 
 public class JPanelGraphe extends JPanel{
@@ -46,7 +44,7 @@ public class JPanelGraphe extends JPanel{
 				System.out.println();
 			}
 			Sommet_matrix[]init = gv.getGraphe().initTab(marge);
-			String[][] tab = gv.getGraphe().matrixLatex(init, marge);
+			String[][] tab = gv.getGraphe().matrixLatex(init, marge, 1);
 			for(int i=0;i<tab.length;i++){
 				for(int j=0;j<tab[i].length;j++){
 					if(tab[i][j]!=null)

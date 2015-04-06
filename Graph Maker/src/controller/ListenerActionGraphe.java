@@ -42,6 +42,26 @@ public class ListenerActionGraphe implements ActionListener {
                     //this.gv.getDist().setText("");
                 }
                 
+                if(e.getSource() == gv.getMargep())
+                {
+                    gv.getGraphe().setMargelinecolumn(isInteger(gv.getMargep().getText()));
+                }
+                
+                if(e.getSource() == gv.getTaillec())
+                {
+                    gv.getGraphe().setLengthlinecolumn(isInteger(gv.getTaillec().getText()));
+                }
+                
+                if(e.getSource() == gv.getGenerate())
+                {
+                    
+                    gv.setAff(new JTextArea(gv.getGraphe().matrixLatexToString(gv.getGraphe()
+                            .matrixLatex(gv.getGraphe().initTab(gv.getGraphe().getMargelinecolumn()), gv.getGraphe().getMargelinecolumn()
+                                    , gv.getGraphe().getLengthlinecolumn()), gv.getGraphe().getMargelinecolumn() , gv.getGraphe().getLengthlinecolumn(),
+                                    gv.getGraphe().initTab(gv.getGraphe().getMargelinecolumn()))));
+                    gv.getLatex().add(gv.getAff());
+                }
+                
                 if(e.getSource() == gv.getRename())
                 {
                     String val = (String) JOptionPane.showInputDialog(null,

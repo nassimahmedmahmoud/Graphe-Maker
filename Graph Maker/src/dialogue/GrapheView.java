@@ -46,6 +46,11 @@ public class GrapheView extends JFrame{
     private JMenuItem menuload;
     private JMenuItem assistance;
     private JMenuItem apropos;
+    private JButton generate;
+    private JTextField taillec;
+    private JTextField margep;
+    private JTextArea aff;
+    private JPanel latex;
     
     public static final int ONGLET_GRAPHE =0;
     public static final int ONGLET_DIJKSTRA =1;
@@ -228,14 +233,36 @@ public JPanel panelGraphe(){
     public JPanel panel4(){
         pangen = new JPanel();
         JPanel east = new JPanel();
+        latex = generationcode();
         east.setLayout(new GridLayout(2,1));
         gen = panelInfoGeneral();
         pangen.add(panelMatrice(),"North");
         east.add(gen,"North");
         east.add(panelConnexeArbre(),"South");
         pangen.add(east,"East");
+        pangen.add(latex);
         
         return pangen;
+    }
+    
+    public JPanel generationcode()
+    {
+        JPanel jp = new JPanel();
+        generate = new JButton("Générer code");
+        JLabel marge = new JLabel("Choisir marge en pixel");
+        JLabel taille = new JLabel("Choisir taille de colonne et de ligne en cm");
+        taillec = new JTextField("1");
+        margep = new JTextField("50");
+        jp.setBorder(BorderFactory.createTitledBorder("Génération de code"));
+        jp.add(marge);
+        jp.add(margep);
+        jp.add(taille);
+        jp.add(taillec);
+        jp.add(generate);
+        margep.addActionListener(new ListenerActionGraphe(this));
+        taillec.addActionListener(new ListenerActionGraphe(this));
+        generate.addActionListener(new ListenerActionGraphe(this));
+        return jp;
     }
     
     public JPanel panelDijkstra(){
@@ -658,4 +685,44 @@ public JPanel panelGraphe(){
         public void setApropos(JMenuItem apropos) {
             this.apropos = apropos;
         }
+
+    public JButton getGenerate() {
+        return generate;
+    }
+
+    public JTextField getTaillec() {
+        return taillec;
+    }
+
+    public JTextField getMargep() {
+        return margep;
+    }
+
+    public void setGenerate(JButton generate) {
+        this.generate = generate;
+    }
+
+    public void setTaillec(JTextField taillec) {
+        this.taillec = taillec;
+    }
+
+    public void setMargep(JTextField margep) {
+        this.margep = margep;
+    }
+
+    public JTextArea getAff() {
+        return aff;
+    }
+
+    public void setAff(JTextArea aff) {
+        this.aff = aff;
+    }
+
+    public JPanel getLatex() {
+        return latex;
+    }
+
+    public void setLatex(JPanel latex) {
+        this.latex = latex;
+    }
 }

@@ -1,6 +1,5 @@
 package graphe;
 
-
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
@@ -24,7 +23,9 @@ public class Graphe {
 	private ArrayList<Sommet> tabCick;          //Liste de sommets pour les graphes génériques et personalisés
 	private ArrayList<Sommet> arcinit;          //Pour debug Cycle et Chaine générique
 	private int dist;                           //Distance par défaut des graphes génériques
-
+        private int margelinecolumn;
+        private int lengthlinecolumn;
+        
 	/**
 	 * Constructeur champ a champ du graphe prend en paramÃƒÂ¨tres :
 	 *  - Une chaine de caractÃƒÂ¨re correspondant au nom du graphe
@@ -339,10 +340,10 @@ public class Graphe {
 		return chaine;
 	}
 
-	public String[][] matrixLatex(Sommet_matrix[] tab, int marge)
+	public String[][] matrixLatex(Sommet_matrix[] tab, int marge, int taille)
 	{
 		String[][] matrice = new String[this.nbLigneEtiquette(marge)+2][this.nbColonneEtiquette(marge)];
-		matrice[0][0] = "\\xymatrix@R=" + (marge/50) + "cm@C=" + (marge/50) + "cm\n"
+		matrice[0][0] = "\\xymatrix@R=" + taille + "cm@C=" + taille + "cm\n"
 				+ "{\n";
 		for(int i = 1; i < matrice.length -1; i++)
 		{
@@ -361,6 +362,20 @@ public class Graphe {
 		matrice[this.nbLigneEtiquette(marge)+1][0] = "\n}";
 		return matrice;
 	}
+        
+        public String matrixLatexToString(String[][] mat, int marge, int taille, Sommet_matrix[] tab)
+        {
+            String s = "";
+            for(int i = 0; i < mat.length; i++)
+            {
+                for(int j = 0; j < mat[i].length; j++)
+                {
+                    s+=mat[i][j];
+                }
+            }
+            
+            return s;
+        }
 
 	/**
 	 * MÃƒÂ©thode qui permet d'orienter un graphe non orientÃƒÂ©, ou si celui-ci est orientÃƒÂ© de
@@ -1207,161 +1222,8 @@ public class Graphe {
 		}
 		return color;
 	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public boolean isType() {
-		return type;
-	}
-
-	public ArrayList<Sommet> getSommets() {
-		return sommets;
-	}
-
-	public Sommet getSommet(int posX, int posY){
-		for(Sommet s : this.arcinit){
-			if(s.getPosX()==posX && s.getPosY()==posY)
-				return s;
-		}
-		return null;
-	}
-
-	public ArrayList<Arc> getArcs() {
-		return arcs;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public void setType(boolean type) {
-		this.type = type;
-	}
-
-	public void setSommets(ArrayList<Sommet> sommets) {
-		this.sommets = sommets;
-	}
-
-	public void setArcs(ArrayList<Arc> arcs) {
-		this.arcs = arcs;
-	}
-
-
-
-	public int getTailleSommet() {
-		return tailleSommet;
-	}
-
-	public void setTailleSommet(int tailleSommet) {
-		this.tailleSommet = tailleSommet;
-	}
-
-	public ArrayList<Sommet> getTabCick() {
-		return tabCick;
-	}
-
-	public void setTabCick(ArrayList<Sommet> tabCick) {
-		this.tabCick = tabCick;
-	}
-
-	public int getDist() {
-		return dist;
-	}
-
-	public void setDist(int dist) {
-		this.dist = dist;
-	}
-
-	public ArrayList<Sommet> getArcinit() {
-		return arcinit;
-	}
-
-	public void setArcinit(ArrayList<Sommet> arcinit) {
-		this.arcinit = arcinit;
-	}
-
-	public String toString() {
-		String s="";
-		int type=0;
-		if(this.isType())
-			type=0;
-		else
-			type=1;
-		s+=this.getNom()+","+type+","+0+","+0+","+this.getSommets().size()+","+this.getArcs().size()+"\n";
-		for(Sommet s0 : this.arcinit)
-			s+=s0.getNom()+","+s0.getPosX()+","+s0.getPosY()+","+0+"\n";
-		for(Arc a0 : this.getArcs()){
-			s+=a0.getOrigine().getPosX()+","+a0.getOrigine().getPosY()+","+a0.getCentre_posX()+","+a0.getCentre_posY()+",";
-			s+=a0.getArrivee().getPosX()+","+a0.getArrivee().getPosY()+","+a0.getCentre_posX()+","+a0.getCentre_posY()+","+a0.getNom()+","+0+"\n";
-		}
-		return s;
-	}
-
-	/**
-	 * La méthode toString avec parèmtre est une surcharge de la méthode toString,
-	 * et prend en paramètre un entier qui correspond a l'information que l'on veut
-	 * afficher dans l'onglet général (1 pour les informations générales, 2 pour 
-	 * les informations sur la connexité, et 3 pour la matrice).
-	 * @param info
-	 * @see connexeGraphe()
-	 * @return String informations
-	 */
-	public String toString(int info)
-	{
-		String s = "";
-		if(info == GENERAL)
-		{
-			s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
-			if(this.isType() == Graphe.NON_ORIENTE)
-				s+="<p>Le graphe est <span style=\"color;red\">non orientÃ©</span></p>";
-			else
-				s+="<p>Le graphe est <span style=\"color;green\">orientÃ©</span></p>";
-
-			if(sommets.isEmpty())
-				s+="<p>Le graphe ne contient aucun sommet</p>";
-			else
-				s+="<p>Le graphe contient " + sommets.size() + " sommets</p>";
-
-			if(arcs.isEmpty() && this.isType() == ORIENTE)
-				s+="<p>Le graphe ne contient aucun arc</p>";
-			else if(arcs.isEmpty() && this.isType() == NON_ORIENTE)
-				s+="<p>Le graphe ne contient aucune arrÃªte</p>";
-			else if(arcs.size() > 0 && this.isType() == ORIENTE)
-				s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
-			else
-				s+="<p>Le graphe contient " + arcs.size() + " arrÃªtes</p>";
-		}
-		else if(info == CONNEXE_ARBRE)
-		{
-			s ="<html>";
-			if(connexeGraphe())
-				s+="Le graphe est connexe<br/>";
-			else
-				s+="Le graphe n'est pas connexe<br/>";
-			if(isTree())
-				s+="Le graphe est un arbre<br/>";
-			else
-				s+="Le graphe n'est pas un arbre<br/>";
-			s+="</html>";
-		}
-		else if(info == MATRIX)
-		{
-			s="<html>";
-			int[][]tab =matrice();
-			for(int i=0;i< tab.length;i++){
-				for(int j=0;j< tab.length;j++){
-					s+=tab[i][j]+"\t";
-				}
-				s+="<br/>";
-			}
-			s+="</html>";
-		}
-		return s;
-	}
-
-	public Graphe read(File fileName){
+        
+        public Graphe read(File fileName){
 		BufferedReader br = null;
 		Graphe g =new Graphe();
 		int nbSommet=0;
@@ -1439,4 +1301,172 @@ public class Graphe {
 		}
 	}
 
+	public String getNom() {
+		return nom;
+	}
+
+	public boolean isType() {
+		return type;
+	}
+
+	public ArrayList<Sommet> getSommets() {
+		return sommets;
+	}
+
+	public Sommet getSommet(int posX, int posY){
+		for(Sommet s : this.arcinit){
+			if(s.getPosX()==posX && s.getPosY()==posY)
+				return s;
+		}
+		return null;
+	}
+
+	public ArrayList<Arc> getArcs() {
+		return arcs;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public void setType(boolean type) {
+		this.type = type;
+	}
+
+	public void setSommets(ArrayList<Sommet> sommets) {
+		this.sommets = sommets;
+	}
+
+	public void setArcs(ArrayList<Arc> arcs) {
+		this.arcs = arcs;
+	}
+
+
+
+	public int getTailleSommet() {
+		return tailleSommet;
+	}
+
+	public void setTailleSommet(int tailleSommet) {
+		this.tailleSommet = tailleSommet;
+	}
+
+	public ArrayList<Sommet> getTabCick() {
+		return tabCick;
+	}
+
+	public void setTabCick(ArrayList<Sommet> tabCick) {
+		this.tabCick = tabCick;
+	}
+
+	public int getDist() {
+		return dist;
+	}
+
+	public void setDist(int dist) {
+		this.dist = dist;
+	}
+
+	public ArrayList<Sommet> getArcinit() {
+		return arcinit;
+	}
+
+	public void setArcinit(ArrayList<Sommet> arcinit) {
+		this.arcinit = arcinit;
+	}
+
+        public int getMargelinecolumn() {
+            return margelinecolumn;
+        }
+
+        public int getLengthlinecolumn() {
+            return lengthlinecolumn;
+        }
+
+        public void setMargelinecolumn(int margelinecolumn) {
+            this.margelinecolumn = margelinecolumn;
+        }
+
+        public void setLengthlinecolumn(int lengthlinecolumn) {
+            this.lengthlinecolumn = lengthlinecolumn;
+        }
+        
+	public String toString() {
+		String s="";
+		int type=0;
+		if(this.isType())
+			type=0;
+		else
+			type=1;
+		s+=this.getNom()+","+type+","+0+","+0+","+this.getSommets().size()+","+this.getArcs().size()+"\n";
+		for(Sommet s0 : this.arcinit)
+			s+=s0.getNom()+","+s0.getPosX()+","+s0.getPosY()+","+0+"\n";
+		for(Arc a0 : this.getArcs()){
+			s+=a0.getOrigine().getPosX()+","+a0.getOrigine().getPosY()+","+a0.getCentre_posX()+","+a0.getCentre_posY()+",";
+			s+=a0.getArrivee().getPosX()+","+a0.getArrivee().getPosY()+","+a0.getCentre_posX()+","+a0.getCentre_posY()+","+a0.getNom()+","+0+"\n";
+		}
+		return s;
+	}
+
+	/**
+	 * La méthode toString avec parèmtre est une surcharge de la méthode toString,
+	 * et prend en paramètre un entier qui correspond a l'information que l'on veut
+	 * afficher dans l'onglet général (1 pour les informations générales, 2 pour 
+	 * les informations sur la connexité, et 3 pour la matrice).
+	 * @param info
+	 * @see connexeGraphe()
+	 * @return String informations
+	 */
+	public String toString(int info)
+	{
+		String s = "";
+		if(info == GENERAL)
+		{
+			s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
+			if(this.isType() == Graphe.NON_ORIENTE)
+				s+="<p>Le graphe est <span style=\"color;red\">non orientÃ©</span></p>";
+			else
+				s+="<p>Le graphe est <span style=\"color;green\">orientÃ©</span></p>";
+
+			if(sommets.isEmpty())
+				s+="<p>Le graphe ne contient aucun sommet</p>";
+			else
+				s+="<p>Le graphe contient " + sommets.size() + " sommets</p>";
+
+			if(arcs.isEmpty() && this.isType() == ORIENTE)
+				s+="<p>Le graphe ne contient aucun arc</p>";
+			else if(arcs.isEmpty() && this.isType() == NON_ORIENTE)
+				s+="<p>Le graphe ne contient aucune arrÃªte</p>";
+			else if(arcs.size() > 0 && this.isType() == ORIENTE)
+				s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
+			else
+				s+="<p>Le graphe contient " + arcs.size() + " arrÃªtes</p>";
+		}
+		else if(info == CONNEXE_ARBRE)
+		{
+			s ="<html>";
+			if(connexeGraphe())
+				s+="Le graphe est connexe<br/>";
+			else
+				s+="Le graphe n'est pas connexe<br/>";
+			if(isTree())
+				s+="Le graphe est un arbre<br/>";
+			else
+				s+="Le graphe n'est pas un arbre<br/>";
+			s+="</html>";
+		}
+		else if(info == MATRIX)
+		{
+			s="<html>";
+			int[][]tab =matrice();
+			for(int i=0;i< tab.length;i++){
+				for(int j=0;j< tab.length;j++){
+					s+=tab[i][j]+"\t";
+				}
+				s+="<br/>";
+			}
+			s+="</html>";
+		}
+		return s;
+	}	
 }

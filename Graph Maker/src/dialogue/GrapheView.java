@@ -65,6 +65,7 @@ public class GrapheView extends JFrame{
         private JButton prec;
         private Aide a;
         private JPanel panassist;
+        private JPanel panbtn;
 
 		private JLabel texte;
 
@@ -213,21 +214,13 @@ public class GrapheView extends JFrame{
 				+ "</p></body></html>");
             prec = new JButton("préc.");
             suiv = new JButton("suiv.");
-
-            if(a.getCurentpage() == 0)
-            {              
-                    panassist.add(suiv);
-            }
-            else if(a.getCurentpage() < 6)
-            {
-                    panassist.add(prec);
-                    panassist.add(suiv);
-            }
-            else
-            {
-                    panassist.add(prec);
-            }
-            panassist.add(texte);
+            panbtn = new JPanel();
+            panassist.setLayout(new BorderLayout());
+            panassist.add(texte, "Center");
+            panassist.setPreferredSize(new Dimension(500,500));
+            //panassist.add(prec);
+            panbtn.add(suiv);
+            panassist.add(panbtn, "South");
             suiv.addActionListener(new ListenerAideGraphe(this));
             prec.addActionListener(new ListenerAideGraphe(this));
             return panassist;
@@ -815,12 +808,19 @@ public class GrapheView extends JFrame{
             this.panassist = panassist;
         }
 
-		public JLabel getTexte() {
-			return texte;
-		}
+	public JLabel getTexte() {
+		return texte;
+	}
 
-		public void setTexte(JLabel texte) {
-			this.texte = texte;
-		}
-        
+	public void setTexte(JLabel texte) {
+		this.texte = texte;
+	}
+
+        public JPanel getPanbtn() {
+            return panbtn;
+        }
+
+        public void setPanbtn(JPanel panbtn) {
+            this.panbtn = panbtn;
+        }
 }

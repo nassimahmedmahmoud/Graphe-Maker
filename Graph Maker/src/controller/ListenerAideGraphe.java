@@ -17,9 +17,25 @@ public class ListenerAideGraphe implements ActionListener
     {
        if(e.getSource() == gv.getPrec())
        {
-           gv.getA().setCurentpage(gv.getA().getCurentpage()-1);
-           gv.getTexte().setText("<html><body><p>" + gv.getA().assistance(gv.getA().getCurentpage())
+           if(gv.getA().getCurentpage() == 6)
+           {
+               gv.getA().setCurentpage(gv.getA().getCurentpage()-1);
+               gv.getTexte().setText("<html><body><p>" + gv.getA().assistance(gv.getA().getCurentpage())
    				+ "</p></body></html>");
+               gv.getPanbtn().add(gv.getSuiv());
+           }
+           else if(gv.getA().getCurentpage() != Aide.SOMMAIRE+1){
+               gv.getA().setCurentpage(gv.getA().getCurentpage()-1);
+               gv.getTexte().setText("<html><body><p>" + gv.getA().assistance(gv.getA().getCurentpage())
+   				+ "</p></body></html>");
+           }
+           else
+           {
+               gv.getA().setCurentpage(gv.getA().getCurentpage()-1);
+               gv.getPanbtn().remove(gv.getPrec());
+               gv.getTexte().setText("<html><body><p>" + gv.getA().assistance(gv.getA().getCurentpage())
+   				+ "</p></body></html>");
+           }
               
            System.out.println(gv.getA().getCurentpage());
        }
@@ -29,6 +45,15 @@ public class ListenerAideGraphe implements ActionListener
            gv.getA().setCurentpage(gv.getA().getCurentpage()+1);
            gv.getTexte().setText("<html><body><p>" + gv.getA().assistance(gv.getA().getCurentpage())
    				+ "</p></body></html>");
+           if(gv.getA().getCurentpage() == 6)
+               gv.getPanbtn().remove(gv.getSuiv());
+           else if(gv.getA().getCurentpage() != Aide.SOMMAIRE)
+           {
+               gv.getPanbtn().remove(gv.getSuiv());
+               gv.getPanbtn().add(gv.getPrec());
+               gv.getPanbtn().add(gv.getSuiv());
+           }
+           System.out.println(gv.getA().getCurentpage());
        }
        gv.getTexte().repaint();
        gv.getPanassist().repaint();

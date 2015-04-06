@@ -3,6 +3,7 @@ package controller;
 import dialogue.*;
 
 import java.awt.event.*;
+
 import javax.swing.*;
 
 public class ListenerMenuGraphe implements ActionListener {
@@ -20,10 +21,14 @@ public class ListenerMenuGraphe implements ActionListener {
 			dialogue.showOpenDialog(null);
 			this.gv.setGraphe(this.gv.getGraphe().read(dialogue.getSelectedFile()));
 			this.gv.grapheMetrique();
-			if(this.gv.getGraphe().isType())
+			if(this.gv.getGraphe().isType()){
 				this.gv.getOnglets().setEnabledAt(2, false);
-			else
+				this.gv.getBarcarrete().setIcon(new ImageIcon("img/nonorienter.png"));
+			}
+			else{
 				this.gv.getOnglets().setEnabledAt(2, true);
+				this.gv.getBarcarrete().setIcon(new ImageIcon("img/orienter.png"));
+			}
 		}
 
 		if(e.getSource() == gv.getApropos())

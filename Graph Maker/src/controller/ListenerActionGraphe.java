@@ -5,6 +5,7 @@ import graphe.*;
 
 import java.awt.event.*;
 import java.util.*;
+
 import javax.swing.*;
 
 
@@ -19,10 +20,14 @@ public class ListenerActionGraphe implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(this.gv.getBarcarrete()==e.getSource()){
-			if(this.gv.getGraphe().isType())
-				this.gv.getOnglets().setEnabledAt(2,true);
-			else
-				this.gv.getOnglets().setEnabledAt(2,false);
+			if(this.gv.getGraphe().isType()){
+				this.gv.getOnglets().setEnabledAt(2, true);
+				this.gv.getBarcarrete().setIcon(new ImageIcon("img/nonorienter.png"));
+			}
+			else{
+				this.gv.getOnglets().setEnabledAt(2, false);
+				this.gv.getBarcarrete().setIcon(new ImageIcon("img/orienter.png"));
+			}
 			this.gv.getGraphe().switchTypeOfGraphe();
 		}
 		if(e.getSource() == gv.getBreset()){

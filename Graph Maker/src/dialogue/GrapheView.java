@@ -21,7 +21,6 @@ public class GrapheView extends JFrame{
 	private JMenuItem assistance;
 	private JToggleButton barc;                  // Bouton arc
 	private JButton barcarrete;                  // Bouton pour orienter/desorienter le graphe
-	private JToggleButton barrete;               // Bouton arrete
 	private JToggleButton barrivee;
 	private JToggleButton bclic;                 // Bouton clic
 	private JToggleButton bgomme;                // Bouton gomme
@@ -330,9 +329,8 @@ public class GrapheView extends JFrame{
 		btngrp = new ButtonGroup();
 		bclic = new JToggleButton(new ImageIcon("img/click.png"));
 		bsommet = new JToggleButton(new ImageIcon("img/sommet.png"));
-		barc = new JToggleButton("arc");
-		barrete = new JToggleButton("arÃªte");
-		barcarrete = new JButton(new ImageIcon("img/orienter.png"));
+		barc = new JToggleButton(new ImageIcon("img/arc.png"));
+		barcarrete = new JButton(new ImageIcon("img/nonorienter.png"));
 		bgomme= new JToggleButton(new ImageIcon("img/gomme.png"));
 		JLabel ltSizeNode = new JLabel("Taille du sommet : ");
 		jtfNode= new JTextField("50");
@@ -340,7 +338,6 @@ public class GrapheView extends JFrame{
 		btngrp.add(bclic);
 		btngrp.add(bsommet);
 		btngrp.add(barc);
-		btngrp.add(barrete);
 		btngrp.add(bgomme);
 		pgraphe.add(bclic);
 		pgraphe.add(bsommet);
@@ -431,10 +428,6 @@ public class GrapheView extends JFrame{
 		return barcarrete;
 	}
 
-	public JToggleButton getBarrete()
-	{
-		return barrete;
-	}
 	public JToggleButton getBarrivee() {
 		return barrivee;
 	}
@@ -605,11 +598,6 @@ public class GrapheView extends JFrame{
 
 	public void setBarcarrete(JButton barcarrete) {
 		this.barcarrete = barcarrete;
-	}
-
-	public void setBarrete(JToggleButton butarrete)
-	{
-		barrete = butarrete;
 	}
 
 	public void setBarrivee(JToggleButton barrivee) {

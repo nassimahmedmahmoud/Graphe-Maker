@@ -296,45 +296,55 @@ public class Graphe {
 		Sommet_matrix sm = sommetInSommetMatrix(s,tab);
 		int[] tabVoisins = this.tabVoisinsCustom(arcinit.indexOf(s));
 		String chaine = "";
+		String chaineVal="";
 		if(tabVoisins.length>0){
-			if(type)
-				chaine+=Graphe.ARC;
-			else
-				chaine+=Graphe.ARETE;
-		}
-		for(int i=0;i<tabVoisins.length;i++){
-			if(tabVoisins[i]!=-1){
-				chaine+="[";
-				Sommet_matrix smtmp = this.sommetInSommetMatrix(sommets.get(tabVoisins[i]), tab);
-				int sml= sm.getLigne();
-				int smtmpl = smtmp.getLigne();
-				int smc = sm.getColonne();
-				int smtmpc = smtmp.getColonne();
-				if(sml>smtmpl){
-					while(sml-smtmpl>0){
-						chaine+="u";
-						sml--;
+			for(int i=0;i<tabVoisins.length;i++){
+				if(tabVoisins[i]!=-1){
+					Arc a = this.arcaPartirSommets(s,sommets.get(tabVoisins[i]));
+					if(type)
+						chaine+=Graphe.ARC;
+					else
+						chaine+=Graphe.ARETE;
+					chaine+="[";
+					Sommet_matrix smtmp = this.sommetInSommetMatrix(sommets.get(tabVoisins[i]), tab);
+					int sml= sm.getLigne();
+					int smtmpl = smtmp.getLigne();
+					int smc = sm.getColonne();
+					int smtmpc = smtmp.getColonne();
+					if(sml>smtmpl){
+						while(sml-smtmpl>0){
+							chaine+="u";
+							sml--;
+						}
 					}
-				}
-				else if(sml<smtmpl){
-					while(smtmpl-sml>0){
-						chaine+="d";
-						smtmpl--;
+					else if(sml<smtmpl){
+						while(smtmpl-sml>0){
+							chaine+="d";
+							smtmpl--;
+						}
 					}
-				}
-				if(smc>smtmpc){
-					while(smc-smtmpc>0){
-						chaine+="l";
-						smc--;
+					if(smc>smtmpc){
+						while(smc-smtmpc>0){
+							chaine+="l";
+							smc--;
+						}
 					}
-				}
-				else if(smc<smtmpc){
-					while(smtmpc-smc>0){
-						chaine+="r";
-						smtmpc--;
+					else if(smc<smtmpc){
+						while(smtmpc-smc>0){
+							chaine+="r";
+							smtmpc--;
+						}
 					}
+					if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1){
+						chaineVal+="\\";
+					}
+					if(chaine.indexOf('r')!=-1 || chaine.indexOf('l')!=-1){
+						chaineVal+="^";
+					}
+					chaineVal+=a.getNom();
+					chaine+=chaineVal;
+					chaine+="]";
 				}
-				chaine+="]";
 			}
 		}
 		return chaine;
@@ -350,9 +360,9 @@ public class Graphe {
 			for(int j = 0; j < matrice[i].length; j++)
 			{
 				if(j != matrice[i].length-1)
-					matrice[i][j] = " &";
+					matrice[i][j] = "\t&\t";
 				else
-					matrice[i][j] =" \\"+"\\";
+					matrice[i][j] ="\t\\"+"\\";
 			}
 		}
 

@@ -39,8 +39,8 @@ public class Aide
                 + " de notre application nous vous proposons une assistance disponible<br>"
                 + " dans l'onglet Assistance.<br>"
                 + "EmbrouilleTech soucieuse du bonheur et du bien-être de ses clients vous"
-                + " propose des produits toujours plus inovants<br>"
-                + "et de meilleur qualité."
+                + " propose des produits toujours<br>"
+                + " plus inovants et de meilleur qualité."
                 + "<br>Vous possédez actuellement la version :<br>"
                 + " - <b>GrapheMaker++v0.9.31s.release:09.04.2015</b>"
                 + "<br><br>Upcoming features :<br>"
@@ -119,7 +119,7 @@ public class Aide
                         + "de sélectionenr le bouton 'Sommet' tout a gauche sous le menu<br>"
                         + "principal. Une fois ce bouton sélectionné appuyez dans le cadre<br>"
                         + "jaune pour créer un sommet, et pour modifier sa valeur, il suffit<br>"
-                        + "de faire clic droit sur ce sommet avec ce meme bouton enfoncé.<br>"
+                        + "de faire clic droit sur ce sommet avec ce meme bouton enfoncé.<br><br>"
                         + "<span color=red>Attention Créer plus de 100 sommets peut causer<br>"
                         + "un ralentissement du programme</span><br>";
                 break;
@@ -130,8 +130,8 @@ public class Aide
                         + "en cliquant sur les 2 sommets a relier, et, de la même manière que<br>"
                         + "les sommets vous pouvez changer leur valeur en cliquant sur<br>"
                         + "avec clique droit sur le milieu de l'arc avec le bouton arc, ou clic<br>"
-                        + "enfoncé. <span color=blue>Asutce : pour créer des arcs avec valeur initiale<br>"
-                        + "vous pouvez également faire clique droit sur le sommet d'arrivé !</span><br><br>"
+                        + "enfoncé.<br><br> <span color=blue>Asutce : pour créer des arcs avec valeur initiale vous pouvez<br>"
+                        + "également faire clique droit sur le sommet d'arrivé !</span><br><br>"
                         + " 3 - Options avancées<br><br>"
                         + "    Vous pouvez dès a présent créer le graphe de vos envies, mais<br>"
                         + "c'est vite lent et peu pratique lorsqu'on doit créer 10 sommets reliés.<br>"
@@ -145,7 +145,7 @@ public class Aide
                         + "'Append' une fois tous vos sommets voulus séléctionnés. Et comme c'est<br>"
                         + "ennuyeux de devoir donner des valeurs aux arcs 1 a 1 vous pouvez remplir<br>"
                         + "le champ juste en dessous et les arcs de votre graphe générique auront cette<br>"
-                        + "valeur.<br><span color=red>Attention : ce champ doit être rempli avec un nombre entier</span><br>";
+                        + "valeur.<br><br><span color=red>Attention : ce champ doit être rempli avec un nombre entier</span><br>";
                 break;
             case 4 :
                 text = "III - Onglet Dijkstra<br>"
@@ -159,7 +159,7 @@ public class Aide
                         + "sommets du graphe, et pour chaque sommet, son d_min, c'est à dire sa<br>"
                         + "distance par rapport a l'origine, ainsi que son sommet le plus proche<br>"
                         + "par lequel cette source doit passer pour atteindre son arrivée avec<br>"
-                        + "la plus courte distance.<br>"
+                        + "la plus courte distance.<br><br>"
                         + "<span color=red>Attention : Un graphe non métrique ne pourra pas faire tourner<br>"
                         + "l'algorithme de Dijkstra</span><br>";
                 break;
@@ -170,7 +170,7 @@ public class Aide
                         + "voisins, et chaque sommet a une couleur différente de son voisin.<br>"
                         + "Cet algorithme donne une majoration du nombre de couleurs différentes<br>"
                         + "que peut posséder un graphe. Un graphe planaire par exemple aura un<br>"
-                        + "nombre de couleurs majoré par 4<br>"
+                        + "nombre de couleurs majoré par 4<br><br>"
                         + "<span color=red>Attention : Graphe-Maker++ ne supporte que 25 couleurs.<br>"
                         + "Attention : Graphe-Maker++ peut rencontrer des ralentissements si vous<br>"
                         + "avez créé plus de 75 sommets tous reliés entre eux</span>";

@@ -55,9 +55,9 @@ public class Aide
                 + "EmbrouilleTech soucieuse du bonheur et du bien-être de ses clients vous"
                 + " propose des produits toujours<br>"
                 + " plus inovants et de meilleur qualité."
-                + "<br>Vous possédez actuellement la version :<br>"
+                + "<br>Vous possédez actuellement la version :<br><br>"
                 + " - <b>GrapheMaker++v0.9.31s.release:09.04.2015</b>"
-                + "<br><br>Upcoming features :<br>"
+                + "<br><br>Upcoming features :<br><br>"
                 + " - Graphe-MakerExtensionPack_10_colors<br><br>"
                 + " - Graphe-MakerAdvancedPackv1.2.11<br><br>"
                 + " - Graphe-MakerAdvancedPack_DeluxEditionv1.2.13<br><br>"
@@ -66,7 +66,8 @@ public class Aide
                 + " - Graphe-MakerLanguageExtentsionPack_3_languages<br><br>"
                 + " - Graphe-MakerUpdatePack++v2.0.1_15_colors<br><br>"
                 + "Prix variant des futures version, a partir de $23.99<br>"
-                + "<span font-size=4px>Tous droits réservés " + this.editeur + "</span>";
+                + "<span font-size=4px>Tous droits réservés " + this.editeur + "</span><br>"
+                + "Icon  from <span color=blue>www.flaticon.com</span>";
         return auteur+editeur+text;
     }
     

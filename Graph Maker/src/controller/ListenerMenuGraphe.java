@@ -17,7 +17,11 @@ public class ListenerMenuGraphe implements ActionListener {
 		if(e.getSource()==this.gv.getMenuload()){
 			JFileChooser dialogue = new JFileChooser();
 			dialogue.showOpenDialog(null);
-			this.gv.setGraphe(this.gv.getGraphe().read(dialogue.getSelectedFile()));
+			
+			try{
+				this.gv.setGraphe(this.gv.getGraphe().read(dialogue.getSelectedFile()));
+			}catch(Exception exc){}
+			
 			this.gv.grapheMetrique();
 			if(this.gv.getGraphe().isType()){
 				this.gv.getOnglets().setEnabledAt(2, false);
@@ -60,7 +64,7 @@ public class ListenerMenuGraphe implements ActionListener {
 
 		if(e.getSource()==this.gv.getMenusave()){
 			String val = (String) JOptionPane.showInputDialog(null,
-					"Entrer le nom de votre fichier :", "Sommet", JOptionPane.QUESTION_MESSAGE, null, null, "");
+					"Entrer le nom de votre fichier :", "Sauvegarde", JOptionPane.QUESTION_MESSAGE, null, null, "");
 			if (val != null)
 				this.gv.getGraphe().save(val,this.gv.getGraphe());
 		}

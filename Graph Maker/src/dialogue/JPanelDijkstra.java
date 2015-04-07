@@ -13,7 +13,7 @@ public class JPanelDijkstra extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
-	private static final int ANIM_DELAY = 0; // 50ms == 20fps
+	private static final int ANIM_DELAY = 20; // 50ms == 20fps
 	private static final float ARC_DASH_LENGTH = 9;
 	private static final float DASH_OFFSET_SUM = 0.5f;
 
@@ -93,7 +93,7 @@ public class JPanelDijkstra extends JPanel{
 		int ctrly=a.getCentre_posY();
 		Path2D p = new Path2D.Double();
 		if (dashed) {
-			Stroke s = new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0, new float[]{ARC_DASH_LENGTH}, dashOffset);
+			Stroke s = new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,0, new float[]{ARC_DASH_LENGTH}, dashOffset);
 			((Graphics2D)gctx).setStroke(s);
 		}
 		if(gv.getGraphe().isType()){

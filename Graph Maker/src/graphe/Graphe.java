@@ -938,9 +938,6 @@ public class Graphe {
                                 smtmpc--;
                             }
                         }
-                        
-                        chaineVal+=a.getNom();
-                        chaine+=chaineVal;
                         chaine+="]";
                         if(a.getNom()!=null && !a.getNom().equals("")){
                             if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1)
@@ -951,6 +948,7 @@ public class Graphe {
                 
                             chaineVal+=a.getNom();
                         }
+                        chaine+=chaineVal;
                     }
                 }
                 if(type)
@@ -1367,7 +1365,7 @@ public class Graphe {
 		FileWriter fileWriter = null;
 		try {
 			//File newTextFile = new File(nom+".ntm");
-                        File newTextFile = new File(nom+".gm++");
+                        File newTextFile = new File(nom+".gmpp");
 			fileWriter = new FileWriter(newTextFile);
 			fileWriter.write(g.toString());
 			fileWriter.close();

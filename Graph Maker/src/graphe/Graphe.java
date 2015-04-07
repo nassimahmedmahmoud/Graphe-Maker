@@ -1313,10 +1313,14 @@ public class Graphe {
 					String[] texte = line.split(",");
 					if(line_i == 0){
 						g.setNom(texte[0]);
-						if(texte[1]=="1")
+						if(texte[1]=="1" && fileName.getName().endsWith(".gm"))
 							g.setType(NON_ORIENTE);
-						else
+						else if( texte[1]=="0" && fileName.getName().endsWith(".gm"))
 							g.setType(ORIENTE);
+						else if(texte[1]=="1" && fileName.getName().endsWith(".gmpp") )
+							g.setType(ORIENTE);
+						else if (texte[1]=="0" && fileName.getName().endsWith(".gmpp"))
+							g.setType(NON_ORIENTE);
 						nbSommet=Integer.parseInt(texte[4]);
 						nbArcs=Integer.parseInt(texte[5]);
 					}

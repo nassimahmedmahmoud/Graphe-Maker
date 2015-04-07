@@ -1,5 +1,18 @@
 package graphe;
 
+
+/**
+ * &nbsp&nbsp&nbsp&nbspLa classe Sommet_matrix représente "l'étiquette" d'un sommet. Cette étiquette
+ * représente un sommet dans la matrice de LaTeX, l'attribut Sommet permet d'avoir accès
+ * a toutes les informations relatives a ce sommet, l'entier ligne correspond à la ligne
+ * ou se trouve ce sommet dans la matrice LaTeX, et l'entier colonne correspond à la colonne
+ * ou se trouve ce sommet dans la matrice LaTeX.
+ * 
+ * @see graphe.Sommet
+ * @see graphe.Graphe
+ * 
+ * @version 1.0
+ */
 public class Sommet_matrix
 {
     private Sommet somm;

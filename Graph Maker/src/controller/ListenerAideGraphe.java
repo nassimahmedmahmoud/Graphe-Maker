@@ -3,6 +3,18 @@ package controller;
 import dialogue.*;
 import java.awt.event.*;
 
+
+/**
+ * &nbsp&nbsp&nbsp&nbspLa classe ListenerAideGraphe implémente l'interface ActionListener.
+ * Cette classe sert a gérer les évenements qui surviennent lorsque l'utilisateur clique
+ * sur les boutons "suiv." ou "prèc." dans la fenêtre "Assistance" lorsque l'utilisateur
+ * a affiché la fenêtre d'aide a partir du menu.
+ * 
+ * @see dialogue.GrapheView
+ * @see controller.ListenerMenuGraphe
+ *
+ * @version 1.0
+ */
 public class ListenerAideGraphe implements ActionListener
 {
     private GrapheView gv;

@@ -2,6 +2,19 @@ package graphe;
 
 import java.util.*;
 
+
+/**
+ * &nbsp&nbsp&nbsp&nbspLa classe Sommet est un composant du graphe. Cette classe représente
+ * un sommet ou noeud du graphe. Les informations nécéssaires à un sommet sont sa position X,
+ * sa position Y, son nom et également une liste d'arcs auquel il est attaché.
+ * 
+ * @see graphe.Graphe
+ * @see graphe.Arc
+ * 
+ * @see graphe.Sommet_matrix
+ * 
+ * @version 1.0
+ */
 public class Sommet {
 	private String nom;
 	private ArrayList<Arc> arcs;

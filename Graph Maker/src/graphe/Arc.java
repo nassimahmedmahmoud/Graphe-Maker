@@ -1,5 +1,17 @@
 package graphe;
 
+
+/**
+ * &nbsp&nbsp&nbsp&nbspLa classe Arc est un composant du graphe. Celle-ci représente un arc ou une arête.
+ * Pour pouvoir être représenté correctement un arc contient comme informations un nom, un
+ * sommet d'origine, un sommet d'arrivée, ainsi que l'absice de son milieu et que l'ordonnée
+ * de son milieu qui définissent un point.
+ * 
+ * @see graphe.Graphe
+ * @see graphe.Sommet
+ * 
+ * @version 1.0
+ */
 public class Arc {
 
 	private String nom;

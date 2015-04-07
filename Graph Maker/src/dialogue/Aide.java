@@ -1,5 +1,19 @@
 package dialogue;
 
+/**
+ * &nbsp&nbsp&nbsp&nbspLa classe Aide sert à créer les textes qui seront présent en cliquant
+ * sur le menu "Aide". Elle comporte 2 méthodes initialisant le texte qui sera affiché dans
+ * les fenêtres "A propos de nous" et "Assistance" a l'aide des méthodes <b>aPropos()</b> et
+ * <b>assistance(int)</b> qui en fonction de son paramètre renverra le bon texte.<br />
+ * Cette classe s'utilise a l'aide des classes GrapheView et des listeners ListenerAideGraphe
+ * et ListenerMenuGraphe.
+ * 
+ * @see controller.ListenerAideGraphe
+ * @see controller.ListenerMenuGraphe
+ * @see dialogue.GrapheView
+ * 
+ * @version 1.0
+ */
 public class Aide
 {
     public static final int SOMMAIRE = 0;
@@ -61,19 +75,19 @@ public class Aide
         if(page == SOMMAIRE)
             text = "Sommaire :<br><br>"
                 + "<b>I - Prise en main de Graphe-Maker++</b><br><br>"
-                + " - 1 Options de base<br>"
-                + " - 2 Onglets<br><br>"
+                + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp - 1 Options de base<br>"
+                + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp - 2 Onglets<br><br>"
                 + "<b>II - Onglet Editeur de graphe</b><br><br>"
-                + " - 1 Manipuler des éléments du graphe<br>"
-                + " - 2 Créer/modifier des éléments du graphe<br>"
-                + " - 3 Options avancées<br><br>"
+                + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp - 1 Manipuler des éléments du graphe<br>"
+                + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp - 2 Créer/modifier des éléments du graphe<br>"
+                + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp - 3 Options avancées<br><br>"
                 + "<b>III - Onglet Dijkstra</b><br><br>"
-                + " - 1 Choix des sources et arrivées<br>"
-                + " - 2 Informations<br><br>"
+                + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp - 1 Choix des sources et arrivées<br>"
+                + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp - 2 Informations<br><br>"
                 + "<b>IV - Onglet Coloration</b><br><br>"
                 + "<b>V - Onglet général</b><br><br>"
-                + " - 1 Informations générales<br>"
-                + " - 2 Options avancées<br>";
+                + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp - 1 Informations générales<br>"
+                + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp - 2 Options avancées<br>";
         switch(page)
         {
             case 1 :
@@ -183,9 +197,22 @@ public class Aide
                         + "il est orienté ou non, si ce graphe est connexe, mais également si<br>"
                         + "ce graphe est un arbre. De plus la matrice associée a ce graphe y<br>"
                         + "est également affichée.<br><br>"
+                        + "<span color=blue>Astuce : Si tous vos arcs ont des valeurs numériques différentes de 1<br>"
+                        + "votre matrice sera remplie avec les valeurs de ces arcs !</span><br><br>"
                         + " - 2 Options avancées<br><br>"
-                        + "    Cet onglet outre ces informations permet également de créer un <br>"
-                        + "sc@¶☺&$!#N-gNh%<br>";
+                        + "    Cet onglet outre ces informations vous permet également de créer un <br>"
+                        + "code LaTeX modifiable correspondant a votre graphe. Dès lors que vous<br>"
+                        + "avez un graphe valide, vous pouvez générer votre graphe en LaTeX avec les<br>"
+                        + "valeurs initiales. Vous avez également la possibilité de changer ces valeurs<br>"
+                        + "la marge correspond à la marge qui sera utilisée pour séparer vos points en<br>"
+                        + "lignes et en colonnes (c'est a dire un interval ou tous les points compris<br>"
+                        + "dedans feront parti d'une même ligne ou colonne), la taille quant à elle<br>"
+                        + "correspond a l'espacement que vos points auront lors de la visualisation de<br>"
+                        + "votre graphe en LaTeX<br><br>"
+                        + "<span color=red>Attetion : Prendre une marge trop élevée ou créer des sommets très<br>"
+                        + "proche peut conduire a un problème dans votre code LaTeX, en effet<br>"
+                        + "ceux-ci seront alors susceptibles d'être dans la même case de votre<br>"
+                        + "matrice</span>";
                 break;
                 
         }

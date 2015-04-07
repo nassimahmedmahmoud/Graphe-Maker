@@ -1,9 +1,7 @@
 package controller;
 
 import dialogue.*;
-
 import java.awt.event.*;
-
 import javax.swing.*;
 
 public class ListenerMenuGraphe implements ActionListener {
@@ -31,6 +29,15 @@ public class ListenerMenuGraphe implements ActionListener {
 			}
 		}
 
+                if(e.getSource() == gv.getMenugraphe())
+                {
+                        this.gv.getGraphe().getSommets().clear();
+			this.gv.getGraphe().getArcs().clear();
+			this.gv.getGraphe().getArcinit().clear();
+			this.gv.getDijkstra().setArrivee(null);
+			this.gv.getDijkstra().setSource(null);
+                }
+                
 		if(e.getSource() == gv.getApropos())
 		{
 			Aide a = new Aide();

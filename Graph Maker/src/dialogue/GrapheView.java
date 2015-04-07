@@ -1,12 +1,36 @@
 package dialogue;
 
 import java.awt.*;
-
 import javax.swing.*;
-
 import controller.*;
 import graphe.*;
 
+
+/**
+ * &nbsp&nbsp&nbsp&nbspLa classe GrapheView encapsule le graphe et permet a l'utilisateur de
+ * modéliser son graphe a l'aide de composants graphiques, et utilise la bilbliothèque javax.swing
+ * pour ça.<br />
+ * &nbsp&nbsp&nbsp&nbspLa classe GrapheView est la composante centrale de l'affichage de notre application, cette
+ * classe gère l'instanciation de tous les panels, tous les boutons, tous les champs de texte
+ * et également tous les labels.<br />
+ * &nbsp&nbsp&nbsp&nbspCette classe définie toutes les méthodes de création de chaque panel
+ * et de chaque onglet de notre application, et également chaque bouton. Pour ce faire cette
+ * classe utilise un grand nombre d'attributs qui seront utilisés par les différents listeners
+ * pour gérer les différents évenements lors de la manipulation du graphe.<br />
+ * 
+ * @see graphe.Graphe
+ * 
+ * @see controller.ListenerActionGraphe
+ * @see controller.ListenerAideGraphe
+ * @see controller.ListenerBoutonGraphe
+ * @see controller.ListenerChangeGraphe
+ * @see controller.ListenerDijkstraGraphe
+ * @see controller.ListenerMenuGraphe
+ * @see controller.ListenerMenuGraphe
+ * @see controller.ListenerMouseMotionGraphe
+ * 
+ * @version 1.0
+ */
 public class GrapheView extends JFrame{
 
 	private static final long serialVersionUID = 1L;
@@ -176,7 +200,7 @@ public class GrapheView extends JFrame{
 		onglets = new JTabbedPane();
 		this.graphe=new Graphe();
 		this.dijkstra=new Dijkstra(graphe);
-        panassist = new JPanel();
+                panassist = new JPanel();
 		onglets.addTab("Graphe", null,this.panel1());
 		onglets.addTab("Dijkstra", null, this.panel2());
 		onglets.addTab("Coloration", null, panel3());
@@ -241,6 +265,7 @@ public class GrapheView extends JFrame{
 		menuload = new JMenuItem("charger graphe");
 		menufichier.add(menugraphe);
 		menufichier.add(menusave);
+                menugraphe.addActionListener(new ListenerMenuGraphe(this));
 		menuload.addActionListener(new ListenerMenuGraphe(this));
 		menusave.addActionListener(new ListenerMenuGraphe(this));
 		menufichier.add(menuload);

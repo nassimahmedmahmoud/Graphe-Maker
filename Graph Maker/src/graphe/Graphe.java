@@ -4,6 +4,40 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 
+    /**
+     * &nbsp&nbsp&nbsp&nbspClasse Graphe, cette classe est le coeur de l'application, c'est sur cette classe
+     * que tout repose. C'est dasn cette classe qu'est définie le nombre de sommets le
+     * nombre d'arcs, si le graphe est orienté, ainsi que le nom du graphe. La classe
+     * Graphe comporte la quasi totalité des méthodes nécéssaire à sa manipulation, ce qui
+     * comprend :<br /><br />
+     *  - Les méthodes manipulation générales (comme ajouter ou supprimer des arcs
+     * ou des sommets)<br />
+     *  - Les méthodes permettant la création de code LaTeX dans le cas ou l'utilisateur 
+     * a besoin de modéliser son graphe et de l'exporter pour le visualiser dans un pdf
+     * (par exemple)<br />
+     *  - Les méthodes serevant pour l'utilisation de l'algorithme de Brélaz sur le graphe
+     * appelées méthodes de coloration du graphe<br />
+     *  - Les méthodes de chargement et de sauvegarde du graphe permettant la sauvegarde
+     * et le chargement de fichiers texte génériques, ainsi cette application peut utiliser
+     * les fichiers de sauvegarde des applications concurrentes<br />
+     *  - Les méthodes de lecture et d'écriture du graphe, permettant d'accéder ou de modifier
+     * des composantes du graphe<br /><br />
+     * &nbsp&nbsp&nbsp&nbspDe plus pour lancer l'algorithme Dijkstra, la classe Dijkstra est utilisée, et les
+     * méthodes inhérentes à cet algorithme sont présents dans cette classe Dijkstra pour
+     * simplifier le code.<br />
+     * Les méthodes permettant de générer le code LaTeX fon appelle a la classe Sommet_matrix
+     * simplifiant le moyen de générer ce code et allégant également la classe Graphe<br /><br />
+     * Cette classe utilise plusieurs constantes de classes facilitant la manipulation de
+     * certaines données.<br />
+     * Cette classe utilise également en attributs des listes de Sommet et d'Arc<br />
+     * 
+     * @see graphe.Dijkstra
+     * @see graphe.Sommet_matrix
+     * @see graphe.Arc
+     * @see graphe.Sommet
+     * 
+     * @version 0.9
+     */
 public class Graphe {
 	public static final boolean ORIENTE = true;
 	public static final boolean NON_ORIENTE = false;
@@ -18,7 +52,7 @@ public class Graphe {
 	private ArrayList<Sommet> sommets;
 	private ArrayList<Arc> arcs;
 	private ArrayList<Sommet> tabCick;          //Liste de sommets pour les graphes génériques et personalisés
-	private ArrayList<Sommet> arcinit;       //Pour debug Cycle et Chaine générique
+	private ArrayList<Sommet> arcinit;          //Pour debug Cycle et Chaine générique
 	private String nom;
 	private boolean type;
 	private int tailleSommet=50;
@@ -27,15 +61,15 @@ public class Graphe {
 	private int lengthlinecolumn = 1;
 
 	/**
-	 * Constructeur champ a champ du graphe prend en paramÃƒÂ¨tres :
-	 *  - Une chaine de caractÃƒÂ¨re correspondant au nom du graphe
-	 *  - Un booleen indiquant si le graphe est orientÃƒÂ© ou non
-	 *  - Une liste de sommets
-	 *  - Une liste d'arcs
-	 * @param nom
-	 * @param type
-	 * @param sommets
-	 * @param arcs 
+	 * Constructeur champ a champ du graphe prend en paramètres :<br />
+	 * &nbsp - Une chaine de caractère correspondant au nom du graphe<br />
+	 * &nbsp - Un booleen indiquant si le graphe est orienté ou non<br />
+	 * &nbsp - Une liste de sommets<br />
+	 * &nbsp - Une liste d'arcs<br />
+	 * @param nom correspondant au nom du graphe.
+	 * @param type true si le graphe est orienté, false si il est non-orienté.
+	 * @param sommets correspondant à la liste des sommets présents dans le graphe.
+	 * @param arcs correspondant à la liste des arcs/arêtes présents dans le graphe.
 	 */
 	public Graphe(String nom, boolean type, ArrayList<Sommet> sommets,
 			ArrayList<Arc> arcs) {
@@ -48,14 +82,25 @@ public class Graphe {
 	}
 
 	/**
-	 * Contructeur par dÃƒÂ©faut d'un graphe,
-	 * CrÃƒÂ©er un graphe sans nom, non orientÃƒÂ© sans, avec une liste de sommets vide
+	 * Contructeur par défaut d'un graphe,
+	 * Créer un graphe sans nom, non orienté sans, avec une liste de sommets vide
 	 * et une liste d'arcs vide.
 	 */
 	public Graphe(){
 		this("Graphe_1",Graphe.NON_ORIENTE,new ArrayList<Sommet>(),new ArrayList<Arc>());
 	}
 
+        
+        
+        /*▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+        * #                                                                         #
+        * #                                                                         #
+        * #     I - Methodes de inérentes a la CREATION et MANIPULATION du Graphe   #
+        * #                                                                         #
+        * #                                                                         #
+        * ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀*/
+        
+        
 	/**
 	 * La méthode arcaPartirSommets prend en paramètre 2 sommet et renvoie l'arc qui
 	 * relie ces 2 sommets si il existe, renvoie null sinon.
@@ -108,334 +153,7 @@ public class Graphe {
 		}
 		else
 			this.setType(Graphe.ORIENTE);
-	}
-
-	public int[] etiquetteX(int marge){
-		int[] etiquette = new int[this.arcinit.size()];
-		int num=1;
-		for(int i=0;i<this.arcinit.size();i++,num++){
-			if(etiquette[i]==0){
-				etiquette[i]=num;
-				for(int j=i+1;j<this.arcinit.size();j++){
-					if(etiquette[j]==0){
-						if(Math.abs(this.arcinit.get(i).getPosX()-this.arcinit.get(j).getPosX())<marge){
-							etiquette[j]=num;
-						}
-					}
-				}
-			}
-		}
-		return etiquette;
-	}
-
-	public int[] etiquetteY(int marge){
-		int[] etiquette = new int[this.arcinit.size()];
-		int num=1;
-		for(int i=0;i<this.arcinit.size();i++,num++){
-			if(etiquette[i]==0){
-				etiquette[i]=num;
-				for(int j=i+1;j<this.arcinit.size();j++){
-					if(etiquette[j]==0){
-						if(Math.abs(this.arcinit.get(i).getPosY()-this.arcinit.get(j).getPosY())<marge){
-							etiquette[j]=num;
-						}
-					}
-				}
-			}
-		}
-		return etiquette;
-	}
-
-	public int nbColonneEtiquette(int marge){
-		int val =0;
-		int[]etX = this.etiquetteX(marge);
-		Arrays.sort(etX);
-		for(int i=1;i<etX.length;i++){
-			if(etX[i-1]!=etX[i])
-				val++;
-		}
-		return val+1;
-	}
-
-	public int nbLigneEtiquette(int marge){
-		int val =0;
-		int[]etY = this.etiquetteY(marge);
-		Arrays.sort(etY);
-		for(int i=1;i<etY.length;i++){
-			if(etY[i-1]!=etY[i])
-				val++;
-		}
-		return val+1;
-	}
-
-	public Sommet[] ligneY(int marge, Sommet s, ArrayList<Sommet> tab)
-	{
-		ArrayList<Sommet> stab = new ArrayList<>();
-		ArrayList<Sommet> tmp = new ArrayList<>();
-		for(int i = 0; i < tab.size(); i++)
-			if(Math.abs(s.getPosY() - tab.get(i).getPosY()) <= marge)
-				tmp.add(tab.get(i));
-
-		for (int i = 0; i < tmp.size(); i++)
-		{
-			tab.remove(tmp.get(i));
-			stab.add(tmp.get(i));
-		}
-		return stab.toArray(new Sommet[stab.size()]);
-	}
-
-	public Sommet[][] ligne(int marge)
-	{
-		Sommet[][] tabmat = new Sommet[this.nbLigneEtiquette(marge)][this.nbColonneEtiquette(marge)];
-		ArrayList<Sommet> tab = new ArrayList<>(arcinit);
-		int len = tab.size();
-		int i=0;
-		while(len>0 && i<tabmat.length)
-		{
-			tabmat[i] = ligneY(marge, tab.get(0), tab);
-			len--;
-			i++;
-		}
-		return tabmat;
-	}
-
-	public Sommet[] colonneX(int marge, Sommet s, ArrayList<Sommet> tab)
-	{
-		ArrayList<Sommet> stab = new ArrayList<>();
-		ArrayList<Sommet> tmp = new ArrayList<>();
-		for(int i = 0; i < tab.size(); i++)
-			if(Math.abs(s.getPosX() - tab.get(i).getPosX()) <= marge)
-				tmp.add(tab.get(i));
-
-		for (int i = 0; i < tmp.size(); i++)
-		{
-			tab.remove(tmp.get(i));
-			stab.add(tmp.get(i));
-		}
-		return stab.toArray(new Sommet[stab.size()]);
-	}
-
-	public Sommet[][] colonne(int marge)
-	{
-		Sommet[][] tabmat = new Sommet[this.nbColonneEtiquette(marge)][this.nbLigneEtiquette(marge)];
-		ArrayList<Sommet> tab = new ArrayList<>(arcinit);
-		int len = tab.size();
-		int i=0;
-
-		while(len>0 && i<tabmat.length)
-		{
-			tabmat[i] = colonneX(marge, tab.get(0), tab);
-			len--;
-			i++;
-		}
-
-		return tabmat;
-	}
-
-	public void sortLigne(Sommet[][] tab, int marge)
-	{
-		Sommet[] li = new Sommet[this.nbColonneEtiquette(marge)];
-		for(int i = 0; i < tab.length; i++)
-		{
-			for(int j = 0; j < tab.length; j++)
-			{
-				if(tab[i][0].getPosY() < tab[j][0].getPosY())
-				{
-					li = tab[i];
-					tab[i] = tab[j];
-					tab[j] = li;
-				}
-			}       
-		}
-	}
-
-	public void sortColonne(Sommet[][] tab, int marge)
-	{
-		Sommet[] co = new Sommet[this.nbLigneEtiquette(marge)];
-		for(int i = 0; i < tab.length; i++)
-		{
-			for(int j = 0; j < tab.length; j++)
-			{
-				if(tab[i][0].getPosX() < tab[j][0].getPosX())
-				{
-					co = tab[i];
-					tab[i] = tab[j];
-					tab[j] = co;
-				}
-			}       
-		}
-	}
-
-	public Sommet_matrix[] initTab(int marge)
-	{
-		Sommet_matrix[] tab = new Sommet_matrix[arcinit.size()];
-		Sommet[][] lignes = ligne(marge);
-		Sommet[][] colonnes = colonne(marge);
-		sortLigne(lignes, marge);
-		sortColonne(colonnes, marge);
-
-		for(int i = 0; i < tab.length; i++)
-		{
-			tab[i] = new Sommet_matrix();
-			tab[i].setSommet(arcinit.get(i));
-			for(int j = 0; j < lignes.length; j++)
-			{
-				for(int k = 0; k < lignes[j].length; k++){
-					if(tab[i].getSommet().equals(lignes[j][k]))
-						tab[i].setLigne(j);
-				}
-			}
-			for(int j = 0; j < colonnes.length; j++)
-			{
-				for(int k = 0; k < colonnes[j].length; k++)
-					if(tab[i].getSommet().equals(colonnes[j][k]))
-						tab[i].setColonne(j);
-			}
-		}                                
-		return tab;
-	}
-
-	public Sommet_matrix sommetInSommetMatrix(Sommet s,Sommet_matrix[]tab){
-		return tab[arcinit.indexOf(s)];
-	}
-        
-	public int[] tabVoisinsCustom(int index) // renvoie les positions des voisins du sommet courant
-	{
-		int[]tab=new int[this.sommets.get(index).getArcs().size()]; // crÃƒÂ©ÃƒÂ© un tableau local a partir de la taille de son ArrayList d'arc qui correspond au nb de sommets voisin du sommet courant
-		for(int i = 0; i < this.sommets.get(index).getArcs().size(); i++){
-			int voisinArrivee=this.sommets.indexOf(this.sommets.get(index).getArcs().get(i).getArrivee()); // on rÃƒÂ©cupÃƒÂ¨re la position des sommets voisins et on les ajoute dans notre tableau local tab
-			if(voisinArrivee!=index) // si la position du voisin est different de la position du sommet courant et si sa couleur est differente de 0 alors on ajoute la position du voisin dans notre tableau
-				tab[i]=voisinArrivee;
-			else
-				tab[i]=-1;
-		}
-		return tab;
-	}
-
-	public String sommetVoisinsLaTeX(Sommet s,Sommet_matrix[]tab)
-        {
-                Sommet_matrix sm = sommetInSommetMatrix(s,tab);
-                int[] tabVoisins = this.tabVoisinsCustom(arcinit.indexOf(s));
-                String chaine = "";
-                String chaineVal="";
-                String boucle ="";
-                String tmp="";
-                if(tabVoisins.length>0){
-                for(int i=0;i<tabVoisins.length;i++)
-                {
-                    for(int j=0;j<s.getArcs().size();j++)
-                    {
-                        if(s.getArcs().get(j).getOrigine().equals(s.getArcs().get(j).getArrivee())){
-                            boucle="(ul,dl)[]";
-                        }
-                    }
-                    if(tabVoisins[i]!=-1){
-                        if(type)
-                            chaine+=Graphe.ARC;
-                        else
-                            chaine+=Graphe.ARETE;
-                        
-                        Arc a = this.arcaPartirSommets(s,sommets.get(tabVoisins[i]));
-                        chaine+="[";
-                        Sommet_matrix smtmp = this.sommetInSommetMatrix(sommets.get(tabVoisins[i]), tab);
-                        int sml= sm.getLigne();
-                        int smtmpl = smtmp.getLigne();
-                        int smc = sm.getColonne();
-                        int smtmpc = smtmp.getColonne();
-                        if(sml>smtmpl){
-                            while(sml-smtmpl>0){
-                                chaine+="u";
-                                sml--;
-                            }
-                        }
-                        else if(sml<smtmpl){
-                            while(smtmpl-sml>0){
-                                chaine+="d";
-                                smtmpl--;
-                            }
-                        }
-                        if(smc>smtmpc){
-                            while(smc-smtmpc>0){
-                                chaine+="l";
-                                smc--;
-                            }
-                        }
-                        else if(smc<smtmpc){
-                            while(smtmpc-smc>0){
-                                chaine+="r";
-                                smtmpc--;
-                            }
-                        }
-                        
-                        chaineVal+=a.getNom();
-                        chaine+=chaineVal;
-                        chaine+="]";
-                        if(a.getNom()!=null && !a.getNom().equals("")){
-                            if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1)
-                                chaineVal+="\\";
-                
-                            if(chaine.indexOf('r')!=-1 || chaine.indexOf('l')!=-1)
-                                chaineVal+="^";
-                
-                            chaineVal+=a.getNom();
-                        }
-                    }
-                }
-                if(type)
-                    tmp = Graphe.ARC + boucle + chaine;  
-                else
-                    tmp = Graphe.ARC + boucle + chaine; 
-            }
-            if(boucle != "")
-                return tmp;
-            else
-                return chaine;
-        }
-
-	public String[][] matrixLatex(Sommet_matrix[] tab, int marge, int taille) throws TailleColumnLineException
-	{
-                if(taille < 1)
-                    throw new TailleColumnLineException(taille);
-		String[][] matrice = new String[this.nbLigneEtiquette(marge)+2][this.nbColonneEtiquette(marge)];
-		matrice[0][0] = "\\xymatrix@R=" + taille + "cm@C=" + taille + "cm\n"
-				+ "{";
-		for(int i = 1; i < matrice.length -1; i++)
-		{
-			for(int j = 0; j < matrice[i].length; j++)
-			{
-				if(j != matrice[i].length-1)
-					if(matrice[i][j] != null)
-						matrice[i][j] = "   & ";
-					else
-						matrice[i][j] = "    & ";
-				else
-					matrice[i][j] ="   \\"+"\\";
-			}
-		}
-
-		for(Sommet_matrix sm : tab)
-			matrice[sm.getLigne()+1][sm.getColonne()] = sm.getSommet().getNom() +this.sommetVoisinsLaTeX(sm.getSommet(), tab)+matrice[sm.getLigne()+1][sm.getColonne()];
-
-		matrice[this.nbLigneEtiquette(marge)+1][0] = "}";
-		return matrice;
-	}
-
-	public String matrixLatexToString(String[][] mat, int marge, int taille, Sommet_matrix[] tab)
-	{
-		String s = "";
-		for(int i = 0; i < mat.length; i++)
-		{
-			for(int j = 0; j < mat[i].length; j++)
-			{
-				if(mat[i][j] != null)
-					s+=mat[i][j];
-				s+="";
-			}
-			s+="\n";
-		}
-
-		return s;
-	}
+	}	
         
 	/**
 	 * La mÃƒÂ©thode isSommet prend en paramÃƒÂ¨tre un entier correspondant au diamÃƒÂ¨tre
@@ -898,6 +616,7 @@ public class Graphe {
 	 * @see matrice()
 	 * @see toString(int)
 	 * @return String
+         * @deprecated depuis la version 0.7 de Graphe, remplacée par toString(int)
 	 */
 	public String stringMatrice(){
 		String s="<html>";
@@ -921,6 +640,7 @@ public class Graphe {
 	 * @see isTree()
 	 * @see toString(int)
 	 * @return String
+         * @deprecated depuis la version 0.7 de Graphe, remplacée par toString(int)
 	 */
 	public String connexeArbre(){
 		String s ="<html>";
@@ -950,7 +670,359 @@ public class Graphe {
 			return true;
 		return false;
 	}
+        
+        
+        /*▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+        * #                                                                         #
+        * #                                                                         #
+        * #     II - Methodes de inérentes a la CREATION du code LaTeX du Graphe    #
+        * #                                                                         #
+        * #                                                                         #
+        * ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀*/
 
+        
+        
+        public int[] etiquetteX(int marge){
+		int[] etiquette = new int[this.arcinit.size()];
+		int num=1;
+		for(int i=0;i<this.arcinit.size();i++,num++){
+			if(etiquette[i]==0){
+				etiquette[i]=num;
+				for(int j=i+1;j<this.arcinit.size();j++){
+					if(etiquette[j]==0){
+						if(Math.abs(this.arcinit.get(i).getPosX()-this.arcinit.get(j).getPosX())<marge){
+							etiquette[j]=num;
+						}
+					}
+				}
+			}
+		}
+		return etiquette;
+	}
+
+	public int[] etiquetteY(int marge){
+		int[] etiquette = new int[this.arcinit.size()];
+		int num=1;
+		for(int i=0;i<this.arcinit.size();i++,num++){
+			if(etiquette[i]==0){
+				etiquette[i]=num;
+				for(int j=i+1;j<this.arcinit.size();j++){
+					if(etiquette[j]==0){
+						if(Math.abs(this.arcinit.get(i).getPosY()-this.arcinit.get(j).getPosY())<marge){
+							etiquette[j]=num;
+						}
+					}
+				}
+			}
+		}
+		return etiquette;
+	}
+
+	public int nbColonneEtiquette(int marge){
+		int val =0;
+		int[]etX = this.etiquetteX(marge);
+		Arrays.sort(etX);
+		for(int i=1;i<etX.length;i++){
+			if(etX[i-1]!=etX[i])
+				val++;
+		}
+		return val+1;
+	}
+
+	public int nbLigneEtiquette(int marge){
+		int val =0;
+		int[]etY = this.etiquetteY(marge);
+		Arrays.sort(etY);
+		for(int i=1;i<etY.length;i++){
+			if(etY[i-1]!=etY[i])
+				val++;
+		}
+		return val+1;
+	}
+
+	public Sommet[] ligneY(int marge, Sommet s, ArrayList<Sommet> tab)
+	{
+		ArrayList<Sommet> stab = new ArrayList<>();
+		ArrayList<Sommet> tmp = new ArrayList<>();
+		for(int i = 0; i < tab.size(); i++)
+			if(Math.abs(s.getPosY() - tab.get(i).getPosY()) <= marge)
+				tmp.add(tab.get(i));
+
+		for (int i = 0; i < tmp.size(); i++)
+		{
+			tab.remove(tmp.get(i));
+			stab.add(tmp.get(i));
+		}
+		return stab.toArray(new Sommet[stab.size()]);
+	}
+
+	public Sommet[][] ligne(int marge)
+	{
+		Sommet[][] tabmat = new Sommet[this.nbLigneEtiquette(marge)][this.nbColonneEtiquette(marge)];
+		ArrayList<Sommet> tab = new ArrayList<>(arcinit);
+		int len = tab.size();
+		int i=0;
+		while(len>0 && i<tabmat.length)
+		{
+			tabmat[i] = ligneY(marge, tab.get(0), tab);
+			len--;
+			i++;
+		}
+		return tabmat;
+	}
+
+	public Sommet[] colonneX(int marge, Sommet s, ArrayList<Sommet> tab)
+	{
+		ArrayList<Sommet> stab = new ArrayList<>();
+		ArrayList<Sommet> tmp = new ArrayList<>();
+		for(int i = 0; i < tab.size(); i++)
+			if(Math.abs(s.getPosX() - tab.get(i).getPosX()) <= marge)
+				tmp.add(tab.get(i));
+
+		for (int i = 0; i < tmp.size(); i++)
+		{
+			tab.remove(tmp.get(i));
+			stab.add(tmp.get(i));
+		}
+		return stab.toArray(new Sommet[stab.size()]);
+	}
+
+	public Sommet[][] colonne(int marge)
+	{
+		Sommet[][] tabmat = new Sommet[this.nbColonneEtiquette(marge)][this.nbLigneEtiquette(marge)];
+		ArrayList<Sommet> tab = new ArrayList<>(arcinit);
+		int len = tab.size();
+		int i=0;
+
+		while(len>0 && i<tabmat.length)
+		{
+			tabmat[i] = colonneX(marge, tab.get(0), tab);
+			len--;
+			i++;
+		}
+
+		return tabmat;
+	}
+
+	public void sortLigne(Sommet[][] tab, int marge)
+	{
+		Sommet[] li = new Sommet[this.nbColonneEtiquette(marge)];
+		for(int i = 0; i < tab.length; i++)
+		{
+			for(int j = 0; j < tab.length; j++)
+			{
+				if(tab[i][0].getPosY() < tab[j][0].getPosY())
+				{
+					li = tab[i];
+					tab[i] = tab[j];
+					tab[j] = li;
+				}
+			}       
+		}
+	}
+
+	public void sortColonne(Sommet[][] tab, int marge)
+	{
+		Sommet[] co = new Sommet[this.nbLigneEtiquette(marge)];
+		for(int i = 0; i < tab.length; i++)
+		{
+			for(int j = 0; j < tab.length; j++)
+			{
+				if(tab[i][0].getPosX() < tab[j][0].getPosX())
+				{
+					co = tab[i];
+					tab[i] = tab[j];
+					tab[j] = co;
+				}
+			}       
+		}
+	}
+
+	public Sommet_matrix[] initTab(int marge)
+	{
+		Sommet_matrix[] tab = new Sommet_matrix[arcinit.size()];
+		Sommet[][] lignes = ligne(marge);
+		Sommet[][] colonnes = colonne(marge);
+		sortLigne(lignes, marge);
+		sortColonne(colonnes, marge);
+
+		for(int i = 0; i < tab.length; i++)
+		{
+			tab[i] = new Sommet_matrix();
+			tab[i].setSommet(arcinit.get(i));
+			for(int j = 0; j < lignes.length; j++)
+			{
+				for(int k = 0; k < lignes[j].length; k++){
+					if(tab[i].getSommet().equals(lignes[j][k]))
+						tab[i].setLigne(j);
+				}
+			}
+			for(int j = 0; j < colonnes.length; j++)
+			{
+				for(int k = 0; k < colonnes[j].length; k++)
+					if(tab[i].getSommet().equals(colonnes[j][k]))
+						tab[i].setColonne(j);
+			}
+		}                                
+		return tab;
+	}
+
+	public Sommet_matrix sommetInSommetMatrix(Sommet s,Sommet_matrix[]tab){
+		return tab[arcinit.indexOf(s)];
+	}
+        
+	public int[] tabVoisinsCustom(int index) // renvoie les positions des voisins du sommet courant
+	{
+		int[]tab=new int[this.sommets.get(index).getArcs().size()]; // crÃƒÂ©ÃƒÂ© un tableau local a partir de la taille de son ArrayList d'arc qui correspond au nb de sommets voisin du sommet courant
+		for(int i = 0; i < this.sommets.get(index).getArcs().size(); i++){
+			int voisinArrivee=this.sommets.indexOf(this.sommets.get(index).getArcs().get(i).getArrivee()); // on rÃƒÂ©cupÃƒÂ¨re la position des sommets voisins et on les ajoute dans notre tableau local tab
+			if(voisinArrivee!=index) // si la position du voisin est different de la position du sommet courant et si sa couleur est differente de 0 alors on ajoute la position du voisin dans notre tableau
+				tab[i]=voisinArrivee;
+			else
+				tab[i]=-1;
+		}
+		return tab;
+	}
+
+	public String sommetVoisinsLaTeX(Sommet s,Sommet_matrix[]tab)
+        {
+                Sommet_matrix sm = sommetInSommetMatrix(s,tab);
+                int[] tabVoisins = this.tabVoisinsCustom(arcinit.indexOf(s));
+                String chaine = "";
+                String chaineVal="";
+                String boucle ="";
+                String tmp="";
+                if(tabVoisins.length>0){
+                for(int i=0;i<tabVoisins.length;i++)
+                {
+                    for(int j=0;j<s.getArcs().size();j++)
+                    {
+                        if(s.getArcs().get(j).getOrigine().equals(s.getArcs().get(j).getArrivee())){
+                            boucle="(ul,dl)[]";
+                        }
+                    }
+                    if(tabVoisins[i]!=-1){
+                        if(type)
+                            chaine+=Graphe.ARC;
+                        else
+                            chaine+=Graphe.ARETE;
+                        
+                        Arc a = this.arcaPartirSommets(s,sommets.get(tabVoisins[i]));
+                        chaine+="[";
+                        Sommet_matrix smtmp = this.sommetInSommetMatrix(sommets.get(tabVoisins[i]), tab);
+                        int sml= sm.getLigne();
+                        int smtmpl = smtmp.getLigne();
+                        int smc = sm.getColonne();
+                        int smtmpc = smtmp.getColonne();
+                        if(sml>smtmpl){
+                            while(sml-smtmpl>0){
+                                chaine+="u";
+                                sml--;
+                            }
+                        }
+                        else if(sml<smtmpl){
+                            while(smtmpl-sml>0){
+                                chaine+="d";
+                                smtmpl--;
+                            }
+                        }
+                        if(smc>smtmpc){
+                            while(smc-smtmpc>0){
+                                chaine+="l";
+                                smc--;
+                            }
+                        }
+                        else if(smc<smtmpc){
+                            while(smtmpc-smc>0){
+                                chaine+="r";
+                                smtmpc--;
+                            }
+                        }
+                        
+                        chaineVal+=a.getNom();
+                        chaine+=chaineVal;
+                        chaine+="]";
+                        if(a.getNom()!=null && !a.getNom().equals("")){
+                            if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1)
+                                chaineVal+="\\";
+                
+                            if(chaine.indexOf('r')!=-1 || chaine.indexOf('l')!=-1)
+                                chaineVal+="^";
+                
+                            chaineVal+=a.getNom();
+                        }
+                    }
+                }
+                if(type)
+                    tmp = Graphe.ARC + boucle + chaine;  
+                else
+                    tmp = Graphe.ARC + boucle + chaine; 
+            }
+            if(boucle != "")
+                return tmp;
+            else
+                return chaine;
+        }
+
+	public String[][] matrixLatex(Sommet_matrix[] tab, int marge, int taille) throws TailleColumnLineException
+	{
+                if(taille < 1)
+                    throw new TailleColumnLineException(taille);
+		String[][] matrice = new String[this.nbLigneEtiquette(marge)+2][this.nbColonneEtiquette(marge)];
+		matrice[0][0] = "\\xymatrix@R=" + taille + "cm@C=" + taille + "cm\n"
+				+ "{";
+		for(int i = 1; i < matrice.length -1; i++)
+		{
+			for(int j = 0; j < matrice[i].length; j++)
+			{
+				if(j != matrice[i].length-1)
+					if(matrice[i][j] != null)
+						matrice[i][j] = "   & ";
+					else
+						matrice[i][j] = "    & ";
+				else
+					matrice[i][j] ="   \\"+"\\";
+			}
+		}
+
+		for(Sommet_matrix sm : tab)
+			matrice[sm.getLigne()+1][sm.getColonne()] = sm.getSommet().getNom() +this.sommetVoisinsLaTeX(sm.getSommet(), tab)+matrice[sm.getLigne()+1][sm.getColonne()];
+
+                for(int i = 1; i < matrice.length-1; i++)
+                    matrice[i][0] = "        " + matrice[i][0];
+                            
+		matrice[this.nbLigneEtiquette(marge)+1][0] = "}";
+		return matrice;
+	}
+
+	public String matrixLatexToString(String[][] mat, int marge, int taille, Sommet_matrix[] tab)
+	{
+		String s = "";
+		for(int i = 0; i < mat.length; i++)
+		{
+			for(int j = 0; j < mat[i].length; j++)
+			{
+				if(mat[i][j] != null)
+					s+=mat[i][j];
+				s+="";
+			}
+			s+="\n";
+		}
+
+		return s;
+	}
+        
+        
+        /*▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+        * #                                                                         #
+        * #                                                                         #
+        * #           III - Methodes de inérentes a la COLORATION du Graphe         #
+        * #                                                                         #
+        * #                                                                         #
+        * ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀*/
+        
+        
+        
 	/**
 	 * La mÃƒÂ©thode voisinsColorie prend en paramÃƒÂ¨tre un sommet s1 et un tableau d'entiers
 	 * correspondant au nombre de degrÃƒÂ©s (arcs sortants/entrants) de chaque sommet du
@@ -1150,7 +1222,7 @@ public class Graphe {
 	 * d'entiers correspondant au degrÃƒÂ© de chaque sommet voisin du sommet prÃƒÂ©sent ÃƒÂ 
 	 * l'index 
 	 * @param index
-	 * @return 
+	 * @return int[]
 	 */
 	public int[] tabVoisins(int index) // renvoie les positions des voisins du sommet courant
 	{
@@ -1194,7 +1266,7 @@ public class Graphe {
 		return DSATTemp;
 	}
 
-	public int[] coloration()
+        public int[] coloration()
 	{
 		int color[] = new int[this.getSommets().size()];
 		int DSAT[] = initialisation();
@@ -1213,6 +1285,17 @@ public class Graphe {
 		}
 		return color;
 	}
+        
+        
+        /*▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+        * #                                                                         #
+        * #                                                                         #
+        * #           IV - Methodes de SAUVEGARDE et CHARGEMENT du Graphe           #
+        * #                                                                         #
+        * #                                                                         #
+        * ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀*/
+	
+        
 
 	public Graphe read(File fileName){
 		BufferedReader br = null;
@@ -1283,7 +1366,8 @@ public class Graphe {
 	public void save(String nom,Graphe g){
 		FileWriter fileWriter = null;
 		try {
-			File newTextFile = new File(nom+".ntm");
+			//File newTextFile = new File(nom+".ntm");
+                        File newTextFile = new File(nom+".gm++");
 			fileWriter = new FileWriter(newTextFile);
 			fileWriter.write(g.toString());
 			fileWriter.close();
@@ -1294,7 +1378,18 @@ public class Graphe {
 			} catch (IOException ex) {}
 		}
 	}
+        
+        
+        /*▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+        * #                                                                         #
+        * #                                                                         #
+        * #   V - GETTER, SETTER et TOSTRING - Méthodes d'accès, lecture/écriture   #
+        * #                                                                         #
+        * #                                                                         #
+        * ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀*/
 
+        
+        
 	public String getNom() {
 		return nom;
 	}
@@ -1385,6 +1480,7 @@ public class Graphe {
 		this.lengthlinecolumn = lengthlinecolumn;
 	}
 
+        @Override
 	public String toString() {
 		String s="";
 		int type=0;
@@ -1409,7 +1505,10 @@ public class Graphe {
 	 * les informations sur la connexité, et 3 pour la matrice).
 	 * @param info
 	 * @see connexeGraphe()
+         * @see connexeArbre()
+         * @see stringMatrice()
 	 * @return String informations
+         * @since version 0.7 de Graphe
 	 */
 	public String toString(int info)
 	{
@@ -1418,9 +1517,9 @@ public class Graphe {
 		{
 			s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
 			if(this.isType() == Graphe.NON_ORIENTE)
-				s+="<p>Le graphe est <span style=\"color;red\">non orientÃ©</span></p>";
+				s+="<p>Le graphe est <span style=\"color;red\">non orienté</span></p>";
 			else
-				s+="<p>Le graphe est <span style=\"color;green\">orientÃ©</span></p>";
+				s+="<p>Le graphe est <span style=\"color;green\">orienté</span></p>";
 
 			if(sommets.isEmpty())
 				s+="<p>Le graphe ne contient aucun sommet</p>";
@@ -1430,11 +1529,11 @@ public class Graphe {
 			if(arcs.isEmpty() && this.isType() == ORIENTE)
 				s+="<p>Le graphe ne contient aucun arc</p>";
 			else if(arcs.isEmpty() && this.isType() == NON_ORIENTE)
-				s+="<p>Le graphe ne contient aucune arrÃªte</p>";
+				s+="<p>Le graphe ne contient aucune arête</p>";
 			else if(arcs.size() > 0 && this.isType() == ORIENTE)
 				s+="<p>Le graphe contient " + arcs.size() + " arcs</p>";
 			else
-				s+="<p>Le graphe contient " + arcs.size() + " arrÃªtes</p>";
+				s+="<p>Le graphe contient " + arcs.size() + " arêtes</p>";
 		}
 		else if(info == CONNEXE_ARBRE)
 		{

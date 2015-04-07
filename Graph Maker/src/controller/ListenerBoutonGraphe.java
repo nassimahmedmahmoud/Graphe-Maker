@@ -26,7 +26,7 @@ public class ListenerBoutonGraphe implements MouseListener {
          }
         this.setsCourant(e);
 
-        if (this.gv.getBclic().isSelected() || (this.gv.getBarc().isSelected() && sCourant == null))
+        if (this.gv.getBclic().isSelected() /*|| (this.gv.getBarc().isSelected()*/ && sCourant == null)
             arcCourant = this.gv.getGraphe().isArc(this.gv.getGraphe().getTailleSommet(), e);
 
         if (this.gv.getBgomme().isSelected() && SwingUtilities.isLeftMouseButton(e) && sCourant != null) {

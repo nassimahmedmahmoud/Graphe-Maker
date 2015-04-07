@@ -298,6 +298,7 @@ public class Graphe {
 	public Sommet_matrix sommetInSommetMatrix(Sommet s,Sommet_matrix[]tab){
 		return tab[arcinit.indexOf(s)];
 	}
+        
 	public int[] tabVoisinsCustom(int index) // renvoie les positions des voisins du sommet courant
 	{
 		int[]tab=new int[this.sommets.get(index).getArcs().size()]; // crÃƒÂ©ÃƒÂ© un tableau local a partir de la taille de son ArrayList d'arc qui correspond au nb de sommets voisin du sommet courant
@@ -311,66 +312,85 @@ public class Graphe {
 		return tab;
 	}
 
-	public String sommetVoisinsLaTeX(Sommet s,Sommet_matrix[]tab){
-		Sommet_matrix sm = sommetInSommetMatrix(s,tab);
-		int[] tabVoisins = this.tabVoisinsCustom(arcinit.indexOf(s));
-		String chaine = "";
-		String chaineVal="";
-		if(tabVoisins.length>0){
-			for(int i=0;i<tabVoisins.length;i++){
-				if(tabVoisins[i]!=-1){
-					Arc a = this.arcaPartirSommets(s,sommets.get(tabVoisins[i]));
-					if(type)
-						chaine+=Graphe.ARC;
-					else
-						chaine+=Graphe.ARETE;
-					chaine+="[";
-					Sommet_matrix smtmp = this.sommetInSommetMatrix(sommets.get(tabVoisins[i]), tab);
-					int sml= sm.getLigne();
-					int smtmpl = smtmp.getLigne();
-					int smc = sm.getColonne();
-					int smtmpc = smtmp.getColonne();
-					if(sml>smtmpl){
-						while(sml-smtmpl>0){
-							chaine+="u";
-							sml--;
-						}
-					}
-					else if(sml<smtmpl){
-						while(smtmpl-sml>0){
-							chaine+="d";
-							smtmpl--;
-						}
-					}
-					if(smc>smtmpc){
-						while(smc-smtmpc>0){
-							chaine+="l";
-							smc--;
-						}
-					}
-					else if(smc<smtmpc){
-						while(smtmpc-smc>0){
-							chaine+="r";
-							smtmpc--;
-						}
-					}
-					if(a.getNom()!=""){
-						if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1){
-							chaineVal+="\\";
-						}
-						if(chaine.indexOf('r')!=-1 || chaine.indexOf('l')!=-1){
-							chaineVal+="^";
-						}
-						chaineVal+=a.getNom();
-					}
-					chaineVal+=a.getNom();
-					chaine+=chaineVal;
-					chaine+="]";
-				}
-			}
-		}
-		return chaine;
-	}
+	public String sommetVoisinsLaTeX(Sommet s,Sommet_matrix[]tab)
+        {
+                Sommet_matrix sm = sommetInSommetMatrix(s,tab);
+                int[] tabVoisins = this.tabVoisinsCustom(arcinit.indexOf(s));
+                String chaine = "";
+                String chaineVal="";
+                String boucle ="";
+                String tmp="";
+                if(tabVoisins.length>0){
+                for(int i=0;i<tabVoisins.length;i++)
+                {
+                    for(int j=0;j<s.getArcs().size();j++)
+                    {
+                        if(s.getArcs().get(j).getOrigine().equals(s.getArcs().get(j).getArrivee())){
+                            boucle="(ul,dl)[]";
+                        }
+                    }
+                    if(tabVoisins[i]!=-1){
+                        if(type)
+                            chaine+=Graphe.ARC;
+                        else
+                            chaine+=Graphe.ARETE;
+                        
+                        Arc a = this.arcaPartirSommets(s,sommets.get(tabVoisins[i]));
+                        chaine+="[";
+                        Sommet_matrix smtmp = this.sommetInSommetMatrix(sommets.get(tabVoisins[i]), tab);
+                        int sml= sm.getLigne();
+                        int smtmpl = smtmp.getLigne();
+                        int smc = sm.getColonne();
+                        int smtmpc = smtmp.getColonne();
+                        if(sml>smtmpl){
+                            while(sml-smtmpl>0){
+                                chaine+="u";
+                                sml--;
+                            }
+                        }
+                        else if(sml<smtmpl){
+                            while(smtmpl-sml>0){
+                                chaine+="d";
+                                smtmpl--;
+                            }
+                        }
+                        if(smc>smtmpc){
+                            while(smc-smtmpc>0){
+                                chaine+="l";
+                                smc--;
+                            }
+                        }
+                        else if(smc<smtmpc){
+                            while(smtmpc-smc>0){
+                                chaine+="r";
+                                smtmpc--;
+                            }
+                        }
+                        
+                        chaineVal+=a.getNom();
+                        chaine+=chaineVal;
+                        chaine+="]";
+                        if(a.getNom()!=null && !a.getNom().equals("")){
+                            if(chaine.indexOf('u')!=-1 || chaine.indexOf('d')!=-1)
+                                chaineVal+="\\";
+                
+                            if(chaine.indexOf('r')!=-1 || chaine.indexOf('l')!=-1)
+                                chaineVal+="^";
+                
+                            chaineVal+=a.getNom();
+                        }
+                    }
+                }
+                if(type)
+                    tmp = Graphe.ARC + boucle + chaine;  
+                else
+                    tmp = Graphe.ARC + boucle + chaine; 
+            }
+            if(boucle != "")
+                return tmp;
+            else
+                return chaine;
+        }
 
 	public String[][] matrixLatex(Sommet_matrix[] tab, int marge, int taille) throws TailleColumnLineException
 	{

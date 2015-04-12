@@ -1517,7 +1517,7 @@ public class Graphe {
 		String s = "";
 		if(info == GENERAL)
 		{
-			s = "<html><p><strong>Nom du graphe : " + nom + "</strong></p><br />";
+			s = "<html><p><b />Nom du graphe : " + nom + "</p><br />";
 			if(this.isType() == Graphe.NON_ORIENTE)
 				s+="<p>Le graphe est <span style=\"color;red\">non orienté</span></p>";
 			else

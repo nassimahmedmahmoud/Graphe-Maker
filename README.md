@@ -1,6 +1,6 @@
 # Graphe-Maker
 
-#Développement Graphe-Maker++ suspendu temporairement...
+Développement Graphe-Maker++ suspendu temporairement...
 
 TODO :
   - LaTeX -> graphe

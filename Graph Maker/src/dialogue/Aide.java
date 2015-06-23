@@ -46,7 +46,7 @@ public class Aide
     
     public String aPropos()
     {
-        auteur = "La team des gars stylés et de la meuf ouf";
+        auteur = "La team des bullshiteurs php et ABAP";
         editeur = "EmbrouilleTech©";
         text = "EmbrouilleTech vous propose leur application <b>Graphe-Maker++</b>"
                 + " à la pointe de la technologie.<br>Afin de vous faciliter l'utilisation"

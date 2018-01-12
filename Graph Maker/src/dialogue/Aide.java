@@ -94,7 +94,7 @@ public class Aide
             case 1 :
                 text = "I - Prise en main de Graphe_Maker++<br>"
                         + " - 1 Options de base<br><br>"
-                        + "    Afin de vous aider a mieux comprendre Graphe-Maker++ et<br>"
+                        + "    Afin de vous aider à mieux comprendre Graphe-Maker++ et<br>"
                         + "afin de vous faciliter son utilisation, nous allons d'abord<br>"
                         + "vous détailler les fonctionnalités de base.<br>"
                         + "Tout d'abord cette application vous permet de créer des graphes<br>"
@@ -149,18 +149,18 @@ public class Aide
                         + "également faire clic droit sur le sommet d'arrivé !</span><br><br>"
                         + " 3 - Options avancées<br><br>"
                         + "    Vous pouvez dès à présent créer le graphe de vos envies, mais<br>"
-                        + "c'est vite lent et peu pratique lorsqu'on doit créer 10 sommets reliés.<br>"
+                        + "c'est vite lent et peu pratique lorsqu'on doit créer plus de 10 sommets reliés.<br>"
                         + "Oui nous l'avons compris, et c'est pour ça que nous avons ajouté la<br>"
                         + "possibilité de créer des graphes génériques qui sont la clique, la chaine<br>"
                         + "ou le cycle. Pour se faire vous n'avez qu'à cliquer sur le bouton<br>"
                         + "correspondant, et ça créera votre modèle avec tous les sommets existants.<br>"
                         + "Vous pouvez également créer des graphes génériques customisés ! Rien de<br>"
-                        + "plus simple en vérité, pour ça vous avez juste a cliquer sur les botuons<br>"
-                        + "clique, cycle ou chaine custom sur votre droite et enfin clique sur<br>"
-                        + "'Append' une fois tous vos sommets voulus séléctionnés. Et comme c'est<br>"
-                        + "ennuyeux de devoir donner des valeurs aux arcs 1 à 1 vous pouvez remplir<br>"
-                        + "le champ juste en dessous et les arcs de votre graphe générique auront cette<br>"
-                        + "valeur.<br><br><span color=red>Attention : ce champ doit être rempli avec un nombre entier</span><br>";
+                        + "plus simple en vérité, pour ça vous avez juste à cliquer sur les botuons<br>"
+                        + "clique, cycle ou chaine custom sur votre droite et enfin cliquer sur le bouton<br>"
+                        + "'Append' une fois tous vos sommets voulus séléctionnés. Et comme il est peu<br>"
+                        + "pratique de devoir donner des valeurs aux arcs 1 à 1 vous pouvez remplir<br>"
+                        + "le champ juste en dessous 'Distance des arcs/arêtes' et les arcs de votre graphe générique"
+                        + "auront cette valeur.<br><br><span color=red>Attention : ce champ doit être rempli avec un nombre entier</span><br>";
                 break;
             case 4 :
                 text = "III - Onglet Dijkstra<br>"
@@ -204,7 +204,7 @@ public class Aide
                         + "    Cet onglet outre ces informations vous permet également de créer un <br>"
                         + "code LaTeX modifiable correspondant à votre graphe. Dès lors que vous<br>"
                         + "avez un graphe valide, vous pouvez générer votre graphe en LaTeX avec les<br>"
-                        + "valeurs initiales. Vous avez également la possibilité de changer ces valeurs<br>"
+                        + "valeurs initiales. Vous avez également la possibilité de changer ces valeurs,<br>"
                         + "la marge correspond à la marge qui sera utilisée pour séparer vos points en<br>"
                         + "lignes et en colonnes (c'est a dire un intervalle ou tous les points compris<br>"
                         + "dedans feront parti d'une même ligne ou colonne), la taille quant à elle<br>"

@@ -52,14 +52,25 @@ public class ListenerActionGraphe implements ActionListener {
 		if(e.getSource() == gv.getGenerate())
 		{
 			try{
+                                //System.out.println("Marge av : "+gv.getGraphe().getMargelinecolumn());
+                                //System.out.println("Taille av : "+gv.getGraphe().getLengthlinecolumn());
+                                gv.getGraphe().setMargelinecolumn(Integer.parseInt(gv.getMargep().getText()));//isInteger(gv.getMargep().getText()));
+                                gv.getGraphe().setLengthlinecolumn(Integer.parseInt(gv.getTaillec().getText()));//isInteger(gv.getTaillec().getText()));
+                                //System.out.println("Marge ap : "+gv.getGraphe().getMargelinecolumn());
+                                //System.out.println("Taille ap : "+gv.getGraphe().getLengthlinecolumn());
 				gv.getAff().setText(gv.getGraphe().matrixLatexToString(gv.getGraphe()
 						.matrixLatex(gv.getGraphe().initTab(gv.getGraphe().getMargelinecolumn()), gv.getGraphe().getMargelinecolumn()
 								, gv.getGraphe().getLengthlinecolumn()), gv.getGraphe().getMargelinecolumn() , gv.getGraphe().getLengthlinecolumn(),
 								gv.getGraphe().initTab(gv.getGraphe().getMargelinecolumn())));
 			}
+                        catch(NumberFormatException ec)
+                        {
+                                JLabel affichage = new JLabel("<html><p>Le code que vous essayez de générer n'est pas bon.<br>La valeur pour la taille ou la marge indiquée est incorrecte.<br><br><span color=red>Attention : Les valeurs de taille et de marge doivent<br>être des nombres entiers supérieur à 0.</span></p></html>");
+				JOptionPane.showMessageDialog(null,affichage,"Erreur : " + ec + ":Valeur_de_champs_erroné",0);
+                        }
                         catch(TailleColumnLineException ec)
                         {
-                            JLabel affichage = new JLabel("<html><p>Le code que vous essayez de générer n'est pas bon.<br>La taille que vous avez indiqué est mauvaise.<br><br><span color=red>Attention : Vous devez entrer une valeur de taille<br>strictement supérieur à 0 pour que la génération s'effectue.</span></p></html>");
+                                JLabel affichage = new JLabel("<html><p>Le code que vous essayez de générer n'est pas bon.<br>La taille que vous avez indiqué est mauvaise.<br><br><span color=red>Attention : Vous devez entrer une valeur de taille<br>strictement supérieur à 0 pour que la génération s'effectue.</span></p></html>");
 				JOptionPane.showMessageDialog(null,affichage,"Erreur : " + ec + ":Taille_colonne_ligne_erroné",0);
                         }
 			catch(NullPointerException ec)
@@ -89,22 +100,64 @@ public class ListenerActionGraphe implements ActionListener {
 		{
 			if(gv.getGraphe().getTabCick().size() > 1)
 			{
-				if(gv.getClikc().isSelected())
-					gv.getGraphe().createClique(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
-				else if(gv.getChainec().isSelected())
-					gv.getGraphe().createChaine(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
-				else
-					gv.getGraphe().createCycle(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
-				gv.getGraphe().setTabCick(new ArrayList<Sommet>());
+                                try
+                                {
+                                        gv.getGraphe().setDist(Integer.parseInt(gv.getDist().getText()));
+                                        if(gv.getClikc().isSelected())
+                                                gv.getGraphe().createClique(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
+                                        else if(gv.getChainec().isSelected())
+                                                gv.getGraphe().createChaine(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
+                                        else
+                                                gv.getGraphe().createCycle(gv.getGraphe().getDist(),gv.getGraphe().getTabCick());
+                                        gv.getGraphe().setTabCick(new ArrayList<Sommet>());
+                                }
+                                catch(NumberFormatException ec)
+                                {
+                                        JLabel affichage = new JLabel("<html><p>Impossible de créer le graphe.<br>La distance indiquée est incorrecte.<br><br><span color=red>Attention : La distance par défaut des arcs doit<br>correspondre un nombre entier.</span></p></html>");
+                                        JOptionPane.showMessageDialog(null,affichage,"Erreur : " + ec + ":Valeur_de_champs_erroné",0);
+                                }
 			}
 		}
 	
 		if(e.getSource() == gv.getClik())
-			this.gv.getGraphe().createClique(gv.getGraphe().getDist());
+                {
+                        try
+                        {
+                            gv.getGraphe().setDist(Integer.parseInt(gv.getDist().getText()));
+                            gv.getGraphe().createClique(gv.getGraphe().getDist());
+                        }
+                        catch(NumberFormatException ec)
+                        {
+                            JLabel affichage = new JLabel("<html><p>Impossible de créer le graphe.<br>La distance indiquée est incorrecte.<br><br><span color=red>Attention : La distance par défaut des arcs doit<br>correspondre un nombre entier.</span></p></html>");
+                            JOptionPane.showMessageDialog(null,affichage,"Erreur : " + ec + ":Valeur_de_champs_erroné",0);
+                        }
+                }
 		if(e.getSource() == gv.getCycle())
-			gv.getGraphe().createCycle(gv.getGraphe().getDist(),gv.getGraphe().getArcinit());
+                {
+                        try
+                        {
+                            gv.getGraphe().setDist(Integer.parseInt(gv.getDist().getText()));
+                            gv.getGraphe().createCycle(gv.getGraphe().getDist(),gv.getGraphe().getArcinit());
+                        }
+                        catch(NumberFormatException ec)
+                        {
+                            JLabel affichage = new JLabel("<html><p>Impossible de créer le graphe.<br>La distance indiquée est incorrecte.<br><br><span color=red>Attention : La distance par défaut des arcs doit<br>correspondre un nombre entier.</span></p></html>");
+                            JOptionPane.showMessageDialog(null,affichage,"Erreur : " + ec + ":Valeur_de_champs_erroné",0);
+                        }
+                }
 		if(e.getSource() == gv.getChaine())
-			gv.getGraphe().createChaine(gv.getGraphe().getDist(),gv.getGraphe().getArcinit());
+                {
+                        try
+                        {
+                            gv.getGraphe().setDist(Integer.parseInt(gv.getDist().getText()));
+                            gv.getGraphe().createChaine(gv.getGraphe().getDist(),gv.getGraphe().getArcinit());
+                        }
+                        catch(NumberFormatException ec)
+                        {
+                            JLabel affichage = new JLabel("<html><p>Impossible de créer le graphe.<br>La distance indiquée est incorrecte.<br><br><span color=red>Attention : La distance par défaut des arcs doit<br>correspondre un nombre entier.</span></p></html>");
+                            JOptionPane.showMessageDialog(null,affichage,"Erreur : " + ec + ":Valeur_de_champs_erroné",0);
+                        }
+                }
 		if(this.gv.getBrelaz() == e.getSource())
 			this.gv.setColors(this.gv.getGraphe().coloration());      
 
@@ -117,8 +170,7 @@ public class ListenerActionGraphe implements ActionListener {
 		int val=50;
 		try { 
 			val =Integer.parseInt(s); 
-		} catch(NumberFormatException e) { 
-		} catch(NullPointerException e) {
+		} catch(NumberFormatException | NullPointerException e) {
 		}
 		return val;
 	}
